@@ -7,7 +7,7 @@ import Header from './components/header/Header.js';
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Header test="This prop has been passed successfully"/>
     </div>
   );
 }
