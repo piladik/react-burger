@@ -3,16 +3,47 @@
 }
 
 .constructor_container {
+    max-height: 55vh;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
 }
 
+.scrollable_box {
+    composes: scrollable_box from "../burger-ingredients/BurgerIngredients.module.css";
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* .scrollable_box {
+    overflow-y: auto;
+    height: 55vh;
+}
+
+.scrollable_box::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable_box::-webkit-scrollbar-track {
+    background: #2F2F37
+}
+
+.scrollable_box::-webkit-scrollbar-thumb {
+    background: #8585AD;
+} */
+
 .constructor_item {
     display: flex;
+    justify-content: flex-end;
     gap: 5px;
     align-items: center;
+    width: 100%;
+}
+
+.constructor_item_bun {
+    margin-right: 10px;
 }
 
 .confirm_container {

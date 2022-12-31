@@ -2,8 +2,7 @@ import data from "../../../utils/data.js";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./BurgerIngredients.module.css";
 
-function IngredientsCard(props) {
-    const imgUrl = data[0].image; 
+function IngredientsCard(props) { 
     return (
         <div className={`mt-6 mb-10 ml-4 ${styles.card}`}>
             <img className={``} src={props.bun.image}></img>
