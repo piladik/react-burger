@@ -8,7 +8,7 @@ import navStyles from "./Header.module.css";
 
 function Header() {
     return (
-        <header>
+        <header className={navStyles.header}>
             <nav className={navStyles.nav}>
                 <div className={navStyles.nav_box}>
                     <HeaderConstructor text="Конструктор"/>

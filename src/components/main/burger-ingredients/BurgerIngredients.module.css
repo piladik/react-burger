@@ -1,0 +1,31 @@
+.ingredients_section {
+    max-width: 50%;
+}
+
+.heading {
+    display: flex;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 1; */
+    width: 46%;
+}
+
+.currency_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.name_box {
+    display: flex;
+    justify-content: center;
+
+}
+
+.name_box p {
+   margin-top: 5px;
+}
