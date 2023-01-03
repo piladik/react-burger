@@ -1,7 +1,9 @@
-import React from "react";
+import PropTypes from "prop-types";
 
+// Styles
 import styles from "./BurgerIngredients.module.css";
 
+// Components
 import IngredientsTab from "./IngredientsTab";
 import IngredientsMainHeading from "./IngredientsMainHeading";
 import IngredientsSecondaryHeading from "./IngredientsSecondaryHeading";
@@ -19,24 +21,39 @@ function BurgerIngredients(props) {
                 <IngredientsSecondaryHeading text="Булки"/>
                     <div className={`${styles.cards_container}`}>
                         {buns.map(bun => (
-                            <IngredientsCard bun={bun} key={bun._id}/>
+                            <IngredientsCard ingredient={bun} key={bun._id}/>
                         ))}
                     </div>
                 <IngredientsSecondaryHeading text="Соусы"/>
                     <div className={`${styles.cards_container}`}>
                         {sauces.map(sauce => (
-                            <IngredientsCard bun={sauce} key={sauce._id}/>
+                            <IngredientsCard ingredient={sauce} key={sauce._id}/>
                         ))}
                     </div>
                 <IngredientsSecondaryHeading text="Начинки"/>
                     <div className={`${styles.cards_container}`}>
                         {mains.map(main => (
-                            <IngredientsCard bun={main} key={main._id}/>
+                            <IngredientsCard ingredient={main} key={main._id}/>
                         ))}
                     </div>
             </div>
         </section>
     )
 }
+
+BurgerIngredients.propTypes = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(["bun, main, sauce"]).isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number
+})
 
 export default BurgerIngredients
