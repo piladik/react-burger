@@ -1,5 +1,5 @@
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import navStyles from "./Header.module.css";
+import navStyles from "./header.module.css";
 
 function HeaderAccount(props) {
     return (

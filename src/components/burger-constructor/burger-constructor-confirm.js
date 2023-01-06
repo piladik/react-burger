@@ -1,5 +1,5 @@
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from "./BurgerConstructor.module.css"
+import styles from "./burger-constructor.module.css"
 
 function BurgerConstructorConfirm() {
     return (

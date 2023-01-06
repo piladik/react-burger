@@ -1,10 +1,8 @@
-import React from "react";
-
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import HeaderConstructor from "./Header-constructor.js";
-import HeaderAccount from "./Header-account.js";
-import HeaderOrderlist from "./Header-order-list.js";
-import navStyles from "./Header.module.css";
+import HeaderConstructor from "./header-constructor"
+import HeaderAccount from "./header-account";
+import HeaderOrderlist from "./header-order-list";
+import navStyles from "./header.module.css";
 
 function Header() {
     return (

@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 
 // Styles
-import styles from "./BurgerConstructor.module.css"
+import styles from "./burger-constructor.module.css"
 
 // Components
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerConstructorConfirm from "./BurgerConstructorConfirm";
+import BurgerConstructorConfirm from "./burger-constructor-confirm";
 
 function BurgerConstructor(props) {
     const buns = props.ingredients.filter(el => el.type === "bun");

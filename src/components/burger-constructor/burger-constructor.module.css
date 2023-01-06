@@ -11,7 +11,7 @@
 }
 
 .scrollable_box {
-    composes: scrollable_box from "../burger-ingredients/BurgerIngredients.module.css";
+    composes: scrollable_box from "../burger-ingredients/burger-ingredients.module.css";
     display: flex;
     flex-direction: column;
     gap: 10px;

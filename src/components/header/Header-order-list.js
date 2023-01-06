@@ -1,5 +1,5 @@
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import navStyles from "./Header.module.css";
+import navStyles from "./header.module.css";
 
 function HeaderOrderList(props) {
     return (

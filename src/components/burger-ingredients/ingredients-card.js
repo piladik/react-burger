@@ -1,6 +1,5 @@
-import data from "../../../utils/data.js";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from "./BurgerIngredients.module.css";
+import styles from "./burger-ingredients.module.css";
 
 function IngredientsCard(props) {
     if ( props.ingredient.name == "Краторная булка N-200i" ||

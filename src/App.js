@@ -1,10 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import Header from "./components/header/Header.js";
-import BurgerIngredients from "./components/main/burger-ingredients/BurgerIngredients.js";
-import BurgerConstructor from "./components/main/burger-constructor/BurgerConstructor.js";
+import Header from "./components/header/header.js";
+import BurgerIngredients from "./components/burger-ingredients/burger-ingredients.js";
+import BurgerConstructor from "./components/burger-constructor/burger-constructor.js";
 import data from "./utils/data.js";
 
 function App() {

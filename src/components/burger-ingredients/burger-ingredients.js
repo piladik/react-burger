@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 
 // Styles
-import styles from "./BurgerIngredients.module.css";
+import styles from "./burger-ingredients.module.css";
 
 // Components
-import IngredientsTab from "./IngredientsTab";
-import IngredientsMainHeading from "./IngredientsMainHeading";
-import IngredientsSecondaryHeading from "./IngredientsSecondaryHeading";
-import IngredientsCard from "./IngredientsCard.js";
+import IngredientsTab from "./ingredients-tab";
+import IngredientsMainHeading from "./ingredients-main-heading";
+import IngredientsSecondaryHeading from "./ingredients-secondary-heading";
+import IngredientsCard from "./ingredients-card";
 
 function BurgerIngredients(props) {
     const buns = props.ingredients.filter(el => el.type === "bun");

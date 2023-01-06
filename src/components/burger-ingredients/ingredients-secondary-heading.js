@@ -1,4 +1,4 @@
-import styles from "./BurgerIngredients.module.css";
+import styles from "./burger-ingredients.module.css";
 
 function IngredientsSecondaryHeading(props) {
     return (
