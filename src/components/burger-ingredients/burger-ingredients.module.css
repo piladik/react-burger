@@ -3,7 +3,7 @@
 }
 
 .heading {
-    display: flex;
+    text-align: start;
 }
 
 .scrollable_box {
@@ -22,6 +22,10 @@
 
 .scrollable_box::-webkit-scrollbar-thumb {
     background: #8585AD;
+}
+
+.tab_container {
+    display: flex;
 }
 
 .cards_container {

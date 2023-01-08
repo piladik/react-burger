@@ -33,14 +33,31 @@
     border-radius: 40px;
 }
 
+.nav_item svg {
+    fill: #8585AD;
+}
+
 .nav_link {
     text-decoration: none;
 }
 
 .nav_link:link {
-    color: white;
+    color: #8585AD;
+    
 }
 
 .nav_link:visited {
+    color: #8585AD;
+}
+
+.nav_item_active .nav_link:link {
     color: white;
+}
+
+.nav_item_active .nav_link:visited {
+    color: white;
+}
+
+.nav_item_active svg {
+    fill: white;
 }

@@ -6,7 +6,7 @@ function BurgerConstructorConfirm() {
         <div className={`mt-10 ${styles.confirm_container}`}>
             <div className={`mr-10 ${styles.total_box}`}>
                 <p className="text text_type_digits-medium">610</p>
-                <CurrencyIcon type="primary" className={`${styles.icon}`} />
+                <CurrencyIcon type="primary" className={styles.icon} />
             </div>
             <Button htmlType="button" type="primary" size="large">
             Оформить заказ
