@@ -1,60 +1,59 @@
 .ingredients_section {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 .heading {
-    text-align: start;
+  text-align: start;
 }
 
 .scrollable_box {
-    overflow-y: auto;
-    min-height: fit-content;
-    max-height: 55vh;
+  overflow-y: auto;
+  min-height: fit-content;
+  max-height: 55vh;
 }
 
 .scrollable_box::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 .scrollable_box::-webkit-scrollbar-track {
-    background: #2F2F37
+  background: #2f2f37;
 }
 
 .scrollable_box::-webkit-scrollbar-thumb {
-    background: #8585AD;
+  background: #8585ad;
 }
 
 .tab_container {
-    display: flex;
+  display: flex;
 }
 
 .cards_container {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .card {
-    display: flex;
-    flex-direction: column;
-    /* flex-grow: 1; */
-    width: 46%;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  /* flex-grow: 1; */
+  width: 46%;
+  position: relative;
 }
 
 .currency_box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .name_box {
-    display: flex;
-    justify-content: center;
-
+  display: flex;
+  justify-content: center;
 }
 
 .name_box p {
-   margin-top: 5px;
+  margin-top: 5px;
 }
