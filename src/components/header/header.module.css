@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  height: 88px;
+  top: 40px;
+  left: 40px;
+  background-color: #1c1c21;
+}
+
+.nav {
+  position: relative;
+  display: flex;
+  width: 80%;
+  margin: auto;
+}
+
+.nav_box {
+  display: flex;
+  align-items: center;
+}
+
+.nav_box_logo {
+  margin: auto;
+  flex-grow: 0.5;
+}
+
+.nav_item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 16px 20px 16px 20px;
+  border-radius: 40px;
+}
+
+.nav_item svg {
+  fill: #8585ad;
+}
+
+.nav_link {
+  text-decoration: none;
+}
+
+.nav_link:link {
+  color: #8585ad;
+}
+
+.nav_link:visited {
+  color: #8585ad;
+}
+
+.nav_item_active .nav_link:link {
+  color: #ffffff;
+}
+
+.nav_item_active .nav_link:visited {
+  color: #ffffff;
+}
+
+.nav_item_active svg {
+  fill: #ffffff;
+}
