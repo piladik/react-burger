@@ -1,4 +1,4 @@
-import navStyles from "./header.module.css";
+import navStyles from "./app-header.module.css";
 import {
   BurgerIcon,
   ListIcon,

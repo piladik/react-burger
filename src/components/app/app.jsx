@@ -1,6 +1,6 @@
 import "./App.css";
 
-import Header from "../header/header";
+import Header from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ingredients from "../../utils/data";
