@@ -5,6 +5,7 @@ import {
 import styles from "./burger-constructor.module.css";
 import { useEffect, useState } from "react";
 import ModalOverlay from "../modal/modal-overlay";
+import Modal from "../modal/modal";
 
 function BurgerConstructorConfirm(props) {
   const [modalDetails, setModalDetails] = useState({
@@ -23,10 +24,17 @@ function BurgerConstructorConfirm(props) {
     });
     // eslint-disable-next-line
   }, [props.orderDetails]);
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+
+  const handleClose = () => {
+    console.log(isModalOpen);
+    setIsModalOpen(false);
   };
 
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  console.log(isModalOpen);
   return (
     <div className={`mt-10 ${styles.confirm_container}`}>
       <div className={`mr-10 ${styles.total_box}`}>
@@ -37,17 +45,19 @@ function BurgerConstructorConfirm(props) {
         htmlType="button"
         type="primary"
         size="large"
-        onClick={toggleModal}
+        onClick={handleOpen}
       >
         Оформить заказ
       </Button>
-      <ModalOverlay
-        handleClose={toggleModal}
-        isModalOpen={isModalOpen}
-        modalDetails={modalDetails}
-      >
-        This is Modal Content
-      </ModalOverlay>
+      {isModalOpen && (
+        <ModalOverlay>
+          <Modal
+            handleClose={handleClose}
+            modalDetails={modalDetails}
+            isModalOpen={isModalOpen}
+          />
+        </ModalOverlay>
+      )}
     </div>
   );
 }

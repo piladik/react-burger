@@ -6,6 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientPropTypes } from "../../utils/prop-types";
 import styles from "./burger-ingredients.module.css";
+import Modal from "../modal/modal";
 
 function IngredientsCard(props) {
   const [modalDetails, setModalDetails] = useState({
@@ -24,14 +25,18 @@ function IngredientsCard(props) {
     // eslint-disable-next-line
   }, [props.ingredient]);
 
-  const toggleModal = (e) => {
-    console.log(e);
-    setIsModalOpen(!isModalOpen);
-    console.log(`I was clicked from ingrediens card: ${isModalOpen}`);
+  const handleClose = () => {
+    console.log(isModalOpen);
+    setIsModalOpen(false);
   };
 
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  console.log(isModalOpen);
   return (
-    <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={toggleModal}>
+    <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={handleOpen}>
       <Counter count={1} size="default" extraClass="m-1" />
       <img
         className="ml-4 mr-4"
@@ -47,13 +52,15 @@ function IngredientsCard(props) {
       <div className={styles.name_box}>
         <p>{props.ingredient.name}</p>
       </div>
-      <ModalOverlay
-        handleClose={toggleModal}
-        isModalOpen={isModalOpen}
-        modalDetails={modalDetails}
-      >
-        This is Modal Content
-      </ModalOverlay>
+      {isModalOpen && (
+        <ModalOverlay>
+          <Modal
+            handleClose={handleClose}
+            modalDetails={modalDetails}
+            isModalOpen={isModalOpen}
+          />
+        </ModalOverlay>
+      )}
     </div>
   );
 }
