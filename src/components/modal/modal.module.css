@@ -1,0 +1,83 @@
+.modal_overlay {
+  position: fixed;
+  inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.modal_container {
+  width: 720px;
+  height: fit-content;
+  background-color: #1c1c21;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 40px;
+}
+
+.modal_box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modal_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.image {
+  width: 100%;
+}
+
+.close_btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.close_btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+}
+
+.modal_content p {
+  text-align: center;
+}
+
+.composition {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.icon_checked_box svg {
+  width: 120px;
+  height: 120px;
+}
+
+.order_id {
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.order_id_text {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

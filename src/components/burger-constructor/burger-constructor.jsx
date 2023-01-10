@@ -55,7 +55,7 @@ function BurgerConstructor(props) {
           />
         </div>
       </div>
-      <BurgerConstructorConfirm />
+      <BurgerConstructorConfirm orderDetails={"Nothing Yet"} />
     </section>
   );
 }

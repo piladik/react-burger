@@ -18,6 +18,8 @@ function App() {
     errorMessage: null,
   });
 
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
   const url = "https://norma.nomoreparties.space/api/ingredients";
   useEffect(() => {
     const getIngredients = () => {
@@ -50,20 +52,20 @@ function App() {
   return (
     <div className="App text text_type_main-default">
       <Header />
+      {success && (
+        <main className="main">
+          <>
+            <BurgerIngredients ingredients={data} />
+            <BurgerConstructor ingredients={data} />
+          </>
+        </main>
+      )}
       {!success && hasError && (
         <>
           <h1>{message}</h1>
           <h2>{`${errorName}: ${errorMessage}`}</h2>
         </>
       )}
-      <main className="main">
-        {success && (
-          <>
-            <BurgerIngredients ingredients={data} />
-            <BurgerConstructor ingredients={data} />
-          </>
-        )}
-      </main>
     </div>
   );
 }

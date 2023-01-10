@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 // Styles
 import styles from "./burger-ingredients.module.css";
 
