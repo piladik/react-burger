@@ -25,9 +25,22 @@ function IngredientsCard(props) {
     // eslint-disable-next-line
   }, [props.ingredient]);
 
-  const handleClose = () => {
-    setIsModalOpen(false);
+  const handleClose = (e) => {
+    // this handles if escape is pressed
+    if (!e) {
+      return setIsModalOpen(false);
+      // this handles if modal-overlay div or close btn svg is pressed
+    } else if (
+      e.target.id === "modal-overlay" ||
+      e.target.localName === "svg"
+    ) {
+      return setIsModalOpen(false);
+    } else {
+      return null;
+    }
   };
+  // console.log(e);
+  // setIsModalOpen(false);
 
   const handleOpen = () => {
     setIsModalOpen(true);
@@ -52,7 +65,7 @@ function IngredientsCard(props) {
         </div>
       </div>
       {isModalOpen && (
-        <ModalOverlay>
+        <ModalOverlay handleClose={handleClose}>
           <Modal
             handleClose={handleClose}
             modalDetails={modalDetails}

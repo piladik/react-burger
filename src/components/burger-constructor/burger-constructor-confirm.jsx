@@ -25,8 +25,19 @@ function BurgerConstructorConfirm(props) {
     // eslint-disable-next-line
   }, [props.orderDetails]);
 
-  const handleClose = () => {
-    setIsModalOpen(false);
+  const handleClose = (e) => {
+    // this handles if escape is pressed
+    if (!e) {
+      return setIsModalOpen(false);
+      // this handles if modal-overlay div or close btn svg is pressed
+    } else if (
+      e.target.id === "modal-overlay" ||
+      e.target.localName === "svg"
+    ) {
+      return setIsModalOpen(false);
+    } else {
+      return null;
+    }
   };
 
   const handleOpen = () => {
@@ -34,21 +45,23 @@ function BurgerConstructorConfirm(props) {
   };
 
   return (
-    <div className={`mt-10 ${styles.confirm_container}`}>
-      <div className={`mr-10 ${styles.total_box}`}>
-        <p className="text text_type_digits-medium">610</p>
-        <CurrencyIcon type="primary" className={styles.icon} />
+    <>
+      <div className={`mt-10 ${styles.confirm_container}`}>
+        <div className={`mr-10 ${styles.total_box}`}>
+          <p className="text text_type_digits-medium">610</p>
+          <CurrencyIcon type="primary" className={styles.icon} />
+        </div>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handleOpen}
+        >
+          Оформить заказ
+        </Button>
       </div>
-      <Button
-        htmlType="button"
-        type="primary"
-        size="large"
-        onClick={handleOpen}
-      >
-        Оформить заказ
-      </Button>
       {isModalOpen && (
-        <ModalOverlay>
+        <ModalOverlay handleClose={handleClose}>
           <Modal
             handleClose={handleClose}
             modalDetails={modalDetails}
@@ -56,7 +69,7 @@ function BurgerConstructorConfirm(props) {
           />
         </ModalOverlay>
       )}
-    </div>
+    </>
   );
 }
 

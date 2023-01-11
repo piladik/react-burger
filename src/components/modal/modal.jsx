@@ -8,9 +8,9 @@ function Modal({ handleClose, modalDetails, isModalOpen }) {
   useEffect(() => {
     const closeOnEscape = (e) => (e.key === "Escape" ? handleClose() : null);
     document.body.addEventListener("keydown", closeOnEscape);
-    console.log("Eevent listener mounted");
+    console.log("Eevent listener on Escape mounted");
     return () => {
-      console.log("Eevent listener unmounted");
+      console.log("Eevent listener on Escape unmounted");
       document.body.removeEventListener("keydown", closeOnEscape);
     };
   }, [handleClose]);
@@ -22,7 +22,7 @@ function Modal({ handleClose, modalDetails, isModalOpen }) {
           {modalDetails.header && (
             <h1 className="text text_type_main-large">{modalDetails.header}</h1>
           )}
-          <p onClick={() => handleClose()} className={styles.close_btn}>
+          <p onClick={handleClose} id="close-btn" className={styles.close_btn}>
             <CloseIcon />
           </p>
         </div>
