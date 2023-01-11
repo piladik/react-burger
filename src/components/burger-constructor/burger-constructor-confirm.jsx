@@ -26,7 +26,6 @@ function BurgerConstructorConfirm(props) {
   }, [props.orderDetails]);
 
   const handleClose = () => {
-    console.log(isModalOpen);
     setIsModalOpen(false);
   };
 
@@ -34,7 +33,6 @@ function BurgerConstructorConfirm(props) {
     setIsModalOpen(true);
   };
 
-  console.log(isModalOpen);
   return (
     <div className={`mt-10 ${styles.confirm_container}`}>
       <div className={`mr-10 ${styles.total_box}`}>

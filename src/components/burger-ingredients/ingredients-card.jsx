@@ -26,31 +26,30 @@ function IngredientsCard(props) {
   }, [props.ingredient]);
 
   const handleClose = () => {
-    console.log(isModalOpen);
     setIsModalOpen(false);
   };
 
   const handleOpen = () => {
     setIsModalOpen(true);
   };
-
-  console.log(isModalOpen);
   return (
-    <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={handleOpen}>
-      <Counter count={1} size="default" extraClass="m-1" />
-      <img
-        className="ml-4 mr-4"
-        src={props.ingredient.image}
-        alt={props.ingredient.name}
-      />
-      <div className={`mt-1 mb-1 ${styles.currency_box}`}>
-        <p className="text text_type_digits-default">
-          {props.ingredient.price}
-        </p>
-        <CurrencyIcon />
-      </div>
-      <div className={styles.name_box}>
-        <p>{props.ingredient.name}</p>
+    <>
+      <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={handleOpen}>
+        <Counter count={1} size="default" extraClass="m-1" />
+        <img
+          className="ml-4 mr-4"
+          src={props.ingredient.image}
+          alt={props.ingredient.name}
+        />
+        <div className={`mt-1 mb-1 ${styles.currency_box}`}>
+          <p className="text text_type_digits-default">
+            {props.ingredient.price}
+          </p>
+          <CurrencyIcon />
+        </div>
+        <div className={styles.name_box}>
+          <p>{props.ingredient.name}</p>
+        </div>
       </div>
       {isModalOpen && (
         <ModalOverlay>
@@ -61,7 +60,7 @@ function IngredientsCard(props) {
           />
         </ModalOverlay>
       )}
-    </div>
+    </>
   );
 }
 

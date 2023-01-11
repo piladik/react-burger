@@ -15,7 +15,6 @@ function Modal({ handleClose, modalDetails, isModalOpen }) {
     };
   }, [handleClose]);
   if (!isModalOpen) return null;
-  console.log(isModalOpen);
   return (
     <div className={styles.modal_container}>
       <div className={styles.modal_box}>
