@@ -1,4 +1,10 @@
+import PropTypes from "prop-types";
+
+// Styles
 import styles from "./modal.module.css";
+
+// Utils
+import { ingredientPropTypes } from "../../utils/prop-types";
 
 function IngredientDetails({ modalDetails }) {
   return (
@@ -48,5 +54,13 @@ function IngredientDetails({ modalDetails }) {
     </div>
   );
 }
+
+IngredientDetails.propTypes = {
+  modalDetails: PropTypes.shape({
+    modalType: PropTypes.string.isRequired,
+    header: PropTypes.string,
+    content: ingredientPropTypes.isRequired,
+  }).isRequired,
+};
 
 export default IngredientDetails;

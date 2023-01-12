@@ -1,5 +1,10 @@
-import ReactPortal from "../portal/react-portal";
+import PropTypes from "prop-types";
+
+// Styles
 import styles from "./modal.module.css";
+
+// Components
+import ReactPortal from "../portal/react-portal";
 
 function ModalOverlay({ children, handleClose }) {
   return (
@@ -14,5 +19,9 @@ function ModalOverlay({ children, handleClose }) {
     </ReactPortal>
   );
 }
+
+ModalOverlay.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default ModalOverlay;

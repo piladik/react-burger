@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
+// import PropTypes from "prop-types";
+
+// Styles
+import styles from "./burger-constructor.module.css";
+
+// Components
+import ModalOverlay from "../modal/modal-overlay";
+import Modal from "../modal/modal";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
-import { useEffect, useState } from "react";
-import ModalOverlay from "../modal/modal-overlay";
-import Modal from "../modal/modal";
 
 function BurgerConstructorConfirm(props) {
   const [modalDetails, setModalDetails] = useState({
@@ -72,5 +77,10 @@ function BurgerConstructorConfirm(props) {
     </>
   );
 }
+
+// Пока что мы не получаем пропсы, когда пропсы будут, то нужно будет тут сделать проверку
+// BurgerConstructorConfirm.propTypes = {
+//   orderDetails :
+// }
 
 export default BurgerConstructorConfirm;

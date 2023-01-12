@@ -1,16 +1,22 @@
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+
+// Styles
 import styles from "./modal.module.css";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+// Components
 import IngredientDetails from "./ingredient-details";
 import OrederDetails from "./order-details";
-import { useEffect } from "react";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+// Utils
+import { modalDetailsPropTypes } from "../../utils/prop-types";
 
 function Modal({ handleClose, modalDetails, isModalOpen }) {
   useEffect(() => {
     const closeOnEscape = (e) => (e.key === "Escape" ? handleClose() : null);
     document.body.addEventListener("keydown", closeOnEscape);
-    console.log("Eevent listener on Escape mounted");
     return () => {
-      console.log("Eevent listener on Escape unmounted");
       document.body.removeEventListener("keydown", closeOnEscape);
     };
   }, [handleClose]);
@@ -35,5 +41,10 @@ function Modal({ handleClose, modalDetails, isModalOpen }) {
     </div>
   );
 }
+
+Modal.propTypes = {
+  modalDetails: modalDetailsPropTypes.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
+};
 
 export default Modal;

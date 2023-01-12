@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
+
+// Styles
+import styles from "./burger-ingredients.module.css";
+
+// Components
 import ModalOverlay from "../modal/modal-overlay";
+import Modal from "../modal/modal";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+// Utils
 import { ingredientPropTypes } from "../../utils/prop-types";
-import styles from "./burger-ingredients.module.css";
-import Modal from "../modal/modal";
+import { is } from "@babel/types";
 
 function IngredientsCard(props) {
   const [modalDetails, setModalDetails] = useState({
@@ -34,6 +41,7 @@ function IngredientsCard(props) {
       e.target.id === "modal-overlay" ||
       e.target.localName === "svg"
     ) {
+      console.log(isModalOpen);
       return setIsModalOpen(false);
     } else {
       return null;

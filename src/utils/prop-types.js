@@ -15,4 +15,10 @@ const ingredientPropTypes = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-export { ingredientPropTypes };
+const modalDetailsPropTypes = PropTypes.shape({
+  modalType: PropTypes.string.isRequired,
+  header: PropTypes.string,
+  content: PropTypes.any,
+});
+
+export { ingredientPropTypes, modalDetailsPropTypes };
