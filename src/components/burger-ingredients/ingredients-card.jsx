@@ -13,7 +13,6 @@ import {
 
 // Utils
 import { ingredientPropTypes } from "../../utils/prop-types";
-import { is } from "@babel/types";
 
 function IngredientsCard(props) {
   const [modalDetails, setModalDetails] = useState({
@@ -41,7 +40,6 @@ function IngredientsCard(props) {
       e.target.id === "modal-overlay" ||
       e.target.localName === "svg"
     ) {
-      console.log(isModalOpen);
       return setIsModalOpen(false);
     } else {
       return null;
