@@ -11,18 +11,17 @@ function Header() {
     <header className={navStyles.header}>
       <nav className={navStyles.nav}>
         <div className={navStyles.nav_box}>
-          <div className={`${navStyles.nav_item} ${navStyles.nav_item_active}`}>
+          <a
+            className={`${navStyles.nav_link} ${navStyles.nav_link_active}`}
+            href="/"
+          >
             <BurgerIcon />
-            <a className={`${navStyles.nav_link} ${navStyles.active}`} href="/">
-              Конструктор
-            </a>
-          </div>
-          <div className={navStyles.nav_item}>
+            <p>Конструктор</p>
+          </a>
+          <a className={navStyles.nav_link} href="/">
             <ListIcon type="primary" />
-            <a className={navStyles.nav_link} href="/">
-              Лента заказов
-            </a>
-          </div>
+            <p>Лента заказов</p>
+          </a>
         </div>
         <div className={`${navStyles.nav_box} ${navStyles.nav_box_logo}`}>
           <a href="/">
@@ -30,12 +29,10 @@ function Header() {
           </a>
         </div>
         <div className={navStyles.nav_box}>
-          <div className={navStyles.nav_item}>
+          <a className={navStyles.nav_link} href="/">
             <ProfileIcon type="primary" />
-            <a className={navStyles.nav_link} href="/">
-              Личный кабинет
-            </a>
-          </div>
+            <p>Личный кабинет</p>
+          </a>
         </div>
       </nav>
     </header>
