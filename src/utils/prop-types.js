@@ -16,7 +16,6 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 const modalDetailsPropTypes = PropTypes.shape({
-  modalType: PropTypes.string.isRequired,
   header: PropTypes.string,
   content: PropTypes.any,
 });

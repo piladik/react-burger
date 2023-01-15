@@ -55,7 +55,7 @@ function BurgerConstructor(props) {
           />
         </div>
       </div>
-      <BurgerConstructorConfirm orderDetails={"Nothing Yet"} />
+      <BurgerConstructorConfirm orderId={345361} />
     </section>
   );
 }

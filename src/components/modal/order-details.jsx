@@ -4,11 +4,11 @@
 import styles from "./modal.module.css";
 import doneImg from "../../images/done.png";
 
-function OrderDetails({ modalDetails }) {
+function OrderDetails({ content }) {
   return (
     <div className={styles.modal_content}>
       <p className={`text text_type_digits-large ${styles.order_id}`}>
-        {modalDetails.content.orderId}
+        {content.orderId}
       </p>
       <p
         className={`"text text_type_digits-small mt-8" ${styles.order_id_text}`}

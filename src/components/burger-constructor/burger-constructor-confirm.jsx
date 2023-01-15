@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 // import PropTypes from "prop-types";
 
 // Styles
 import styles from "./burger-constructor.module.css";
 
 // Components
-import ModalOverlay from "../modal/modal-overlay";
 import Modal from "../modal/modal";
+import OrderDetails from "../modal/order-details";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerConstructorConfirm(props) {
+function BurgerConstructorConfirm({ orderId }) {
   const [modalDetails, setModalDetails] = useState({
-    modalType: "orderDetails",
     content: null,
   });
 
@@ -24,30 +24,21 @@ function BurgerConstructorConfirm(props) {
     setModalDetails({
       ...modalDetails,
       content: {
-        orderId: 345360,
+        orderId: orderId,
       },
     });
     // eslint-disable-next-line
-  }, [props.orderDetails]);
+  }, [orderId]);
 
-  const handleClose = (e) => {
-    // this handles if escape is pressed
-    if (!e) {
-      return setIsModalOpen(false);
-      // this handles if modal-overlay div or close btn svg is pressed
-    } else if (
-      e.target.id === "modal-overlay" ||
-      e.target.localName === "svg"
-    ) {
-      return setIsModalOpen(false);
-    } else {
-      return null;
-    }
+  const handleClose = () => {
+    setIsModalOpen(false);
   };
 
   const handleOpen = () => {
     setIsModalOpen(true);
   };
+
+  const { content } = modalDetails;
 
   return (
     <>
@@ -66,21 +57,20 @@ function BurgerConstructorConfirm(props) {
         </Button>
       </div>
       {isModalOpen && (
-        <ModalOverlay handleClose={handleClose}>
-          <Modal
-            handleClose={handleClose}
-            modalDetails={modalDetails}
-            isModalOpen={isModalOpen}
-          />
-        </ModalOverlay>
+        <Modal
+          handleClose={handleClose}
+          modalDetails={modalDetails}
+          isModalOpen={isModalOpen}
+        >
+          <OrderDetails content={content} />
+        </Modal>
       )}
     </>
   );
 }
 
-// Пока что мы не получаем пропсы, когда пропсы будут, то нужно будет тут сделать проверку
-// BurgerConstructorConfirm.propTypes = {
-//   orderDetails :
-// }
+BurgerConstructorConfirm.propTypes = {
+  orderId: PropTypes.number.isRequired,
+};
 
 export default BurgerConstructorConfirm;

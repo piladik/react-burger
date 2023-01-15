@@ -1,29 +1,25 @@
-import PropTypes from "prop-types";
-
 // Styles
 import styles from "./modal.module.css";
 
 // Utils
 import { ingredientPropTypes } from "../../utils/prop-types";
 
-function IngredientDetails({ modalDetails }) {
+function IngredientDetails({ content }) {
   return (
     <div className={styles.modal_content}>
       <img
-        src={modalDetails.content.image_large}
-        alt={modalDetails.content.name}
+        src={content.image_large}
+        alt={content.name}
         className={styles.image}
       />
-      <p className="mt-4 mb-8 text text_type_main-medium">
-        {modalDetails.content.name}
-      </p>
+      <p className="mt-4 mb-8 text text_type_main-medium">{content.name}</p>
       <div className={`mb-10 ${styles.composition}`}>
         <div className={`mr-5 ${styles.composition_item}`}>
           <p className="text text_type_main-default text_color_inactive">
             Калории, ккал
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {modalDetails.content.calories}
+            {content.calories}
           </p>
         </div>
         <div className={`mr-5 ${styles.composition_item}`}>
@@ -31,7 +27,7 @@ function IngredientDetails({ modalDetails }) {
             Белки, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {modalDetails.content.proteins}
+            {content.proteins}
           </p>
         </div>
         <div className={`mr-5 ${styles.composition_item}`}>
@@ -39,7 +35,7 @@ function IngredientDetails({ modalDetails }) {
             Жиры, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {modalDetails.content.fat}
+            {content.fat}
           </p>
         </div>
         <div className={styles.composition_item}>
@@ -47,7 +43,7 @@ function IngredientDetails({ modalDetails }) {
             Углеводы, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {modalDetails.content.carbohydrates}
+            {content.carbohydrates}
           </p>
         </div>
       </div>
@@ -56,11 +52,7 @@ function IngredientDetails({ modalDetails }) {
 }
 
 IngredientDetails.propTypes = {
-  modalDetails: PropTypes.shape({
-    modalType: PropTypes.string.isRequired,
-    header: PropTypes.string,
-    content: ingredientPropTypes.isRequired,
-  }).isRequired,
+  content: ingredientPropTypes.isRequired,
 };
 
 export default IngredientDetails;

@@ -1,24 +1,19 @@
 .modal_overlay {
   position: fixed;
-  inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   transition: all 0.3s ease-in-out;
-  overflow: hidden;
-  z-index: 999;
 }
 
 .modal_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 720px;
   height: fit-content;
   background-color: #1c1c21;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 2rem;
   border-radius: 40px;
 }

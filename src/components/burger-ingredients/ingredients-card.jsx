@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "./burger-ingredients.module.css";
 
 // Components
-import ModalOverlay from "../modal/modal-overlay";
 import Modal from "../modal/modal";
+import IngredientDetails from "../modal/ingredient-details";
 import {
   CurrencyIcon,
   Counter,
@@ -16,7 +16,6 @@ import { ingredientPropTypes } from "../../utils/prop-types";
 
 function IngredientsCard(props) {
   const [modalDetails, setModalDetails] = useState({
-    modalType: "ingredientDetail",
     header: "Детали ингредиента",
     content: null,
   });
@@ -31,26 +30,15 @@ function IngredientsCard(props) {
     // eslint-disable-next-line
   }, [props.ingredient]);
 
-  const handleClose = (e) => {
-    // this handles if escape is pressed
-    if (!e) {
-      return setIsModalOpen(false);
-      // this handles if modal-overlay div or close btn svg is pressed
-    } else if (
-      e.target.id === "modal-overlay" ||
-      e.target.localName === "svg"
-    ) {
-      return setIsModalOpen(false);
-    } else {
-      return null;
-    }
+  const handleClose = () => {
+    setIsModalOpen(false);
   };
-  // console.log(e);
-  // setIsModalOpen(false);
 
   const handleOpen = () => {
     setIsModalOpen(true);
   };
+
+  const { content } = modalDetails;
   return (
     <>
       <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={handleOpen}>
@@ -71,13 +59,13 @@ function IngredientsCard(props) {
         </div>
       </div>
       {isModalOpen && (
-        <ModalOverlay handleClose={handleClose}>
-          <Modal
-            handleClose={handleClose}
-            modalDetails={modalDetails}
-            isModalOpen={isModalOpen}
-          />
-        </ModalOverlay>
+        <Modal
+          handleClose={handleClose}
+          modalDetails={modalDetails}
+          isModalOpen={isModalOpen}
+        >
+          <IngredientDetails content={content} />
+        </Modal>
       )}
     </>
   );
