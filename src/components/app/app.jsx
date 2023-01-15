@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+
+// Styles
 import "./app.css";
 
+// Components
 import Header from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-// import ingredients from "../../utils/data";
+
+// Utils
+import getIngredients from "../../utils/burger-api";
 
 function App() {
   const [ingredients, setIngredients] = useState({
@@ -14,56 +19,53 @@ function App() {
   const [error, setError] = useState({
     hasError: null,
     message: null,
-    errorName: null,
-    errorMessage: null,
   });
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const url = "https://norma.nomoreparties.space/api/ingredients";
   useEffect(() => {
-    const getIngredients = () => {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          setIngredients({
-            ...ingredients,
+    getIngredients()
+      .then((data) => {
+        setIngredients((currentState) => {
+          const newState = {
+            ...currentState,
             success: data.success,
             data: data.data,
-          });
-        })
-        .catch((e) => {
-          setIngredients({ ...ingredients, success: false });
-          setError({
-            ...error,
-            hasError: true,
-            message: "Could not get data",
-            errorName: e.name,
-            errorMessage: e.message,
-          });
+          };
+          return newState;
         });
-    };
-    getIngredients();
-    // eslint-disable-next-line
+      })
+      .catch((e) => {
+        setIngredients((currentState) => {
+          const newState = {
+            ...currentState,
+            success: false,
+          };
+          return newState;
+        });
+        setError((currentState) => {
+          const newState = {
+            ...currentState,
+            hasError: true,
+            message: e.message,
+          };
+          return newState;
+        });
+      });
   }, []);
 
   const { success, data } = ingredients;
-  const { hasError, message, errorName, errorMessage } = error;
+  const { hasError, message } = error;
   return (
     <div className="App text text_type_main-default">
       <Header />
       {success && (
         <main className="main">
-          <>
-            <BurgerIngredients ingredients={data} />
-            <BurgerConstructor ingredients={data} />
-          </>
+          <BurgerIngredients ingredients={data} />
+          <BurgerConstructor ingredients={data} />
         </main>
       )}
       {!success && hasError && (
         <>
           <h1>{message}</h1>
-          <h2>{`${errorName}: ${errorMessage}`}</h2>
         </>
       )}
     </div>
