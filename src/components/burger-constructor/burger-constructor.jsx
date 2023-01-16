@@ -55,13 +55,13 @@ function BurgerConstructor(props) {
           />
         </div>
       </div>
-      <BurgerConstructorConfirm />
+      <BurgerConstructorConfirm orderId={345361} />
     </section>
   );
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };
 
 export default BurgerConstructor;

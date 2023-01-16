@@ -1,0 +1,42 @@
+.modal_overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease-in-out;
+}
+
+.modal_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  height: fit-content;
+  background-color: #1c1c21;
+  color: #fff;
+  font-size: 2rem;
+  border-radius: 40px;
+}
+
+.modal_box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modal_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.close_btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.close_btn svg {
+  width: 18px;
+  height: 18px;
+}

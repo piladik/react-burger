@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 // Styles
 import styles from "./burger-ingredients.module.css";
 
@@ -51,7 +50,7 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };
 
 export default BurgerIngredients;
