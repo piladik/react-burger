@@ -17,23 +17,6 @@
   gap: 10px;
 }
 
-/* .scrollable_box {
-    overflow-y: auto;
-    height: 55vh;
-}
-
-.scrollable_box::-webkit-scrollbar {
-    width: 10px;
-}
-
-.scrollable_box::-webkit-scrollbar-track {
-    background: #2F2F37
-}
-
-.scrollable_box::-webkit-scrollbar-thumb {
-    background: #8585AD;
-} */
-
 .constructor_item {
   display: flex;
   justify-content: flex-end;

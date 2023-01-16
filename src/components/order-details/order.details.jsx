@@ -1,21 +1,21 @@
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 // Styles
-import styles from "./modal.module.css";
+import styles from "./order-details.module.css";
 import doneImg from "../../images/done.png";
 
-function OrderDetails({ content }) {
+function OrderDetails({ orderId }) {
   return (
     <div className={styles.modal_content}>
       <p className={`text text_type_digits-large ${styles.order_id}`}>
-        {content.orderId}
+        {orderId}
       </p>
       <p
         className={`"text text_type_digits-small mt-8" ${styles.order_id_text}`}
       >
         Идентификатор заказа
       </p>
-      <div className={`mt-15 mb-15 ${styles.icon_checked_box}`}>
+      <div className={"mt-15 mb-15"}>
         <img src={doneImg} alt="" />
       </div>
 
@@ -28,9 +28,9 @@ function OrderDetails({ content }) {
     </div>
   );
 }
-// Пока что данные захордкожены - проверка не нужна
-// OrderDetails.propTypes = {
-//   modalDetails:
-// }
+
+OrderDetails.propTypes = {
+  orderId: PropTypes.number.isRequired,
+};
 
 export default OrderDetails;

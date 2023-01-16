@@ -1,6 +1,5 @@
 // Styles
-import styles from "./modal.module.css";
-
+import styles from "./ingredient-details.module.css";
 // Utils
 import { ingredientPropTypes } from "../../utils/prop-types";
 

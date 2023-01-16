@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 // import PropTypes from "prop-types";
 
@@ -7,28 +7,14 @@ import styles from "./burger-constructor.module.css";
 
 // Components
 import Modal from "../modal/modal";
-import OrderDetails from "../modal/order-details";
+import OrderDetails from "../order-details/order.details";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function BurgerConstructorConfirm({ orderId }) {
-  const [modalDetails, setModalDetails] = useState({
-    content: null,
-  });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    setModalDetails({
-      ...modalDetails,
-      content: {
-        orderId: orderId,
-      },
-    });
-    // eslint-disable-next-line
-  }, [orderId]);
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -37,8 +23,6 @@ function BurgerConstructorConfirm({ orderId }) {
   const handleOpen = () => {
     setIsModalOpen(true);
   };
-
-  const { content } = modalDetails;
 
   return (
     <>
@@ -57,12 +41,8 @@ function BurgerConstructorConfirm({ orderId }) {
         </Button>
       </div>
       {isModalOpen && (
-        <Modal
-          handleClose={handleClose}
-          modalDetails={modalDetails}
-          isModalOpen={isModalOpen}
-        >
-          <OrderDetails content={content} />
+        <Modal handleClose={handleClose}>
+          <OrderDetails orderId={orderId} />
         </Modal>
       )}
     </>

@@ -1,4 +1,4 @@
-import BURGER_API_URL from "../api/api-url";
+const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 
 const checkResponse = (res) => {
   if (!res.ok) {
