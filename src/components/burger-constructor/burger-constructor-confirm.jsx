@@ -34,12 +34,14 @@ function BurgerConstructorConfirm({ orderDetails }) {
       orderDetails.bun,
       orderDetails.fillings
     );
-    postOrder(ingredientsId).then((res) =>
-      setOrderId((currentState) => {
-        const newState = { ...currentState, id: res.order.number };
-        return newState;
-      })
-    );
+    postOrder(ingredientsId)
+      .then((res) =>
+        setOrderId((currentState) => {
+          const newState = { ...currentState, id: res.order.number };
+          return newState;
+        })
+      )
+      .catch((e) => console.log(e));
   }, [orderDetails.bun, orderDetails.fillings]);
 
   return (

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 // Styles
 import styles from "./burger-ingredients.module.css";
 
@@ -11,9 +11,18 @@ import { IngredientsContext } from "../../utils/ingredients-context";
 
 function BurgerIngredients() {
   const { ingredients } = useContext(IngredientsContext);
-  const buns = ingredients.data.filter((el) => el.type === "bun");
-  const sauces = ingredients.data.filter((el) => el.type === "sauce");
-  const mains = ingredients.data.filter((el) => el.type === "main");
+  const buns = useMemo(
+    () => ingredients.data.filter((el) => el.type === "bun"),
+    [ingredients.data]
+  );
+  const sauces = useMemo(
+    () => ingredients.data.filter((el) => el.type === "sauce"),
+    [ingredients.data]
+  );
+  const mains = useMemo(
+    () => ingredients.data.filter((el) => el.type === "main"),
+    [ingredients.data]
+  );
   return (
     <section className={`mt-10 ${styles.ingredients_section}`}>
       <h1 className={`mb-5 text text_type_main-large ${styles.heading}`}>

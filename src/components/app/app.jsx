@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // Styles
-import "./app.css";
+import styles from "./app.module.css";
 
 // Components
 import Header from "../app-header/app-header";
@@ -53,16 +53,16 @@ function App() {
       });
   }, []);
 
-  const { success, data } = ingredients;
+  const { success } = ingredients;
   const { hasError, message } = error;
   return (
-    <div className="App text text_type_main-default">
+    <div className={`${styles.App} text text_type_main-default`}>
       <Header />
       {success && (
         <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
-          <main className="main">
+          <main className={`${styles.main}`}>
             <BurgerIngredients />
-            <BurgerConstructor ingredients={data} />
+            <BurgerConstructor />
           </main>
         </IngredientsContext.Provider>
       )}

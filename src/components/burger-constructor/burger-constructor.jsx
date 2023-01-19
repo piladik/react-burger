@@ -1,4 +1,4 @@
-import { useContext, useReducer, useEffect } from "react";
+import { useContext, useReducer, useEffect, useMemo } from "react";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -32,9 +32,13 @@ function reducer(state, action) {
 function BurgerConstructor() {
   const orderInitialState = { bun: [], fillings: [], total: 0 };
   const { ingredients } = useContext(IngredientsContext);
-  orderInitialState["bun"] = ingredients.data.find((el) => el.type === "bun");
-  orderInitialState["fillings"] = ingredients.data.filter(
-    (el) => el.type !== "bun"
+  orderInitialState["bun"] = useMemo(
+    () => ingredients.data.find((el) => el.type === "bun"),
+    [ingredients.data]
+  );
+  orderInitialState["fillings"] = useMemo(
+    () => ingredients.data.filter((el) => el.type !== "bun"),
+    [ingredients.data]
   );
 
   const [orderState, orderDetailsDispatcher] = useReducer(
