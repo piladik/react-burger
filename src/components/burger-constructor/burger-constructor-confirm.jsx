@@ -1,6 +1,4 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-// import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -13,7 +11,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerConstructorConfirm({ orderId }) {
+// Utils
+import { orderDetailsPropTypes } from "../../utils/prop-types";
+import { getIngredientsId } from "../../utils/helpers";
+import { postOrder } from "../../utils/burger-api";
+
+function BurgerConstructorConfirm({ orderDetails }) {
+  const [orderId, setOrderId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClose = () => {
@@ -24,11 +28,25 @@ function BurgerConstructorConfirm({ orderId }) {
     setIsModalOpen(true);
   };
 
+  // Делаем запрос к API и получаем id, которое записываем в state orderId
+  useEffect(() => {
+    const ingredientsId = getIngredientsId(
+      orderDetails.bun,
+      orderDetails.fillings
+    );
+    postOrder(ingredientsId).then((res) =>
+      setOrderId((currentState) => {
+        const newState = { ...currentState, id: res.order.number };
+        return newState;
+      })
+    );
+  }, [orderDetails.bun, orderDetails.fillings]);
+
   return (
     <>
       <div className={`mt-10 ${styles.confirm_container}`}>
         <div className={`mr-10 ${styles.total_box}`}>
-          <p className="text text_type_digits-medium">610</p>
+          <p className="text text_type_digits-medium">{orderDetails.total}</p>
           <CurrencyIcon type="primary" className={styles.icon} />
         </div>
         <Button
@@ -50,7 +68,7 @@ function BurgerConstructorConfirm({ orderId }) {
 }
 
 BurgerConstructorConfirm.propTypes = {
-  orderId: PropTypes.number.isRequired,
+  orderDetails: orderDetailsPropTypes.isRequired,
 };
 
 export default BurgerConstructorConfirm;

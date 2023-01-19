@@ -1,4 +1,5 @@
 const BURGER_API_URL = "https://norma.nomoreparties.space/api";
+const ORDER_API_URL = "https://norma.nomoreparties.space/api/orders";
 
 const checkResponse = (res) => {
   if (!res.ok) {
@@ -9,7 +10,7 @@ const checkResponse = (res) => {
   return 0;
 };
 
-const getIngredients = async () => {
+export const getIngredients = async () => {
   const res = await fetch(`${BURGER_API_URL}/ingredients`);
 
   checkResponse(res);
@@ -18,4 +19,15 @@ const getIngredients = async () => {
   return ingredients;
 };
 
-export default getIngredients;
+export const postOrder = async (ingredientsId) => {
+  const res = await fetch(ORDER_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ingredients: ingredientsId }),
+  });
+
+  checkResponse(res);
+
+  const orderId = await res.json();
+  return orderId;
+};

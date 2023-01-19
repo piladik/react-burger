@@ -20,4 +20,10 @@ const modalDetailsPropTypes = PropTypes.shape({
   content: PropTypes.any,
 });
 
-export { ingredientPropTypes, modalDetailsPropTypes };
+const orderDetailsPropTypes = PropTypes.shape({
+  bun: ingredientPropTypes.isRequired,
+  fillings: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+  total: PropTypes.number.isRequired,
+});
+
+export { ingredientPropTypes, modalDetailsPropTypes, orderDetailsPropTypes };
