@@ -8,7 +8,7 @@ function OrderDetails({ orderId }) {
   return (
     <div className={styles.modal_content}>
       <p className={`text text_type_digits-large ${styles.order_id}`}>
-        {orderId}
+        {orderId.id}
       </p>
       <p
         className={`"text text_type_digits-small mt-8" ${styles.order_id_text}`}
@@ -30,7 +30,7 @@ function OrderDetails({ orderId }) {
 }
 
 OrderDetails.propTypes = {
-  orderId: PropTypes.number.isRequired,
+  orderId: PropTypes.shape({ id: PropTypes.number }).isRequired,
 };
 
 export default OrderDetails;

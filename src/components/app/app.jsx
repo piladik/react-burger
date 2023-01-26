@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // Styles
-import "./app.css";
+import styles from "./app.module.css";
 
 // Components
 import Header from "../app-header/app-header";
@@ -9,7 +9,8 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 // Utils
-import getIngredients from "../../utils/burger-api";
+import { getIngredients } from "../../utils/burger-api";
+import { IngredientsContext } from "../../utils/ingredients-context";
 
 function App() {
   const [ingredients, setIngredients] = useState({
@@ -52,16 +53,18 @@ function App() {
       });
   }, []);
 
-  const { success, data } = ingredients;
+  const { success } = ingredients;
   const { hasError, message } = error;
   return (
-    <div className="App text text_type_main-default">
+    <div className={`${styles.App} text text_type_main-default`}>
       <Header />
       {success && (
-        <main className="main">
-          <BurgerIngredients ingredients={data} />
-          <BurgerConstructor ingredients={data} />
-        </main>
+        <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
+          <main className={`${styles.main}`}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </IngredientsContext.Provider>
       )}
       {!success && hasError && (
         <>

@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import { useContext, useMemo } from "react";
 // Styles
 import styles from "./burger-ingredients.module.css";
 
@@ -7,12 +7,22 @@ import IngredientsTab from "./ingredients-tab";
 import IngredientsCard from "./ingredients-card";
 
 // Utils
-import { ingredientPropTypes } from "../../utils/prop-types";
+import { IngredientsContext } from "../../utils/ingredients-context";
 
-function BurgerIngredients(props) {
-  const buns = props.ingredients.filter((el) => el.type === "bun");
-  const sauces = props.ingredients.filter((el) => el.type === "sauce");
-  const mains = props.ingredients.filter((el) => el.type === "main");
+function BurgerIngredients() {
+  const { ingredients } = useContext(IngredientsContext);
+  const buns = useMemo(
+    () => ingredients.data.filter((el) => el.type === "bun"),
+    [ingredients.data]
+  );
+  const sauces = useMemo(
+    () => ingredients.data.filter((el) => el.type === "sauce"),
+    [ingredients.data]
+  );
+  const mains = useMemo(
+    () => ingredients.data.filter((el) => el.type === "main"),
+    [ingredients.data]
+  );
   return (
     <section className={`mt-10 ${styles.ingredients_section}`}>
       <h1 className={`mb-5 text text_type_main-large ${styles.heading}`}>
@@ -48,9 +58,5 @@ function BurgerIngredients(props) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
 
 export default BurgerIngredients;
