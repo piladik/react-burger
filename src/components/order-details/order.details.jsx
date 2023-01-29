@@ -1,14 +1,15 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 // Styles
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.png";
 
-function OrderDetails({ orderId }) {
+function OrderDetails() {
+  const { orderId } = useSelector((store) => store.order);
   return (
     <div className={styles.modal_content}>
       <p className={`text text_type_digits-large ${styles.order_id}`}>
-        {orderId.id}
+        {orderId}
       </p>
       <p
         className={`"text text_type_digits-small mt-8" ${styles.order_id_text}`}
@@ -28,9 +29,5 @@ function OrderDetails({ orderId }) {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-  orderId: PropTypes.shape({ id: PropTypes.number }).isRequired,
-};
 
 export default OrderDetails;

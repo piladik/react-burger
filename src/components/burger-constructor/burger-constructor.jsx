@@ -1,95 +1,136 @@
-import { useContext, useReducer, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
 
 // Styles
 import styles from "./burger-constructor.module.css";
 
 // Components
-import {
-  DragIcon,
-  ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorConfirm from "./burger-constructor-confirm";
+import FillingsContainer from "./fillings-container";
 
 // Utils
-import { IngredientsContext } from "../../utils/ingredients-context";
-import { countTotal } from "../../utils/helpers";
+import { countTotal, isEmptyConstuctor, checkBun } from "../../utils/helpers";
+import { getIngredientsId } from "../../utils/helpers";
+import { setOrderId } from "../../services/reducers/order";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "add":
-      return 0;
-    case "delete":
-      return 0;
-    case "total":
-      return { ...state, total: countTotal(state) };
-    case "clear":
-      return { bun: [], fillings: [], total: 0 };
-    default:
-      new Error(`Wrong type of action ${action.type}`);
-  }
-}
+// ACTIONS-REDUCERS
+import {
+  COUNT_TOTAL,
+  ADD_FILLING,
+  ADD_BUN,
+} from "../../services/actions/constructor";
+import {
+  INGREDIENTS_COUNTER_INCREASE,
+  CHANGE_BUN,
+} from "../../services/actions/ingredients";
 
 function BurgerConstructor() {
-  const orderInitialState = { bun: [], fillings: [], total: 0 };
-  const { ingredients } = useContext(IngredientsContext);
-  orderInitialState["bun"] = useMemo(
-    () => ingredients.data.find((el) => el.type === "bun"),
-    [ingredients.data]
-  );
-  orderInitialState["fillings"] = useMemo(
-    () => ingredients.data.filter((el) => el.type !== "bun"),
-    [ingredients.data]
+  const { ingredients } = useSelector((store) => store.constructorBurger);
+  const dispatch = useDispatch();
+
+  const isEmpty = useMemo(() => isEmptyConstuctor(ingredients), [ingredients]);
+  const isEmptyBun = useMemo(() => checkBun(ingredients), [ingredients]);
+  const memoizedTotal = useMemo(
+    () => countTotal(ingredients, isEmpty),
+    [ingredients, isEmpty]
   );
 
-  const [orderState, orderDetailsDispatcher] = useReducer(
-    reducer,
-    orderInitialState,
-    undefined
+  const [, dropTarget] = useDrop({
+    accept: ["bun", "main", "sauce"],
+    drop(data) {
+      if (data.ingredient.type === "bun") {
+        dispatch({
+          type: CHANGE_BUN,
+          id: data.ingredient._id,
+        });
+        dispatch({
+          type: ADD_BUN,
+          ingredient: data.ingredient,
+        });
+        dispatch({
+          type: INGREDIENTS_COUNTER_INCREASE,
+          id: data.ingredient._id,
+        });
+      } else {
+        dispatch({
+          type: ADD_FILLING,
+          ingredient: data.ingredient,
+        });
+        dispatch({
+          type: INGREDIENTS_COUNTER_INCREASE,
+          id: data.ingredient._id,
+        });
+      }
+    },
+  });
+
+  // Получаем id всех ингредиентов, находящихся в конструкторе
+  const ingredientsId = useMemo(
+    () => getIngredientsId(ingredients.bun, ingredients.fillings),
+    [ingredients.bun, ingredients.fillings]
   );
 
+  // Делаем запрос к api, получаем orderId и записываем его в глобальное состояние store.order.orderId
   useEffect(() => {
-    orderDetailsDispatcher({ type: "total" });
-  }, [orderDetailsDispatcher]);
+    if (!isEmptyBun) {
+      dispatch(setOrderId(ingredientsId));
+    }
+  }, [dispatch, ingredientsId, isEmptyBun]);
+
+  // Считаем общую стоимость заказа и записываем в глобальное состояние store.constructorBurger.total
+  useEffect(() => {
+    dispatch({
+      type: COUNT_TOTAL,
+      total: memoizedTotal,
+    });
+  }, [dispatch, memoizedTotal]);
 
   return (
     <section className={`mt-25 ${styles.constructor_section}`}>
-      <div className={styles.constructor_container}>
-        <div
-          className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
-        >
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${orderState.bun.name} (верх)`}
-            price={orderState.bun.price}
-            thumbnail={orderState.bun.image}
-          />
-        </div>
-        <div className={styles.scrollable_box}>
-          {orderState.fillings.map((el) => (
-            <div className={styles.constructor_item} key={el["_id"]}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={el.name}
-                price={el.price}
-                thumbnail={el.image}
-              />
+      <div className={styles.constructor_container} ref={dropTarget}>
+        {!isEmptyBun ? (
+          <div
+            className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
+          >
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${ingredients.bun.name} (верх)`}
+              price={ingredients.bun.price}
+              thumbnail={ingredients.bun.image}
+            />
+          </div>
+        ) : (
+          <div className={`${styles.constructor_empty_item} ${styles.bun_top}`}>
+            Выберите булку
+          </div>
+        )}
+        <FillingsContainer />
+        {!isEmptyBun ? (
+          <div
+            className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
+          >
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${ingredients.bun.name} (низ)`}
+              price={ingredients.bun.price}
+              thumbnail={ingredients.bun.image}
+            />
+          </div>
+        ) : (
+          <>
+            <div
+              className={`${styles.constructor_empty_item} ${styles.bun_bottom}`}
+            >
+              Выберите булку
             </div>
-          ))}
-        </div>
-        <div
-          className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
-        >
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${orderState.bun.name} (низ)`}
-            price={orderState.bun.price}
-            thumbnail={orderState.bun.image}
-          />
-        </div>
+          </>
+        )}
       </div>
-      <BurgerConstructorConfirm orderDetails={orderState} />
+      <BurgerConstructorConfirm isEmptyBun={isEmptyBun} />
     </section>
   );
 }

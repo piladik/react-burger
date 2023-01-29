@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 // Styles
 import styles from "./app.module.css";
@@ -9,67 +12,32 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 // Utils
-import { getIngredients } from "../../utils/burger-api";
-import { IngredientsContext } from "../../utils/ingredients-context";
+
+// ACTIONS-REDUCERS
+import { getIngredients } from "../../services/reducers/ingredients";
 
 function App() {
-  const [ingredients, setIngredients] = useState({
-    success: false,
-    data: [],
-  });
-  const [error, setError] = useState({
-    hasError: null,
-    message: null,
-  });
+  const { errorMessage, ingredientsFailed } = useSelector(
+    (store) => store.ingredients
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredients()
-      .then((data) => {
-        setIngredients((currentState) => {
-          const newState = {
-            ...currentState,
-            success: data.success,
-            data: data.data,
-          };
-          return newState;
-        });
-      })
-      .catch((e) => {
-        setIngredients((currentState) => {
-          const newState = {
-            ...currentState,
-            success: false,
-          };
-          return newState;
-        });
-        setError((currentState) => {
-          const newState = {
-            ...currentState,
-            hasError: true,
-            message: e.message,
-          };
-          return newState;
-        });
-      });
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-  const { success } = ingredients;
-  const { hasError, message } = error;
   return (
     <div className={`${styles.App} text text_type_main-default`}>
       <Header />
-      {success && (
-        <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
-          <main className={`${styles.main}`}>
+      {ingredientsFailed ? (
+        <h1>{errorMessage}</h1>
+      ) : (
+        <main className={`${styles.main}`}>
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
             <BurgerConstructor />
-          </main>
-        </IngredientsContext.Provider>
-      )}
-      {!success && hasError && (
-        <>
-          <h1>{message}</h1>
-        </>
+          </DndProvider>
+        </main>
       )}
     </div>
   );

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrag } from "react-dnd";
 
 // Styles
 import styles from "./burger-ingredients.module.css";
@@ -14,21 +16,44 @@ import {
 // Utils
 import { ingredientPropTypes } from "../../utils/prop-types";
 
+// ACTIONS-REDUCERS
+import {
+  CLEAR_MODAL,
+  POPULATE_MODAL,
+} from "../../services/actions/currentIngredient";
+
 function IngredientsCard({ ingredient }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const item = useSelector((store) =>
+    store.ingredients.ingredients.filter((el) => el._id === ingredient._id)
+  );
+
+  const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: ingredient.type,
+    item: { ingredient },
+  });
 
   const handleClose = () => {
     setIsModalOpen(false);
+    dispatch({ type: CLEAR_MODAL });
   };
 
   const handleOpen = () => {
     setIsModalOpen(true);
+    dispatch({ type: POPULATE_MODAL, ingredient });
   };
 
   return (
     <>
-      <div className={`mt-6 mb-10 ml-4 ${styles.card}`} onClick={handleOpen}>
-        <Counter count={1} size="default" extraClass="m-1" />
+      <div
+        className={`mt-6 mb-10 ml-4 ${styles.card}`}
+        onClick={handleOpen}
+        ref={dragRef}
+      >
+        {item[0].qty > 0 && (
+          <Counter count={item[0].qty} size="default" extraClass="m-1" />
+        )}
         <img
           className="ml-4 mr-4"
           src={ingredient.image}

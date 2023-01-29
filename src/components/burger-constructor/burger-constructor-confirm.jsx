@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -11,14 +13,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-// Utils
-import { orderDetailsPropTypes } from "../../utils/prop-types";
-import { getIngredientsId } from "../../utils/helpers";
-import { postOrder } from "../../utils/burger-api";
-
-function BurgerConstructorConfirm({ orderDetails }) {
-  const [orderId, setOrderId] = useState(null);
+function BurgerConstructorConfirm({ isEmptyBun }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { total } = useSelector((store) => store.constructorBurger);
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -28,27 +25,11 @@ function BurgerConstructorConfirm({ orderDetails }) {
     setIsModalOpen(true);
   };
 
-  // Делаем запрос к API и получаем id, которое записываем в state orderId
-  useEffect(() => {
-    const ingredientsId = getIngredientsId(
-      orderDetails.bun,
-      orderDetails.fillings
-    );
-    postOrder(ingredientsId)
-      .then((res) =>
-        setOrderId((currentState) => {
-          const newState = { ...currentState, id: res.order.number };
-          return newState;
-        })
-      )
-      .catch((e) => console.log(e));
-  }, [orderDetails.bun, orderDetails.fillings]);
-
   return (
     <>
       <div className={`mt-10 ${styles.confirm_container}`}>
         <div className={`mr-10 ${styles.total_box}`}>
-          <p className="text text_type_digits-medium">{orderDetails.total}</p>
+          <p className="text text_type_digits-medium">{total}</p>
           <CurrencyIcon type="primary" className={styles.icon} />
         </div>
         <Button
@@ -56,13 +37,14 @@ function BurgerConstructorConfirm({ orderDetails }) {
           type="primary"
           size="large"
           onClick={handleOpen}
+          disabled={isEmptyBun ? true : false}
         >
           Оформить заказ
         </Button>
       </div>
       {isModalOpen && (
         <Modal handleClose={handleClose}>
-          <OrderDetails orderId={orderId} />
+          <OrderDetails />
         </Modal>
       )}
     </>
@@ -70,7 +52,6 @@ function BurgerConstructorConfirm({ orderDetails }) {
 }
 
 BurgerConstructorConfirm.propTypes = {
-  orderDetails: orderDetailsPropTypes.isRequired,
+  isEmptyBun: PropTypes.bool.isRequired,
 };
-
 export default BurgerConstructorConfirm;
