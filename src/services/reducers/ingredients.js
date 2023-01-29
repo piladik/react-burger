@@ -6,7 +6,6 @@ import {
   INGREDIENTS_COUNTER_INCREASE,
   CHANGE_BUN,
 } from "../actions/ingredients";
-import { getIngredientsRequest } from "../../utils/burger-api";
 
 const initialState = {
   ingredients: [],
@@ -68,24 +67,3 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
   }
 };
-
-export function getIngredients() {
-  return function (dispatch) {
-    dispatch({
-      type: GET_INGREDIENTS_REQUEST,
-    });
-    getIngredientsRequest()
-      .then((data) => {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          ingredients: data.data,
-        });
-      })
-      .catch((e) => {
-        dispatch({
-          type: GET_INGREDIENTS_FAILED,
-          errorMessage: e.message,
-        });
-      });
-  };
-}

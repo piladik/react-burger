@@ -14,7 +14,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 // Utils
 
 // ACTIONS-REDUCERS
-import { getIngredients } from "../../services/reducers/ingredients";
+import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
   const { errorMessage, ingredientsFailed } = useSelector(

@@ -1,4 +1,5 @@
-export function countTotal(state, isEmpty) {
+export function countTotal(state) {
+  const isEmpty = isEmptyConstuctor(state);
   if (isEmpty) return 0;
   let bunTotal = 0;
   let fillingTotal = 0;

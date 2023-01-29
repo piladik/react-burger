@@ -4,7 +4,6 @@ import {
   ADD_BUN,
   ADD_FILLING,
   DELETE_FILLING,
-  COUNT_TOTAL,
   MOVE_FILLING,
 } from "../actions/constructor";
 
@@ -59,9 +58,6 @@ export const constructorReducer = (state = initialState, action) => {
           fillings: state.ingredients.fillings,
         },
       };
-    }
-    case COUNT_TOTAL: {
-      return { ...state, total: action.total };
     }
     default: {
       return state;
