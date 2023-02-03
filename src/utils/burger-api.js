@@ -10,23 +10,17 @@ const checkResponse = (res) => {
     throw new Error(message);
   }
 
-  return res;
+  return res.json();
 };
 
-export const getIngredients = async () => {
-  const res = await request(`${BURGER_BASE_API}/ingredients`);
-
-  const ingredients = await res.json();
-  return ingredients;
+export const getIngredientsRequest = async () => {
+  return await request(`${BURGER_BASE_API}/ingredients`);
 };
 
-export const postOrder = async (ingredientsId) => {
-  const res = await request(`${BURGER_BASE_API}/orders`, {
+export const postOrderRequest = async (ingredientsId) => {
+  return await request(`${BURGER_BASE_API}/orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ingredients: ingredientsId }),
   });
-
-  const order = await res.json();
-  return order;
 };
