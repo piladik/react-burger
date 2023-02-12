@@ -1,25 +1,29 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDispatch } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Styles
 import styles from "./app.module.css";
 
 // Components
 import Header from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-// Utils
+// Pages
+import {
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ConstructorPage,
+  ResetPasswordPage,
+  ProfilePage,
+} from "../../pages";
 
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
 
+// COOKIES
+
 function App() {
-  const { errorMessage, ingredientsFailed } = useSelector(
-    (store) => store.ingredients
-  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,16 +33,16 @@ function App() {
   return (
     <div className={`${styles.App} text text_type_main-default`}>
       <Header />
-      {ingredientsFailed ? (
-        <h1>{errorMessage}</h1>
-      ) : (
-        <main className={`${styles.main}`}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        </main>
-      )}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ConstructorPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
