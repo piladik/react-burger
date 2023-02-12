@@ -7,6 +7,7 @@ import styles from "./app.module.css";
 
 // Components
 import Header from "../app-header/app-header";
+import { ProtectedRouteElement } from "../protected-route";
 
 // Pages
 import {
@@ -20,7 +21,7 @@ import {
 
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
-import { setUser } from "../../services/actions/auth";
+import { setUser } from "../../services/actions/user";
 
 // COOKIES
 import { getCookie } from "../../utils/cookie";
@@ -35,10 +36,6 @@ function App() {
     dispatch(setUser(accessToken, refreshToken));
   }
 
-  // useEffect(() => {
-  //   dispatch(setUser());
-  // }, [dispatch]);
-
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
@@ -48,12 +45,24 @@ function App() {
       <Header />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ConstructorPage />} />
+          <Route
+            path="/"
+            element={<ProtectedRouteElement element={<ConstructorPage />} />}
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/forgot-password"
+            element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
+          />
+          <Route
+            path="/reset-password"
+            element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
+          />
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<ProfilePage />} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

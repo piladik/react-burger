@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 function Header() {
   const pathname = window.location.pathname;
-  const user = useSelector((store) => store.auth.user);
+  const user = useSelector((store) => store.user.user);
   const username = user.username ? user.username : "Личный кабинет";
 
   const splitLocation = pathname.split("/");

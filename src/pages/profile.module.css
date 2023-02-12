@@ -10,6 +10,12 @@ main {
   height: 48;
 }
 
+.profile_info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .profile_link {
   margin-left: auto;
   list-style: none;

@@ -14,9 +14,6 @@ import {
 } from "../actions/auth";
 
 const initialState = {
-  user: { username: "", email: "" },
-  isLoggedIn: false,
-
   registerRequest: false,
   registerFailed: false,
 
@@ -25,9 +22,6 @@ const initialState = {
 
   logoutRequest: false,
   logoutFailed: false,
-
-  setUserRequest: false,
-  setUserFailed: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -97,30 +91,6 @@ export const authReducer = (state = initialState, action) => {
         logoutRequest: false,
         logoutFailed: true,
         isLoggedIn: true,
-      };
-    }
-    case AUTH_SET_USER_REQUEST: {
-      return {
-        ...state,
-        setUserRequest: true,
-      };
-    }
-    case AUTH_SET_USER_SUCCESS: {
-      const { user } = action;
-      return {
-        ...state,
-        setUserRequest: false,
-        setUserFailed: false,
-        isLoggedIn: true,
-        user: { ...state.user, username: user.name, email: user.email },
-      };
-    }
-    case AUTH_SET_USER_FAILED: {
-      return {
-        ...state,
-        setUserRequest: false,
-        setUserFailed: true,
-        isLoggedIn: false,
       };
     }
     default: {

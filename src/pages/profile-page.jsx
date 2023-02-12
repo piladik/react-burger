@@ -1,12 +1,13 @@
 import {
-  Input,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./profile.module.css";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { updateUser } from "../services/actions/user";
 
 function ProfilePage() {
   return (
@@ -44,115 +45,70 @@ function ProfileLink({ name, active }) {
 }
 
 function ProfileInfo() {
-  const { username, email } = useSelector((store) => store.auth.user);
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.user);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "********",
+  });
+
+  useEffect(() => {
+    setForm({ ...form, name: user.username, email: user.email });
+  }, [user, setForm]);
+
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(form));
+  };
 
   return (
-    <section>
+    <form className={styles.profile_info} onSubmit={submitForm}>
       <div>
-        <NameChange username={username} />
+        <EmailInput
+          value={form.name}
+          name={"name"}
+          placeholder="Имя"
+          isIcon={true}
+          error={false}
+          onChange={onChange}
+        />
       </div>
       <div className="mt-6">
-        <EmailChange email={email} />
-      </div>
-      <div className="mt-6">
-        <PasswordChange />
-      </div>
-    </section>
-  );
-}
-
-function NameChange({ username }) {
-  const [value, setValue] = useState(username);
-  const [isChangeable, setIsChangeable] = useState(false);
-  const onIconClick = () => {
-    setIsChangeable(!isChangeable);
-  };
-
-  return (
-    <>
-      {isChangeable ? (
-        <Input
-          type={"text"}
-          placeholder={"Имя"}
-          onChange={(e) => setValue(e.target.value)}
-          icon={"EditIcon"}
-          value={value}
-          name={"name"}
-          onIconClick={onIconClick}
-          size={"default"}
-        />
-      ) : (
-        <Input
-          type={"text"}
-          placeholder={"Имя"}
-          onChange={(e) => setValue(e.target.value)}
-          icon={"EditIcon"}
-          value={value}
-          name={"name"}
-          onIconClick={onIconClick}
-          size={"default"}
-          disabled
-        />
-      )}
-    </>
-  );
-}
-
-function EmailChange({ email }) {
-  const [value, setValue] = useState(email);
-  const [isChangeable, setIsChangeable] = useState(false);
-  const onIconClick = () => {
-    setIsChangeable(!isChangeable);
-  };
-
-  return (
-    <>
-      {isChangeable ? (
         <EmailInput
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-          name={"email"}
-          isIcon={false}
-          onIconClick={onIconClick}
-        />
-      ) : (
-        <EmailInput
-          value={value}
+          value={form.email}
           name={"email"}
           placeholder="Логин"
           isIcon={true}
-          onIconClick={onIconClick}
+          onChange={onChange}
         />
-      )}
-    </>
-  );
-}
-
-function PasswordChange() {
-  const [value, setValue] = useState("asdsdasadsad");
-  const [isChangeable, setIsChangeable] = useState(false);
-  const onIconClick = () => {
-    setIsChangeable(!isChangeable);
-  };
-
-  return (
-    <>
-      {isChangeable ? (
+      </div>
+      <div className="mt-6 mb-6">
         <PasswordInput
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-          name={"password"}
-          extraClass="mb-2"
-          onIconClick={onIconClick}
-        />
-      ) : (
-        <PasswordInput
-          value={value}
+          value={form.password}
           name={"password"}
           icon="EditIcon"
-          onIconClick={onIconClick}
+          onChange={onChange}
         />
-      )}
-    </>
+      </div>
+      <div>
+        <Button htmlType="button" type="secondary" size="medium">
+          Отмена
+        </Button>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onSubmit={submitForm}
+        >
+          Сохранить
+        </Button>
+      </div>
+    </form>
   );
 }

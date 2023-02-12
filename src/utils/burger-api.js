@@ -84,11 +84,13 @@ export const updateTokenRequest = async (refreshToken) => {
   });
 };
 
-export const updateUserRequest = async () => {
+export const updateUserRequest = async (form) => {
+  const { name, email } = form;
   return await request(`${BURGER_BASE_API}/auth/user`, {
     method: "PATCH",
     headers: {
       Authorization: getCookie("accessToken"),
     },
+    body: JSON.stringify({ name: name, email: email }),
   });
 };
