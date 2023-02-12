@@ -1,0 +1,24 @@
+.profile_navigation p {
+  text-align: start;
+  width: 320px;
+  height: 48;
+}
+
+.profile_info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.profile_link {
+  margin-left: auto;
+  list-style: none;
+  text-align: start;
+  color: #8585ad;
+  width: 320px;
+  height: 64px;
+}
+
+.active {
+  color: white;
+}
