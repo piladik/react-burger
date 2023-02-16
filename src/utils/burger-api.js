@@ -6,8 +6,7 @@ async function request(url, options) {
 
 const checkResponse = (res) => {
   if (!res.ok) {
-    const message = `Something went wrong. Status code: ${res.status}`;
-    throw new Error(message);
+    res.json().then((err) => Promise.reject(err));
   }
 
   return res.json();
