@@ -6,8 +6,10 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header() {
+  const { user } = useSelector((store) => store.auth);
   const active = `${styles.nav_link} ${styles.nav_link_active}`;
   const inactive = `${styles.nav_link}`;
 
@@ -41,7 +43,7 @@ function Header() {
             to="/profile"
           >
             <ProfileIcon type="primary" />
-            <p>Личный кабинет</p>
+            <p>{user.username ? user.username : "Личный кабинет"}</p>
           </NavLink>
         </div>
       </nav>

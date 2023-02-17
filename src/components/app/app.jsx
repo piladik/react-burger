@@ -22,6 +22,7 @@ import {
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
+import { getUser } from "../../services/actions/auth";
 
 // COOKIES
 
@@ -37,6 +38,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(getUser());
   }, [dispatch]);
 
   return (

@@ -3,8 +3,11 @@ import {
   PasswordInput,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { login } from "../../services/actions/auth";
 
 export function LoginForm({ form, setForm }) {
+  const dispatch = useDispatch();
   const onChange = (e) => {
     setForm((currentState) => {
       const newState = {
@@ -13,7 +16,10 @@ export function LoginForm({ form, setForm }) {
       };
       return newState;
     });
+  };
+  const onSubmit = () => {
     console.log(form);
+    dispatch(login(form));
   };
   return (
     <form>
@@ -34,7 +40,12 @@ export function LoginForm({ form, setForm }) {
         />
       </div>
       <div className="mt-6">
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={onSubmit}
+        >
           Войти
         </Button>
       </div>

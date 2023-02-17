@@ -4,8 +4,11 @@ import {
   EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { register } from "../../services/actions/auth";
 
 export function RegisterForm({ form, setForm }) {
+  const dispatch = useDispatch();
   const onChange = (e) => {
     setForm((currentState) => {
       const newState = {
@@ -15,6 +18,10 @@ export function RegisterForm({ form, setForm }) {
       return newState;
     });
     console.log(form);
+  };
+
+  const onSubmit = () => {
+    dispatch(register(form));
   };
   return (
     <form>
@@ -47,7 +54,12 @@ export function RegisterForm({ form, setForm }) {
         />
       </div>
       <div className="mt-6">
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={onSubmit}
+        >
           Зарегистрироваться
         </Button>
       </div>
