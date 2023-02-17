@@ -9,9 +9,9 @@ async function request(url, options) {
 const checkResponse = (res) => {
   if (!res.ok) {
     res.json().then((err) => Promise.reject(err));
+  } else {
+    return res.json();
   }
-
-  return res.json();
 };
 
 export const requestWithRefresh = async (url, options) => {
@@ -103,5 +103,26 @@ export const updateUserRequest = async (form) => {
       Authorization: getCookie("accessToken"),
     },
     body: JSON.stringify({ name: name, email: email }),
+  });
+};
+
+export const resetPasswordRequest = async (email) => {
+  return await request(`${BURGER_BASE_API}/password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+};
+
+export const resetPasswordConfirm = async (form) => {
+  const { password, token } = form;
+  return await request(`${BURGER_BASE_API}/password-reset/reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password, token }),
   });
 };

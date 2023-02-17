@@ -3,8 +3,11 @@ import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useNavigate } from "react-router-dom";
+import { resetPasswordConfirm } from "../../utils/burger-api";
 
 export function ResetPasswordForm({ form, setForm }) {
+  const navigate = useNavigate();
   const onChange = (e) => {
     setForm((currentState) => {
       const newState = {
@@ -13,6 +16,15 @@ export function ResetPasswordForm({ form, setForm }) {
       };
       return newState;
     });
+  };
+
+  const handleSave = async () => {
+    resetPasswordConfirm(form)
+      .then((res) => {
+        if (res.success) return navigate("/login");
+        if (!res.success) return Promise.reject(res);
+      })
+      .catch((err) => Promise.reject(err));
   };
   return (
     <form method="POST" action="/login">
@@ -31,22 +43,27 @@ export function ResetPasswordForm({ form, setForm }) {
           placeholder={"Введите код из письма"}
           onChange={onChange}
           value={form.code}
-          name={"code"}
+          name={"token"}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
         />
       </div>
       <div className="mt-6">
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handleSave}
+        >
           Сохранить
         </Button>
       </div>
       <p className="mt-20 text text_type_main-default text_color_inactive">
         Вспомнили пароль?{" "}
-        <a className={"auth_link"} href="/login">
+        <Link className={"auth_link"} to="/login">
           Войти
-        </a>
+        </Link>
       </p>
     </form>
   );
