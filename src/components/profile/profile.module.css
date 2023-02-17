@@ -10,15 +10,25 @@
   align-items: flex-end;
 }
 
-.profile_link {
+.list_item {
   margin-left: auto;
   list-style: none;
   text-align: start;
-  color: #8585ad;
   width: 320px;
   height: 64px;
 }
 
-.active {
+.profile_link,
+.profile_link:link,
+.profile_link:visited,
+.profile_link:active {
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.active,
+.active:link,
+.active:visited,
+.active:active {
   color: white;
 }

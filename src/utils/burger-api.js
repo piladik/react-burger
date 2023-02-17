@@ -66,13 +66,13 @@ export const loginRequest = async (form) => {
   });
 };
 
-export const logoutRequest = async (token) => {
+export const logoutRequest = async () => {
   return await request(`${BURGER_BASE_API}/auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
 };
 

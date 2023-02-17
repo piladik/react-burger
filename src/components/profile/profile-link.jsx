@@ -1,9 +1,51 @@
 import styles from "./profile.module.css";
+import { logout } from "../../services/actions/auth";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 
-export function ProfileLink({ name, active }) {
-  const className =
-    active === name
-      ? `${styles.profile_link} ${styles.active}`
-      : `${styles.profile_link}`;
-  return <li className={className}>{name}</li>;
+export function ProfileLink({ name }) {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const active = `${styles.profile_link} ${styles.active}`;
+  const inactive = `${styles.profile_link}`;
+  switch (name) {
+    case "Профиль":
+      return (
+        <li className={styles.list_item}>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to={"/profile"}
+          >
+            {name}
+          </NavLink>
+        </li>
+      );
+    case "История заказов":
+      return (
+        <li className={styles.list_item}>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to={"/proofile/orders"}
+          >
+            {name}
+          </NavLink>
+        </li>
+      );
+    case "Выход":
+      return (
+        <li className={styles.list_item} onClick={handleLogout}>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to={"/"}
+          >
+            {name}
+          </NavLink>
+        </li>
+      );
+    default:
+      return;
+  }
 }
