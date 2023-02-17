@@ -11,6 +11,9 @@ import {
   AUTH_GET_USER_REQUEST,
   AUTH_GET_USER_SUCCESS,
   AUTH_GET_USER_FAILED,
+  AUTH_UPDATE_USER_REQUEST,
+  AUTH_UPDATE_USER_SUCCESS,
+  AUTH_UPDATE_USER_FAILED,
 } from "../actions/auth";
 
 const initialState = {
@@ -26,6 +29,9 @@ const initialState = {
 
   getUserRequest: false,
   getUserFailed: false,
+
+  updateUserRequest: false,
+  updateUserFailed: false,
 
   isLoggedIn: false,
 };
@@ -125,6 +131,32 @@ export const authReducer = (state = initialState, action) => {
         getUserRequest: false,
         getUserFailed: false,
         isLoggedIn: false,
+      };
+    }
+    case AUTH_UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        updateUserRequest: true,
+      };
+    }
+    case AUTH_UPDATE_USER_SUCCESS: {
+      const { user } = action;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          username: user.name,
+          email: user.email,
+          updateUserRequest: false,
+          updateUserFailed: false,
+        },
+      };
+    }
+    case AUTH_UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserFailed: true,
       };
     }
     default: {

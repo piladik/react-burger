@@ -3,7 +3,7 @@ import {
   loginRequest,
   logoutRequest,
   getUserRequest,
-  //   updateUserRequest,
+  updateUserRequest,
 } from "../../utils/burger-api";
 import { setCookie, deleteCookie } from "../../utils/cookie";
 
@@ -18,8 +18,6 @@ export const AUTH_LOGIN_FAILED = "AUTH/LOGIN_FAILED";
 export const AUTH_LOGOUT_REQUEST = "AUTH/LOGOUT_REQUEST";
 export const AUTH_LOGOUT_SUCCESS = "AUTH/LOGOUT_SUCCESS";
 export const AUTH_LOGOUT_FAILED = "AUTH/LOGOUT_FAILED";
-
-export const AUTH_CHECK_USER_AUTH = "AUTH/CHECK_USER_AUTH";
 
 export const AUTH_GET_USER_REQUEST = "AUTH/GET_USER_REQUEST";
 export const AUTH_GET_USER_SUCCESS = "AUTH/GET_USER_SUCCESS";
@@ -122,19 +120,17 @@ export function getUser() {
   };
 }
 
-// export function updateUser(form) {
-//   return function (dispatch) {
-//     console.log(form);
-//     dispatch({
-//       type: AUTH_UPDATE_USER_REQUEST,
-//     });
-//     updateUserRequest(form)
-//       .then((res) => {
-//         console.log(res);
-//         dispatch({ type: AUTH_UPDATE_USER_SUCCESS, ...res });
-//       })
-//       .catch(() => {
-//         dispatch({ type: AUTH_UPDATE_USER_FAILED });
-//       });
-//   };
-// }
+export function updateUser(form) {
+  return function (dispatch) {
+    dispatch({
+      type: AUTH_UPDATE_USER_REQUEST,
+    });
+    updateUserRequest(form)
+      .then((res) => {
+        dispatch({ type: AUTH_UPDATE_USER_SUCCESS, ...res });
+      })
+      .catch(() => {
+        dispatch({ type: AUTH_UPDATE_USER_FAILED });
+      });
+  };
+}

@@ -95,15 +95,26 @@ export const getUserRequest = async () => {
   });
 };
 
-export const updateUserRequest = async (form) => {
-  const { name, email } = form;
-  return await request(`${BURGER_BASE_API}/auth/user`, {
-    method: "PATCH",
-    headers: {
-      Authorization: getCookie("accessToken"),
-    },
-    body: JSON.stringify({ name: name, email: email }),
-  });
+export const updateUserRequest = async ({ name, email, password = null }) => {
+  if (password === null) {
+    return await request(`${BURGER_BASE_API}/auth/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("accessToken"),
+      },
+      body: JSON.stringify({ name: name, email: email }),
+    });
+  } else {
+    return await request(`${BURGER_BASE_API}/auth/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("accessToken"),
+      },
+      body: JSON.stringify({ name: name, email: email, password: password }),
+    });
+  }
 };
 
 export const resetPasswordRequest = async (email) => {

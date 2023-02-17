@@ -5,15 +5,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.css";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../services/actions/auth";
 
 export function ProfileInfo() {
+  const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const [showButtons, setShowButtons] = useState(false);
+  const [passwordChanged, setPasswordChanged] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "********",
+    name: user.username,
+    email: user.email,
+    password: "12345678",
   });
 
   const onChange = (e) => {
+    if (e.target.name === "password") {
+      setPasswordChanged(true);
+    }
     setForm((currentState) => {
       const newState = {
         ...currentState,
@@ -21,7 +30,27 @@ export function ProfileInfo() {
       };
       return newState;
     });
-    console.log(form);
+    setShowButtons(true);
+  };
+
+  const handleCancel = () => {
+    setForm({
+      name: user.username,
+      email: user.email,
+      password: "********",
+    });
+    setShowButtons(false);
+    setPasswordChanged(false);
+  };
+
+  const handleSubmit = () => {
+    if (!passwordChanged) {
+      dispatch(updateUser({ name: form.name, email: form.email }));
+    } else {
+      dispatch(updateUser(form));
+    }
+    setShowButtons(false);
+    setPasswordChanged(false);
   };
 
   return (
@@ -53,14 +82,26 @@ export function ProfileInfo() {
           onChange={onChange}
         />
       </div>
-      <div>
-        <Button htmlType="button" type="secondary" size="medium">
-          Отмена
-        </Button>
-        <Button htmlType="button" type="primary" size="medium">
-          Сохранить
-        </Button>
-      </div>
+      {showButtons && (
+        <div>
+          <Button
+            htmlType="button"
+            type="secondary"
+            size="medium"
+            onClick={handleCancel}
+          >
+            Отмена
+          </Button>
+          <Button
+            htmlType="button"
+            type="primary"
+            size="medium"
+            onClick={handleSubmit}
+          >
+            Сохранить
+          </Button>
+        </div>
+      )}
     </form>
   );
 }
