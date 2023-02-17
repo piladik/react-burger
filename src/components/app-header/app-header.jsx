@@ -5,49 +5,44 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink } from "react-router-dom";
 
 function Header() {
-  const pathname = window.location.pathname;
+  const active = `${styles.nav_link} ${styles.nav_link_active}`;
+  const inactive = `${styles.nav_link}`;
 
-  const splitLocation = pathname.split("/");
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.nav_box}>
-          <a
-            className={`${styles.nav_link} ${
-              splitLocation[1] === "" ? styles.nav_link_active : ""
-            }`}
-            href="/"
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/"
           >
             <BurgerIcon />
             <p>Конструктор</p>
-          </a>
-          <a
-            className={`${styles.nav_link} ${
-              splitLocation[1] === "history" ? styles.nav_link_active : ""
-            }`}
-            href="/history"
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/history"
           >
             <ListIcon type="primary" />
             <p>Лента заказов</p>
-          </a>
+          </NavLink>
         </div>
         <div className={`${styles.nav_box} ${styles.nav_box_logo}`}>
-          <a href="/">
+          <NavLink to="/">
             <Logo />
-          </a>
+          </NavLink>
         </div>
         <div className={styles.nav_box}>
-          <a
-            className={`${styles.nav_link} ${
-              splitLocation[1] === "profile" ? styles.nav_link_active : ""
-            }`}
-            href="/profile"
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/profile"
           >
             <ProfileIcon type="primary" />
             <p>Личный кабинет</p>
-          </a>
+          </NavLink>
         </div>
       </nav>
     </header>
