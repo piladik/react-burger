@@ -3,7 +3,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./profile.module.css";
+import styles from "./profile-info.module.css";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../services/actions/auth";

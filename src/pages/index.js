@@ -3,7 +3,7 @@ import { RegisterPage } from "./register-page";
 import { ForgotPasswordPage } from "./forgot-password-page";
 import { ConstructorPage } from "./constructor-page";
 import { ResetPasswordPage } from "./reset-password-page";
-import { ProfilePage } from "./profile-page";
+import { ProfileSharedLayout } from "./profile-shared-layout";
 
 export {
   LoginPage,
@@ -11,5 +11,5 @@ export {
   ForgotPasswordPage,
   ConstructorPage,
   ResetPasswordPage,
-  ProfilePage,
+  ProfileSharedLayout,
 };

@@ -16,13 +16,15 @@ import {
   ForgotPasswordPage,
   ConstructorPage,
   ResetPasswordPage,
-  ProfilePage,
+  ProfileSharedLayout,
 } from "../../pages";
 
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import { getUser } from "../../services/actions/auth";
+import { ProfileInfo } from "../profile-info/profile-info";
+import { ProfileOrders } from "../profile-orders/profile-orders";
 
 // COOKIES
 
@@ -36,6 +38,7 @@ function App() {
     navigate(-1);
   };
 
+  // Сюда нужно добавить preloader
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
@@ -50,7 +53,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfileSharedLayout />}>
+          <Route index element={<ProfileInfo />} />
+          <Route path="orders" element={<ProfileOrders />} />
+        </Route>
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
       </Routes>
       {background && (

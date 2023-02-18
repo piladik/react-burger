@@ -1,15 +1,3 @@
-.profile_navigation p {
-  text-align: start;
-  width: 320px;
-  height: 48;
-}
-
-.profile_info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
 .list_item {
   margin-left: auto;
   list-style: none;

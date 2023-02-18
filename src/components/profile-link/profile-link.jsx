@@ -1,4 +1,4 @@
-import styles from "./profile.module.css";
+import styles from "./profile-link.module.css";
 import { logout } from "../../services/actions/auth";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -18,6 +18,7 @@ export function ProfileLink({ name }) {
           <NavLink
             className={({ isActive }) => (isActive ? active : inactive)}
             to={"/profile"}
+            end
           >
             {name}
           </NavLink>
@@ -28,7 +29,7 @@ export function ProfileLink({ name }) {
         <li className={styles.list_item}>
           <NavLink
             className={({ isActive }) => (isActive ? active : inactive)}
-            to={"/proofile/orders"}
+            to={"orders"}
           >
             {name}
           </NavLink>

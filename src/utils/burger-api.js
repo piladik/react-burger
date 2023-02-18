@@ -8,7 +8,7 @@ async function request(url, options) {
 
 const checkResponse = (res) => {
   if (!res.ok) {
-    res.json().then((err) => Promise.reject(err));
+    res.json().then((err) => Promise.reject(new Error(err.message)));
   } else {
     return res.json();
   }
@@ -16,7 +16,8 @@ const checkResponse = (res) => {
 
 export const requestWithRefresh = async (url, options) => {
   try {
-    return await request(url, options);
+    const res = await request(url, options);
+    return res.catch();
   } catch (err) {
     if (err.message === "jwt expired" || "You should be authorised") {
       const refreshData = await updateTokenRequest();
@@ -90,6 +91,7 @@ export const getUserRequest = async () => {
   return await requestWithRefresh(`${BURGER_BASE_API}/auth/user`, {
     method: "GET",
     headers: {
+      "Content-Type": "application/json",
       Authorization: getCookie("accessToken"),
     },
   });
