@@ -22,12 +22,12 @@ export function LoginForm({ form, setForm }) {
       return newState;
     });
   };
-  const onSubmit = () => {
-    console.log(form);
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(login(form));
   };
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h1 className="text text_type_main-medium">Вход</h1>
       <div className="mt-6">
         <EmailInput
@@ -46,7 +46,7 @@ export function LoginForm({ form, setForm }) {
       </div>
       <div className="mt-6">
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
           onClick={onSubmit}

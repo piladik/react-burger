@@ -23,7 +23,8 @@ export function ResetPasswordForm({ form, setForm }) {
     });
   };
 
-  const handleSave = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     resetPasswordConfirm(form)
       .then((res) => {
         if (res.success) return navigate("/login");
@@ -32,7 +33,7 @@ export function ResetPasswordForm({ form, setForm }) {
       .catch((err) => Promise.reject(err));
   };
   return (
-    <form method="POST" action="/login">
+    <form onSubmit={onSubmit}>
       <h1 className="text text_type_main-medium">Восстановление пароля</h1>
       <div className="mt-6">
         <PasswordInput
@@ -55,12 +56,7 @@ export function ResetPasswordForm({ form, setForm }) {
         />
       </div>
       <div className="mt-6">
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={handleSave}
-        >
+        <Button htmlType="submit" type="primary" size="large">
           Сохранить
         </Button>
       </div>

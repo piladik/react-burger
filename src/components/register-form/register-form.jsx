@@ -25,11 +25,12 @@ export function RegisterForm({ form, setForm }) {
     console.log(form);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(register(form));
   };
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h1 className="text text_type_main-medium">Регистрация</h1>
       <div className="mt-6">
         <Input
@@ -60,7 +61,7 @@ export function RegisterForm({ form, setForm }) {
       </div>
       <div className="mt-6">
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
           onClick={onSubmit}

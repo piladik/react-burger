@@ -16,7 +16,8 @@ export function ForgotPasswordForm({ email, setEmail }) {
     setEmail(e.target.value);
   };
 
-  const handleReset = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     await resetPasswordRequest(email)
       .then((res) => {
         if (res.success)
@@ -26,7 +27,7 @@ export function ForgotPasswordForm({ email, setEmail }) {
       .catch((err) => Promise.reject(err));
   };
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h1 className="text text_type_main-medium">Восстановление пароля</h1>
       <div className="mt-6">
         <EmailInput
@@ -38,12 +39,7 @@ export function ForgotPasswordForm({ email, setEmail }) {
         />
       </div>
       <div className="mt-6">
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={handleReset}
-        >
+        <Button htmlType="submit" type="primary" size="large">
           Восстановить
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../services/actions/auth";
 
@@ -7,6 +7,7 @@ import styles from "./profile-info.module.css";
 
 // Components
 import {
+  Input,
   EmailInput,
   PasswordInput,
   Button,
@@ -47,7 +48,8 @@ export function ProfileInfo() {
     setPasswordChanged(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!passwordChanged) {
       dispatch(updateUser({ name: form.name, email: form.email }));
     } else {
@@ -57,16 +59,28 @@ export function ProfileInfo() {
     setPasswordChanged(false);
   };
 
+  const [inputIsActive, setInputIsActive] = useState(false);
+
+  const inputRef = useRef(null);
+  const onIconClick = () => {
+    setTimeout(() => inputRef.current.focus(), 0);
+    setInputIsActive(true);
+  };
+
   return (
-    <form className={styles.profile_info}>
+    <form className={styles.profile_info} onSubmit={handleSubmit}>
       <div>
-        <EmailInput
+        <Input
           value={form.name}
           name={"name"}
           placeholder="Имя"
-          isIcon={true}
+          icon="EditIcon"
           error={false}
           onChange={onChange}
+          onIconClick={onIconClick}
+          onBlur={() => setInputIsActive(false)}
+          disabled={inputIsActive ? false : true}
+          ref={inputRef}
         />
       </div>
       <div className="mt-6">
@@ -96,12 +110,7 @@ export function ProfileInfo() {
           >
             Отмена
           </Button>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="medium"
-            onClick={handleSubmit}
-          >
+          <Button htmlType="submit" type="primary" size="medium">
             Сохранить
           </Button>
         </div>
