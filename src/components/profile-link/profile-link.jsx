@@ -1,7 +1,12 @@
-import styles from "./profile-link.module.css";
-import { logout } from "../../services/actions/auth";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+
+// Styles
+import styles from "./profile-link.module.css";
+
+// ACTIONS_REDUCERS
+import { logout } from "../../services/actions/auth";
 
 export function ProfileLink({ name }) {
   const dispatch = useDispatch();
@@ -50,3 +55,7 @@ export function ProfileLink({ name }) {
       return;
   }
 }
+
+ProfileLink.propTypes = {
+  name: PropTypes.string.isRequired,
+};

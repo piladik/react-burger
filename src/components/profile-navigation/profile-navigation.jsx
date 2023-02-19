@@ -1,4 +1,7 @@
+//Styles
 import styles from "./profile-navigation.module.css";
+
+// Components
 import { ProfileLink } from "../profile-link/profile-link";
 
 export function ProfileNavigation() {

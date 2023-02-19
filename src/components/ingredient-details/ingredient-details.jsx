@@ -1,9 +1,8 @@
-// Styles
-import styles from "./ingredient-details.module.css";
-// Utils
-// import { ingredientPropTypes } from "../../utils/prop-types";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+// Styles
+import styles from "./ingredient-details.module.css";
 
 function IngredientDetails() {
   const { id } = useParams();
@@ -59,9 +58,5 @@ function IngredientDetails() {
     );
   } else return null;
 }
-
-// IngredientDetails.propTypes = {
-//   content: ingredientPropTypes.isRequired,
-// };
 
 export default IngredientDetails;

@@ -1,12 +1,16 @@
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../services/actions/auth";
+
+// Styles
+import styles from "./profile-info.module.css";
+
+// Components
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./profile-info.module.css";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../services/actions/auth";
 
 export function ProfileInfo() {
   const { user } = useSelector((store) => store.auth);

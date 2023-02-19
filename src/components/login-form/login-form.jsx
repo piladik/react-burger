@@ -1,9 +1,14 @@
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+
+// Components
 import {
   Button,
   PasswordInput,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+
+// Utils
 import { login } from "../../services/actions/auth";
 
 export function LoginForm({ form, setForm }) {
@@ -64,3 +69,11 @@ export function LoginForm({ form, setForm }) {
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  form: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }),
+  setForm: PropTypes.func.isRequired,
+};

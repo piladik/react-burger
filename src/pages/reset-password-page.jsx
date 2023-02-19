@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ResetPasswordForm } from "../components/reset-password-form/reset-password-form";
 import { Navigate, useLocation } from "react-router-dom";
+
+// Components
+import { ResetPasswordForm } from "../components/reset-password-form/reset-password-form";
 
 export function ResetPasswordPage() {
   const [form, setForm] = useState({ password: "", token: "" });

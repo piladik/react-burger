@@ -1,8 +1,13 @@
+import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
+
+// Components
 import {
   Button,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+
+// Utils
 import { resetPasswordRequest } from "../../utils/burger-api";
 
 export function ForgotPasswordForm({ email, setEmail }) {
@@ -51,3 +56,8 @@ export function ForgotPasswordForm({ email, setEmail }) {
     </form>
   );
 }
+
+ForgotPasswordForm.propTypes = {
+  email: PropTypes.string.isRequired,
+  setEmail: PropTypes.func.isRequired,
+};

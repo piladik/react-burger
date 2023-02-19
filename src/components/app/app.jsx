@@ -10,6 +10,7 @@ import Header from "../app-header/app-header";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import ProtectedRouteElement from "../protected-route-element";
 import Preloader from "../preloader/preloader";
+import Modal from "../modal/modal";
 
 // Pages
 import {
@@ -23,30 +24,27 @@ import {
 
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
-import Modal from "../modal/modal";
 import { getUser } from "../../services/actions/auth";
 import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
-
-// COOKIES
 
 function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const location = useLocation();
-  const background = location.state && location.state.background;
   const navigate = useNavigate();
 
-  const handleModalClose = () => {
-    navigate(-1);
-  };
+  const background = location.state && location.state.background;
 
-  // Сюда нужно добавить preloader
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
     setLoading(false);
   }, [dispatch]);
+
+  const handleModalClose = () => {
+    navigate(-1);
+  };
 
   return (
     <>

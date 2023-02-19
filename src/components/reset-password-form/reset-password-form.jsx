@@ -1,9 +1,14 @@
+import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
+
+// Components
 import {
   Button,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+
+// Utils
 import { resetPasswordConfirm } from "../../utils/burger-api";
 
 export function ResetPasswordForm({ form, setForm }) {
@@ -68,3 +73,10 @@ export function ResetPasswordForm({ form, setForm }) {
     </form>
   );
 }
+
+ResetPasswordForm.propTypes = {
+  form: PropTypes.shape({
+    password: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }),
+};

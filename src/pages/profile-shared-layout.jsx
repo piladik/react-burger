@@ -1,6 +1,10 @@
-import { ProfileNavigation } from "../components/profile-navigation/profile-navigation";
 import { Outlet } from "react-router-dom";
+
+// Styles
 import "./profile-shared-layout.module.css";
+
+// Components
+import { ProfileNavigation } from "../components/profile-navigation/profile-navigation";
 
 export function ProfileSharedLayout() {
   return (

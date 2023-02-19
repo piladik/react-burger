@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function ProtectedRouteElement({ onlyUnAuth = false, children }) {
   const { isLoggedIn, user } = useSelector((store) => store.auth);
@@ -16,5 +17,10 @@ function ProtectedRouteElement({ onlyUnAuth = false, children }) {
 
   return children;
 }
+
+ProtectedRouteElement.propTypes = {
+  onlyUnAuth: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 export default ProtectedRouteElement;

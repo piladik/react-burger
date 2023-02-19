@@ -1,19 +1,12 @@
 import { useMemo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 // Styles
 import styles from "./burger-ingredients.module.css";
 
 // Components
 import IngredientsTab from "./ingredients-tab";
 import IngredientsCard from "./ingredients-card";
-
-// Utils
-
-// ACTIONS-REDUCERS
-// import {
-//   POPULATE_MODAL,
-//   CLEAR_MODAL,
-// } from "../../services/actions/currentIngredient";
 
 function BurgerIngredients() {
   const [activeTab, setActiveTab] = useState({
@@ -56,15 +49,6 @@ function BurgerIngredients() {
     [ingredients]
   );
 
-  // const handleModalOpen = (ingredient) => {
-  //   setIngredientModal(ingredient);
-  //   dispatch({ type: POPULATE_MODAL, ingredient });
-  // };
-
-  // const handleModalClose = () => {
-  //   setIngredientModal(null);
-  //   dispatch({ type: CLEAR_MODAL });
-  // };
   return (
     <section className={`mt-10 ${styles.ingredients_section}`}>
       <h1 className={`mb-5 text text_type_main-large ${styles.heading}`}>

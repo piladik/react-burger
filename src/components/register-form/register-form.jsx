@@ -1,10 +1,15 @@
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+
+// Components
 import {
   Button,
   PasswordInput,
   EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+
+// ACTIONS-REDUCERS
 import { register } from "../../services/actions/auth";
 
 export function RegisterForm({ form, setForm }) {
@@ -72,3 +77,12 @@ export function RegisterForm({ form, setForm }) {
     </form>
   );
 }
+
+RegisterForm.propTypes = {
+  form: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+  setForm: PropTypes.func.isRequired,
+};
