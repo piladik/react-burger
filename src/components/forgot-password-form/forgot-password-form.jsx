@@ -14,7 +14,8 @@ export function ForgotPasswordForm({ email, setEmail }) {
   const handleReset = async () => {
     await resetPasswordRequest(email)
       .then((res) => {
-        if (res.success) return navigate("/reset-password");
+        if (res.success)
+          return navigate("/reset-password", { state: { hasAccess: true } });
         if (!res.success) return Promise.reject(res);
       })
       .catch((err) => Promise.reject(err));
