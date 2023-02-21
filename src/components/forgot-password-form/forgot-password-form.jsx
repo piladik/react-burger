@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // Components
 import {
@@ -10,7 +10,8 @@ import {
 // Utils
 import { resetPasswordRequest } from "../../utils/burger-api";
 
-export function ForgotPasswordForm({ email, setEmail }) {
+export function ForgotPasswordForm() {
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const onChange = (e) => {
     setEmail(e.target.value);
@@ -52,8 +53,3 @@ export function ForgotPasswordForm({ email, setEmail }) {
     </form>
   );
 }
-
-ForgotPasswordForm.propTypes = {
-  email: PropTypes.string.isRequired,
-  setEmail: PropTypes.func.isRequired,
-};

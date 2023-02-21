@@ -10,8 +10,6 @@ function Preloader() {
         color="#4ffae9"
         ariaLabel="tail-spin-loading"
         radius="1"
-        wrapperStyle={{}}
-        wrapperClass=""
         visible={true}
       />
     </div>

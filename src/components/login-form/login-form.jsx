@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 
 // Components
@@ -10,17 +9,13 @@ import {
 
 // Utils
 import { login } from "../../services/actions/auth";
+import useForm from "../../hooks/useForm";
 
-export function LoginForm({ form, setForm }) {
+export function LoginForm() {
+  const [form, handleChange] = useForm({ email: "", password: "" });
   const dispatch = useDispatch();
   const onChange = (e) => {
-    setForm((currentState) => {
-      const newState = {
-        ...currentState,
-        [e.target.name]: e.target.value,
-      };
-      return newState;
-    });
+    handleChange(e);
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -45,12 +40,7 @@ export function LoginForm({ form, setForm }) {
         />
       </div>
       <div className="mt-6">
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-          onClick={onSubmit}
-        >
+        <Button htmlType="submit" type="primary" size="large">
           Войти
         </Button>
       </div>
@@ -69,11 +59,3 @@ export function LoginForm({ form, setForm }) {
     </form>
   );
 }
-
-LoginForm.propTypes = {
-  form: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }),
-  setForm: PropTypes.func.isRequired,
-};

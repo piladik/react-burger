@@ -14,10 +14,11 @@ import {
   AUTH_UPDATE_USER_REQUEST,
   AUTH_UPDATE_USER_SUCCESS,
   AUTH_UPDATE_USER_FAILED,
+  AUTH_CHECKED,
 } from "../actions/auth";
 
 const initialState = {
-  user: {},
+  user: null,
   registerRequest: false,
   registerFailed: false,
 
@@ -34,6 +35,7 @@ const initialState = {
   updateUserFailed: false,
 
   isLoggedIn: false,
+  authChecked: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -95,7 +97,7 @@ export const authReducer = (state = initialState, action) => {
     case AUTH_LOGOUT_SUCCESS: {
       return {
         ...state,
-        user: {},
+        user: null,
         logoutRequest: false,
         logoutFailed: false,
         isLoggedIn: false,
@@ -157,6 +159,12 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         updateUserRequest: false,
         updateUserFailed: true,
+      };
+    }
+    case AUTH_CHECKED: {
+      return {
+        ...state,
+        authChecked: action.payload,
       };
     }
     default: {

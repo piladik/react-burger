@@ -48,7 +48,7 @@ function Header() {
             to="/profile"
           >
             <ProfileIcon type="primary" />
-            <p>{user.username ? user.username : "Личный кабинет"}</p>
+            <p>{user ? user.username : "Личный кабинет"}</p>
           </NavLink>
         </div>
       </nav>

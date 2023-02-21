@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 // Styles
@@ -33,14 +33,17 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { authChecked } = useSelector((store) => store.auth);
 
   const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
-    setLoading(false);
-  }, [dispatch]);
+    if (authChecked) {
+      setLoading(false);
+    }
+  }, [authChecked, dispatch]);
 
   const handleModalClose = () => {
     navigate(-1);

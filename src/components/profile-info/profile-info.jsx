@@ -13,12 +13,15 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+// Utils
+import useForm from "../../hooks/useForm";
+
 export function ProfileInfo() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const [showButtons, setShowButtons] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
-  const [form, setForm] = useState({
+  const [form, handleChange, setForm] = useForm({
     name: user.username,
     email: user.email,
     password: "12345678",
@@ -28,13 +31,7 @@ export function ProfileInfo() {
     if (e.target.name === "password") {
       setPasswordChanged(true);
     }
-    setForm((currentState) => {
-      const newState = {
-        ...currentState,
-        [e.target.name]: e.target.value,
-      };
-      return newState;
-    });
+    handleChange(e);
     setShowButtons(true);
   };
 

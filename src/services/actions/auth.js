@@ -27,6 +27,8 @@ export const AUTH_UPDATE_USER_REQUEST = "AUTH/UPDATE_USER_REQUEST";
 export const AUTH_UPDATE_USER_SUCCESS = "AUTH/UPDATE_USER_SUCCESS";
 export const AUTH_UPDATE_USER_FAILED = "AUTH/UPDATE_USER_FAILED";
 
+export const AUTH_CHECKED = "AUTH/AUTH_CHECKED";
+
 export function register(form) {
   return function (dispatch) {
     dispatch({
@@ -87,6 +89,7 @@ export function logout(token) {
         dispatch({
           type: AUTH_LOGOUT_SUCCESS,
         });
+        dispatch({ type: AUTH_CHECKED, payload: false });
       })
       .then(() => {
         deleteCookie("accessToken");
@@ -116,6 +119,9 @@ export function getUser() {
         dispatch({
           type: AUTH_GET_USER_FAILED,
         });
+      })
+      .then(() => {
+        dispatch({ type: AUTH_CHECKED, payload: true });
       });
   };
 }

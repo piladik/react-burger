@@ -11,7 +11,7 @@ function ProtectedRouteElement({ onlyUnAuth = false, children }) {
     return <Navigate to={"/login"} replace state={{ from: location }} />;
   }
 
-  if (onlyUnAuth && user.hasOwnProperty("email")) {
+  if (onlyUnAuth && user) {
     return <Navigate to={from} />;
   }
 

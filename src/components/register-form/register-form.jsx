@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 
 // Components
@@ -12,17 +11,14 @@ import {
 // ACTIONS-REDUCERS
 import { register } from "../../services/actions/auth";
 
-export function RegisterForm({ form, setForm }) {
+// Utils
+import useForm from "../../hooks/useForm";
+
+export function RegisterForm() {
+  const [form, handleChange] = useForm({ email: "", password: "", name: "" });
   const dispatch = useDispatch();
   const onChange = (e) => {
-    setForm((currentState) => {
-      const newState = {
-        ...currentState,
-        [e.target.name]: e.target.value,
-      };
-      return newState;
-    });
-    console.log(form);
+    handleChange(e);
   };
 
   const onSubmit = (e) => {
@@ -78,12 +74,3 @@ export function RegisterForm({ form, setForm }) {
     </form>
   );
 }
-
-RegisterForm.propTypes = {
-  form: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }),
-  setForm: PropTypes.func.isRequired,
-};

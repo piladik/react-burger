@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 
 // Components
@@ -10,17 +9,13 @@ import {
 
 // Utils
 import { resetPasswordConfirm } from "../../utils/burger-api";
+import useForm from "../../hooks/useForm";
 
-export function ResetPasswordForm({ form, setForm }) {
+export function ResetPasswordForm() {
+  const [form, handleChange] = useForm({ password: "", token: "" });
   const navigate = useNavigate();
   const onChange = (e) => {
-    setForm((currentState) => {
-      const newState = {
-        ...currentState,
-        [e.target.name]: e.target.value,
-      };
-      return newState;
-    });
+    handleChange(e);
   };
 
   const onSubmit = async (e) => {
@@ -69,10 +64,3 @@ export function ResetPasswordForm({ form, setForm }) {
     </form>
   );
 }
-
-ResetPasswordForm.propTypes = {
-  form: PropTypes.shape({
-    password: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-  }),
-};
