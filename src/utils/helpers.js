@@ -21,6 +21,7 @@ export function getIngredientsId(bun, fillings) {
   fillings.forEach((el) => {
     ingredientsId.push(el._id);
   });
+  ingredientsId.push(bun._id);
   return ingredientsId;
 }
 

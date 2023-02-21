@@ -41,7 +41,10 @@ export const getIngredientsRequest = async () => {
 export const postOrderRequest = async (ingredientsId) => {
   return await request(`${BURGER_BASE_API}/orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie("accessToken"),
+    },
     body: JSON.stringify({ ingredients: ingredientsId }),
   });
 };
