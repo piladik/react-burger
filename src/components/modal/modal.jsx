@@ -11,23 +11,24 @@ import ModalOverlay from "./modal-overlay";
 
 // Utils
 
-function Modal({ handleClose, header, children }) {
+function Modal({ handleModalClose, header, children }) {
   useEffect(() => {
-    const closeOnEscape = (e) => (e.key === "Escape" ? handleClose() : null);
+    const closeOnEscape = (e) =>
+      e.key === "Escape" ? handleModalClose() : null;
     document.body.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.removeEventListener("keydown", closeOnEscape);
     };
-  }, [handleClose]);
+  }, [handleModalClose]);
   return createPortal(
     <>
-      <ModalOverlay handleClose={handleClose} />
+      <ModalOverlay handleModalClose={handleModalClose} />
       <div className={styles.modal_container}>
         <div className={styles.modal_box}>
           <div className={`mr-10 ml-10 mt-10 ${styles.modal_header}`}>
             {header && <h1 className="text text_type_main-large">{header}</h1>}
             <p
-              onClick={handleClose}
+              onClick={handleModalClose}
               id="close-btn"
               className={styles.close_btn}
             >
@@ -43,7 +44,7 @@ function Modal({ handleClose, header, children }) {
 }
 
 Modal.propTypes = {
-  handleClose: PropTypes.func.isRequired,
+  handleModalClose: PropTypes.func.isRequired,
   header: PropTypes.string,
   children: PropTypes.element.isRequired,
 };

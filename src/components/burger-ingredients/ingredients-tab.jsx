@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
 // Styles
 import styles from "./burger-ingredients.module.css";
@@ -52,5 +53,11 @@ function IngredientsTab({ activeTab }) {
     </div>
   );
 }
+
+IngredientsTab.propTypes = {
+  activeTab: PropTypes.shape({
+    active: PropTypes.string.isRequired,
+  }),
+};
 
 export default IngredientsTab;

@@ -12,7 +12,6 @@ const initialState = {
     bun: {},
     fillings: [],
   },
-  total: 0,
 };
 
 export const constructorReducer = (state = initialState, action) => {

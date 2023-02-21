@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -22,8 +23,11 @@ import { setOrderId } from "../../services/actions/order";
 function BurgerConstructorConfirm({ isEmptyBun }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { ingredients } = useSelector((store) => store.constructorBurger);
+  const { isLoggedIn } = useSelector((store) => store.auth);
   const memoizedTotal = useMemo(() => countTotal(ingredients), [ingredients]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Сюда сохраняем старый список айди ингредиентов, чтобы сравнивать при нажатии на кнопку "Оформить заказ"
   // Если список не изменился, то новый запрос не делается
@@ -36,10 +40,16 @@ function BurgerConstructorConfirm({ isEmptyBun }) {
   );
 
   const makeOrder = () => {
-    if (!isEmptyBun && prevIngredientsId.current !== ingredientsId) {
+    if (
+      !isEmptyBun &&
+      prevIngredientsId.current !== ingredientsId &&
+      isLoggedIn
+    ) {
       // Если есть булка и список ингредиентов обновился,
       // то делаем запрос к api, получаем orderId и записываем его в глобальное состояние store.order.orderId
       dispatch(setOrderId(ingredientsId));
+    } else if (!isLoggedIn) {
+      navigate("/login", { state: { from: location } });
     }
     prevIngredientsId.current = ingredientsId;
   };
@@ -73,7 +83,7 @@ function BurgerConstructorConfirm({ isEmptyBun }) {
         </Button>
       </div>
       {isModalOpen && (
-        <Modal handleClose={handleClose}>
+        <Modal handleModalClose={handleClose}>
           <OrderDetails />
         </Modal>
       )}
