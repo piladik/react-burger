@@ -1,45 +1,119 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 // Styles
 import styles from "./app.module.css";
 
 // Components
 import Header from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import ProtectedRouteElement from "../protected-route-element";
+import Preloader from "../preloader/preloader";
+import Modal from "../modal/modal";
 
-// Utils
+// Pages
+import {
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ConstructorPage,
+  ResetPasswordPage,
+  ProfileSharedLayout,
+} from "../../pages";
 
 // ACTIONS-REDUCERS
 import { getIngredients } from "../../services/actions/ingredients";
+import { getUser } from "../../services/actions/auth";
+import { ProfileInfo } from "../profile-info/profile-info";
+import { ProfileOrders } from "../profile-orders/profile-orders";
 
 function App() {
-  const { errorMessage, ingredientsFailed } = useSelector(
-    (store) => store.ingredients
-  );
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { authChecked } = useSelector((store) => store.auth);
+
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+    dispatch(getUser());
+    if (authChecked) {
+      setLoading(false);
+    }
+  }, [authChecked, dispatch]);
+
+  const handleModalClose = () => {
+    navigate(-1);
+  };
 
   return (
-    <div className={`${styles.App} text text_type_main-default`}>
-      <Header />
-      {ingredientsFailed ? (
-        <h1>{errorMessage}</h1>
+    <>
+      {loading ? (
+        <Preloader />
       ) : (
-        <main className={`${styles.main}`}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        </main>
+        <div className={`${styles.App} text text_type_main-default`}>
+          <Header />
+          <Routes location={background || location}>
+            <Route path="/" element={<ConstructorPage />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <LoginPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <RegisterPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/profile" element={<ProfileSharedLayout />}>
+              <Route
+                index
+                element={
+                  <ProtectedRouteElement onlyUnAuth={false}>
+                    <ProfileInfo />
+                  </ProtectedRouteElement>
+                }
+              />
+              <Route
+                path="orders"
+                element={
+                  <ProtectedRouteElement onlyUnAuth={false}>
+                    <ProfileOrders />
+                  </ProtectedRouteElement>
+                }
+              />
+            </Route>
+            <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          </Routes>
+          {background && (
+            <Routes>
+              <Route
+                path="/ingredients/:id"
+                element={
+                  <Modal
+                    handleModalClose={handleModalClose}
+                    header={"Детали ингредиента"}
+                  >
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+            </Routes>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

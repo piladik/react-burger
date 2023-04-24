@@ -1,4 +1,11 @@
-import navStyles from "./app-header.module.css";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+// Styles
+
+import styles from "./app-header.module.css";
+
+// Components
 import {
   BurgerIcon,
   ListIcon,
@@ -7,32 +14,42 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function Header() {
+  const { user } = useSelector((store) => store.auth);
+  const active = `${styles.nav_link} ${styles.nav_link_active}`;
+  const inactive = `${styles.nav_link}`;
+
   return (
-    <header className={navStyles.header}>
-      <nav className={navStyles.nav}>
-        <div className={navStyles.nav_box}>
-          <a
-            className={`${navStyles.nav_link} ${navStyles.nav_link_active}`}
-            href="/"
+    <header className={styles.header}>
+      <nav className={styles.nav}>
+        <div className={styles.nav_box}>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/"
           >
             <BurgerIcon />
             <p>Конструктор</p>
-          </a>
-          <a className={navStyles.nav_link} href="/">
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/history"
+          >
             <ListIcon type="primary" />
             <p>Лента заказов</p>
-          </a>
+          </NavLink>
         </div>
-        <div className={`${navStyles.nav_box} ${navStyles.nav_box_logo}`}>
-          <a href="/">
+        <div className={`${styles.nav_box} ${styles.nav_box_logo}`}>
+          <NavLink to="/">
             <Logo />
-          </a>
+          </NavLink>
         </div>
-        <div className={navStyles.nav_box}>
-          <a className={navStyles.nav_link} href="/">
+        <div className={styles.nav_box}>
+          <NavLink
+            className={({ isActive }) => (isActive ? active : inactive)}
+            to="/profile"
+          >
             <ProfileIcon type="primary" />
-            <p>Личный кабинет</p>
-          </a>
+            <p>{user ? user.username : "Личный кабинет"}</p>
+          </NavLink>
         </div>
       </nav>
     </header>
