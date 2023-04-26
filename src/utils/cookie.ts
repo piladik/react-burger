@@ -1,4 +1,4 @@
-export function getCookie(name) {
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
@@ -7,7 +7,7 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(accessToken) {
+export function setCookie(accessToken: string): void {
   const d = new Date();
   d.setTime(d.getTime() + 60 * 20 * 1000);
 
@@ -18,6 +18,10 @@ export function setCookie(accessToken) {
   document.cookie = cookie;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie() {
+  const d = new Date();
+  d.setTime(d.getTime() - 60 * 20 * 1000);
+
+  let cookie = "accessToken=; expires=" + d.toUTCString();
+  document.cookie = cookie;
 }

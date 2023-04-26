@@ -86,14 +86,14 @@ export function logout(token) {
     });
     logoutRequest(token)
       .then(() => {
+        deleteCookie();
+        window.localStorage.clear();
+      })
+      .then(() => {
         dispatch({
           type: AUTH_LOGOUT_SUCCESS,
         });
         dispatch({ type: AUTH_CHECKED, payload: false });
-      })
-      .then(() => {
-        deleteCookie("accessToken");
-        window.localStorage.clear();
       })
       .catch(() => {
         dispatch({
