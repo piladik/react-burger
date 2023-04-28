@@ -129,7 +129,7 @@ export const updateUserRequest = async (form: IUpdateuser) => {
   });
 };
 
-export const resetPasswordRequest = async (email: string) => {
+export const resetPasswordRequest = async <T>(email: string): Promise<T> => {
   return await request(`${BURGER_BASE_API}/password-reset`, {
     method: "POST",
     headers: {
