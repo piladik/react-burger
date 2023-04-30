@@ -13,13 +13,13 @@ import useForm from "../../hooks/useForm";
 import React from "react";
 
 export function ResetPasswordForm(): JSX.Element {
-  const [form, handleChange] = useForm({ password: "", token: "" });
+  const { form, handleChange } = useForm({ password: "", token: "" });
   const navigate = useNavigate();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
   };
 
-  const onSubmit = async (e: React.SyntheticEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     resetPasswordConfirm(form)
       .then((res: any) => {
@@ -44,7 +44,7 @@ export function ResetPasswordForm(): JSX.Element {
           type={"text"}
           placeholder={"Введите код из письма"}
           onChange={onChange}
-          value={form.code}
+          value={form.token}
           name={"token"}
           error={false}
           errorText={"Ошибка"}

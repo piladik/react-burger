@@ -13,14 +13,12 @@ import useForm from "../../hooks/useForm";
 import React from "react";
 
 export function LoginForm() {
-  const [form, handleChange] = useForm({ email: "", password: "" });
+  const { form, handleChange } = useForm({ email: "", password: "" });
   const dispatch = useDispatch();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     handleChange(e);
   };
-  const onSubmit = (e: React.BaseSyntheticEvent) => {
-    console.log(e);
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     //@ts-ignore
     dispatch(login(form));

@@ -22,7 +22,7 @@ export function ProfileInfo(): JSX.Element {
   const dispatch = useDispatch();
   const [showButtons, setShowButtons] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
-  const [form, handleChange, setForm] = useForm({
+  const { form, handleChange, setForm } = useForm({
     name: user.username,
     email: user.email,
     password: "12345678",
@@ -46,7 +46,7 @@ export function ProfileInfo(): JSX.Element {
     setPasswordChanged(false);
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!passwordChanged) {
       //@ts-ignore хранилище не типизировано

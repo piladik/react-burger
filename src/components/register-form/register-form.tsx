@@ -13,16 +13,15 @@ import { register } from "../../services/actions/auth";
 
 // Utils
 import useForm from "../../hooks/useForm";
-import React from "react";
 
 export function RegisterForm(): JSX.Element {
-  const [form, handleChange] = useForm({ email: "", password: "", name: "" });
+  const { form, handleChange } = useForm({ email: "", password: "", name: "" });
   const dispatch = useDispatch();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
   };
 
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     //@ts-ignore хранилище не типизировано
     dispatch(register(form));

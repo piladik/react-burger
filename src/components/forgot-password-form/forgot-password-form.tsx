@@ -17,10 +17,10 @@ export function ForgotPasswordForm() {
     setEmail(e.target.value);
   };
 
-  const onSubmit = async (e: React.BaseSyntheticEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await resetPasswordRequest(email)
-      .then((res: any) => {
+    await resetPasswordRequest<{ success: boolean }>(email)
+      .then((res) => {
         if (res.success)
           return navigate("/reset-password", { state: { hasAccess: true } });
         if (!res.success) return Promise.reject(res);
