@@ -22,7 +22,7 @@ import {
   DELETE_FILLING,
   MOVE_FILLING,
 } from "../../services/actions/constructor";
-import { INGREDIENTS_COUNTER_DECREASE } from "../../services/actions/ingredients";
+import { counterDecrease } from "../../services/reducers/ingredients";
 
 interface DragItem {
   index: number;
@@ -126,7 +126,7 @@ function FillingItem({
 
   const deleteIngredient = (nanoid: string, id: string) => {
     dispatch({ type: DELETE_FILLING, nanoid });
-    dispatch({ type: INGREDIENTS_COUNTER_DECREASE, id });
+    dispatch(counterDecrease(id));
   };
   return (
     <div

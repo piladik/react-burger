@@ -11,13 +11,13 @@ import BurgerIngredients from "../components/burger-ingredients/burger-ingredien
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 
 function ConstructorPage(): JSX.Element {
-  const { errorMessage, ingredientsFailed } = useSelector(
+  const { error, status } = useSelector(
     (store: RootState) => store.ingredients
   );
   return (
     <main className={`${styles.main}`}>
-      {ingredientsFailed ? (
-        <h1>{errorMessage}</h1>
+      {status === "failed" ? (
+        <h1>{error}</h1>
       ) : (
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />

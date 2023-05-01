@@ -18,9 +18,9 @@ import { checkBun } from "../../utils/helpers";
 // ACTIONS-REDUCERS
 import { ADD_FILLING, ADD_BUN } from "../../services/actions/constructor";
 import {
-  INGREDIENTS_COUNTER_INCREASE,
-  CHANGE_BUN,
-} from "../../services/actions/ingredients";
+  counterIncrease,
+  changeBun,
+} from "../../services/reducers/ingredients";
 
 function BurgerConstructor(): JSX.Element {
   const { ingredients } = useSelector(
@@ -34,27 +34,18 @@ function BurgerConstructor(): JSX.Element {
     accept: ["bun", "main", "sauce"],
     drop({ ingredient }: { ingredient: TIngredient }) {
       if (ingredient.type === "bun") {
-        dispatch({
-          type: CHANGE_BUN,
-          id: ingredient._id,
-        });
+        dispatch(changeBun());
         dispatch({
           type: ADD_BUN,
           ingredient: ingredient,
         });
-        dispatch({
-          type: INGREDIENTS_COUNTER_INCREASE,
-          id: ingredient._id,
-        });
+        dispatch(counterIncrease(ingredient._id));
       } else {
         dispatch({
           type: ADD_FILLING,
           ingredient: ingredient,
         });
-        dispatch({
-          type: INGREDIENTS_COUNTER_INCREASE,
-          id: ingredient._id,
-        });
+        dispatch(counterIncrease(ingredient._id));
       }
     },
   });

@@ -24,7 +24,7 @@ import {
 } from "../../pages";
 
 // ACTIONS-REDUCERS
-import { getIngredients } from "../../services/actions/ingredients";
+import { fetchIngredients } from "../../services/reducers/ingredients";
 import { getUser } from "../../services/actions/auth";
 import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
@@ -40,7 +40,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     //@ts-ignore хранилище не типизировано
-    dispatch(getIngredients());
+    dispatch(fetchIngredients());
     //@ts-ignore хранилище не типизировано
     dispatch(getUser());
     if (authChecked) {
