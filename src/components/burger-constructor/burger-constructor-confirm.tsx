@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../../services/reducers";
+import { TIngredientsWithUniqueId } from "../../utils/types/ingredients-types";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -27,9 +28,8 @@ function BurgerConstructorConfirm({
   isEmptyBun: boolean;
 }): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { ingredients } = useSelector(
-    (store: RootState) => store.constructorBurger
-  );
+  const { ingredients }: { ingredients: TIngredientsWithUniqueId } =
+    useSelector((store: RootState) => store.constructorBurger);
   const { isLoggedIn } = useSelector((store: RootState) => store.auth);
   const memoizedTotal = useMemo(() => countTotal(ingredients), [ingredients]);
   const dispatch = useDispatch();

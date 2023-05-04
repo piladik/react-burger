@@ -1,11 +1,5 @@
 import { nanoid } from "nanoid";
-
-import {
-  ADD_BUN,
-  ADD_FILLING,
-  DELETE_FILLING,
-  MOVE_FILLING,
-} from "../actions/constructor";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   ingredients: {
@@ -14,52 +8,28 @@ const initialState = {
   },
 };
 
-export const constructorReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_BUN: {
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          bun: action.ingredient,
-        },
-      };
-    }
-    case ADD_FILLING: {
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          fillings: [...state.ingredients.fillings].concat([
-            { ...action.ingredient, nanoid: nanoid() },
-          ]),
-        },
-      };
-    }
-    case DELETE_FILLING: {
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          fillings: [...state.ingredients.fillings].filter(
-            (el) => el.nanoid !== action.nanoid
-          ),
-        },
-      };
-    }
-    case MOVE_FILLING: {
-      const item = state.ingredients.fillings.splice(action.from, 1)[0];
-      state.ingredients.fillings.splice(action.to, 0, item);
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          fillings: state.ingredients.fillings,
-        },
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+const constructorSlice = createSlice({
+  name: "constructor",
+  initialState,
+  reducers: {
+    addBun(state, action) {
+      state.ingredients.bun = action.payload;
+    },
+    addFilling(state, action) {
+      state.ingredients.fillings.push({ ...action.payload, nanoid: nanoid() });
+    },
+    deleteFilling(state, action) {
+      state.ingredients.fillings = state.ingredients.fillings.filter(
+        (el) => el.nanoid !== action.payload
+      );
+    },
+    moveFilling(state, action) {
+      const item = state.ingredients.fillings.splice(action.payload.from, 1)[0];
+      state.ingredients.fillings.splice(action.payload.to, 0, item);
+    },
+  },
+});
+
+export const { addBun, addFilling, deleteFilling, moveFilling } =
+  constructorSlice.actions;
+export default constructorSlice.reducer;

@@ -18,11 +18,11 @@ import {
 import styles from "./burger-constructor.module.css";
 
 // ACTIONS-REDUCERS
-import {
-  DELETE_FILLING,
-  MOVE_FILLING,
-} from "../../services/actions/constructor";
 import { counterDecrease } from "../../services/reducers/ingredients";
+import {
+  deleteFilling,
+  moveFilling,
+} from "../../services/reducers/constructor";
 
 interface DragItem {
   index: number;
@@ -105,7 +105,8 @@ function FillingItem({
         return;
       }
 
-      dispatch({ type: MOVE_FILLING, from: dragIndex, to: hoverIndex });
+      // dispatch({ type: MOVE_FILLING, from: dragIndex, to: hoverIndex });
+      dispatch(moveFilling({ from: dragIndex, to: hoverIndex }));
 
       // Сразу меняем индекс перемещаемого элемента
       item.index = hoverIndex;
@@ -125,7 +126,7 @@ function FillingItem({
   drag(drop(ref));
 
   const deleteIngredient = (nanoid: string, id: string) => {
-    dispatch({ type: DELETE_FILLING, nanoid });
+    dispatch(deleteFilling(nanoid));
     dispatch(counterDecrease(id));
   };
   return (

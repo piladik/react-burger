@@ -2,7 +2,10 @@ import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { RootState } from "../../services/reducers";
-import { TIngredient } from "../../utils/types/ingredients-types";
+import {
+  TIngredient,
+  TIngredientsWithUniqueId,
+} from "../../utils/types/ingredients-types";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -16,16 +19,15 @@ import FillingsContainer from "./fillings-container";
 import { checkBun } from "../../utils/helpers";
 
 // ACTIONS-REDUCERS
-import { ADD_FILLING, ADD_BUN } from "../../services/actions/constructor";
 import {
   counterIncrease,
   changeBun,
 } from "../../services/reducers/ingredients";
+import { addBun, addFilling } from "../../services/reducers/constructor";
 
 function BurgerConstructor(): JSX.Element {
-  const { ingredients } = useSelector(
-    (store: RootState) => store.constructorBurger
-  );
+  const { ingredients }: { ingredients: TIngredientsWithUniqueId } =
+    useSelector((store: RootState) => store.constructorBurger);
   const dispatch = useDispatch();
 
   const isEmptyBun = useMemo(() => checkBun(ingredients), [ingredients]);
@@ -35,16 +37,10 @@ function BurgerConstructor(): JSX.Element {
     drop({ ingredient }: { ingredient: TIngredient }) {
       if (ingredient.type === "bun") {
         dispatch(changeBun());
-        dispatch({
-          type: ADD_BUN,
-          ingredient: ingredient,
-        });
+        dispatch(addBun(ingredient));
         dispatch(counterIncrease(ingredient._id));
       } else {
-        dispatch({
-          type: ADD_FILLING,
-          ingredient: ingredient,
-        });
+        dispatch(addFilling(ingredient));
         dispatch(counterIncrease(ingredient._id));
       }
     },
