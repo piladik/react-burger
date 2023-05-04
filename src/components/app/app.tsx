@@ -25,7 +25,7 @@ import {
 
 // ACTIONS-REDUCERS
 import { fetchIngredients } from "../../services/reducers/ingredients";
-import { getUser } from "../../services/actions/auth";
+import { getUser } from "../../services/reducers/auth";
 import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
 

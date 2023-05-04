@@ -9,7 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // ACTIONS-REDUCERS
-import { register } from "../../services/actions/auth";
+import { register } from "../../services/reducers/auth";
 
 // Utils
 import useForm from "../../hooks/useForm";

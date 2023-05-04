@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Utils
-import { login } from "../../services/actions/auth";
+import { login } from "../../services/reducers/auth";
 import useForm from "../../hooks/useForm";
 import React from "react";
 

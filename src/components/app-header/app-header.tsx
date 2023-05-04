@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
+import { IUser } from "../../utils/types/api-types";
 
 // Styles
 
@@ -15,7 +16,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function Header(): JSX.Element {
-  const { user } = useSelector((store: RootState) => store.auth);
+  //@ts-ignore
+  const user: IUser = useSelector((store: RootState) => store.auth.user);
   const active = `${styles.nav_link} ${styles.nav_link_active}`;
   const inactive = `${styles.nav_link}`;
 

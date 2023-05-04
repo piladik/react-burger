@@ -20,7 +20,7 @@ import {
 import { getIngredientsId, countTotal } from "../../utils/helpers";
 
 // ACTIONS-REDUCERS
-import { setOrderId } from "../../services/actions/order";
+import { setOrderId } from "../../services/reducers/order";
 
 function BurgerConstructorConfirm({
   isEmptyBun,

@@ -1,174 +1,150 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  AUTH_REGISTER_REQUEST,
-  AUTH_REGISTER_SUCCESS,
-  AUTH_REGISTER_FAILED,
-  AUTH_LOGIN_REQUEST,
-  AUTH_LOGIN_SUCCESS,
-  AUTH_LOGIN_FAILED,
-  AUTH_LOGOUT_REQUEST,
-  AUTH_LOGOUT_SUCCESS,
-  AUTH_LOGOUT_FAILED,
-  AUTH_GET_USER_REQUEST,
-  AUTH_GET_USER_SUCCESS,
-  AUTH_GET_USER_FAILED,
-  AUTH_UPDATE_USER_REQUEST,
-  AUTH_UPDATE_USER_SUCCESS,
-  AUTH_UPDATE_USER_FAILED,
-  AUTH_CHECKED,
-} from "../actions/auth";
+  registerRequest,
+  loginRequest,
+  logoutRequest,
+  getUserRequest,
+  updateUserRequest,
+} from "../../utils/burger-api";
+import { setCookie } from "../../utils/cookie";
+import { deleteCookie } from "../../utils/cookie";
 
 const initialState = {
+  registerStatus: "uninitialized",
+  loginStatus: "uninitialized",
+  logoutStatus: "uninitialized",
+  getUserStatus: "uninitialized",
+  updateUserStatus: "uninitialized",
   user: null,
-  registerRequest: false,
-  registerFailed: false,
-
-  loginRequest: false,
-  loginFailed: false,
-
-  logoutRequest: false,
-  logoutFailed: false,
-
-  getUserRequest: false,
-  getUserFailed: false,
-
-  updateUserRequest: false,
-  updateUserFailed: false,
-
   isLoggedIn: false,
   authChecked: false,
+  error: null,
 };
 
-export const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case AUTH_REGISTER_REQUEST: {
-      return {
-        ...state,
-        registerRequest: true,
-      };
-    }
-    case AUTH_REGISTER_SUCCESS: {
-      const { user } = action;
-      return {
-        ...state,
-        user: { ...state.user, username: user.name, email: user.email },
-        registerRequest: false,
-        registerFailed: false,
-        isLoggedIn: true,
-      };
-    }
-    case AUTH_REGISTER_FAILED: {
-      return {
-        ...state,
-        registerRequest: false,
-        registerFailed: true,
-        isLoggedIn: false,
-      };
-    }
-    case AUTH_LOGIN_REQUEST: {
-      return {
-        ...state,
-        loginRequest: true,
-      };
-    }
-    case AUTH_LOGIN_SUCCESS: {
-      const { user } = action;
-      return {
-        ...state,
-        loginRequest: false,
-        loginFailed: false,
-        isLoggedIn: true,
-        user: { ...state.user, username: user.name, email: user.email },
-      };
-    }
-    case AUTH_LOGIN_FAILED: {
-      return {
-        ...state,
-        loginRequest: false,
-        loginFailed: true,
-        isLoggedIn: false,
-      };
-    }
-    case AUTH_LOGOUT_REQUEST: {
-      return {
-        ...state,
-        logoutRequest: true,
-      };
-    }
-    case AUTH_LOGOUT_SUCCESS: {
-      return {
-        ...state,
-        user: null,
-        logoutRequest: false,
-        logoutFailed: false,
-        isLoggedIn: false,
-      };
-    }
-    case AUTH_LOGOUT_FAILED: {
-      return {
-        ...state,
-        logoutRequest: false,
-        logoutFailed: true,
-        isLoggedIn: true,
-      };
-    }
-    case AUTH_GET_USER_REQUEST: {
-      return {
-        ...state,
-        getUserRequest: true,
-      };
-    }
-    case AUTH_GET_USER_SUCCESS: {
-      const { user } = action;
-      return {
-        ...state,
-        user: { ...state.user, username: user.name, email: user.email },
-        getUserRequest: false,
-        getUserFailed: false,
-        isLoggedIn: true,
-      };
-    }
-    case AUTH_GET_USER_FAILED: {
-      return {
-        ...state,
-        getUserRequest: false,
-        getUserFailed: false,
-        isLoggedIn: false,
-      };
-    }
-    case AUTH_UPDATE_USER_REQUEST: {
-      return {
-        ...state,
-        updateUserRequest: true,
-      };
-    }
-    case AUTH_UPDATE_USER_SUCCESS: {
-      const { user } = action;
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          username: user.name,
-          email: user.email,
-          updateUserRequest: false,
-          updateUserFailed: false,
-        },
-      };
-    }
-    case AUTH_UPDATE_USER_FAILED: {
-      return {
-        ...state,
-        updateUserRequest: false,
-        updateUserFailed: true,
-      };
-    }
-    case AUTH_CHECKED: {
-      return {
-        ...state,
-        authChecked: action.payload,
-      };
-    }
-    default: {
-      return state;
-    }
+export const register = createAsyncThunk("auth/register", async (form) => {
+  const res = await registerRequest(form);
+  if (res.success) {
+    setCookie(res.accessToken);
+    window.localStorage.setItem("refreshToken", res.refreshToken);
   }
-};
+  return res;
+});
+
+export const login = createAsyncThunk("auth/login", async (form) => {
+  const res = await loginRequest(form);
+  if (res.success) {
+    setCookie(res.accessToken);
+    window.localStorage.setItem("refreshToken", res.refreshToken);
+  }
+  return res;
+});
+
+export const logout = createAsyncThunk("auth/logout", async (token) => {
+  const res = await logoutRequest(token);
+  if (res.success) {
+    deleteCookie();
+    window.localStorage.clear();
+  }
+  return res;
+});
+
+export const getUser = createAsyncThunk("auth/getUser", async () => {
+  return await getUserRequest();
+});
+
+export const updateUser = createAsyncThunk("auth/updateUser", async (form) => {
+  return await updateUserRequest(form);
+});
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  // Можно добавить экшн authCheck
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.registerStatus = "loading";
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        const { name, email } = action.payload.user;
+        state.registerStatus = "succeeded";
+        state.isLoggedIn = true;
+        state.user = {
+          username: name,
+          email: email,
+        };
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.registerStatus = "failed";
+        state.error = action.error;
+        state.isLoggedIn = false;
+      })
+      .addCase(login.pending, (state) => {
+        state.loginStatus = "loading";
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        const { name, email } = action.payload.user;
+        state.loginStatus = "succeeded";
+        state.isLoggedIn = true;
+        state.user = {
+          username: name,
+          email: email,
+        };
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loginStatus = "failed";
+        state.error = action.error;
+        state.isLoggedIn = false;
+      })
+      .addCase(logout.pending, (state) => {
+        state.logoutStatus = "loading";
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.logoutStatus = "succeeded";
+        state.isLoggedIn = false;
+        state.user = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.logoutStatus = "failed";
+        state.error = action.error;
+        state.isLoggedIn = false;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.getUserStatus = "loading";
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        const { name, email } = action.payload.user;
+        state.getUserStatus = "succeeded";
+        state.isLoggedIn = true;
+        state.user = {
+          username: name,
+          email: email,
+        };
+        state.authChecked = true;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.getUserStatus = "failed";
+        state.error = action.error;
+        state.isLoggedIn = false;
+        state.authChecked = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.updateUserStatus = "loading";
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const { name, email } = action.payload.user;
+        state.updateUserStatus = "succeeded";
+        state.user = {
+          username: name,
+          email: email,
+        };
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.updateUserStatus = "failed";
+        state.error = action.error;
+      });
+  },
+});
+
+export default authSlice.reducer;

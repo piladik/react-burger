@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../services/actions/auth";
+import { updateUser } from "../../services/reducers/auth";
 import { RootState } from "../../services/reducers";
+import { IUser } from "../../utils/types/api-types";
 
 // Styles
 import styles from "./profile-info.module.css";
@@ -18,7 +19,8 @@ import {
 import useForm from "../../hooks/useForm";
 
 export function ProfileInfo(): JSX.Element {
-  const { user } = useSelector((store: RootState) => store.auth);
+  //@ts-ignore
+  const user: IUser = useSelector((store: RootState) => store.auth.user);
   const dispatch = useDispatch();
   const [showButtons, setShowButtons] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);

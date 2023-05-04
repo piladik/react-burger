@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import styles from "./profile-link.module.css";
 
 // ACTIONS_REDUCERS
-import { logout } from "../../services/actions/auth";
+import { logout } from "../../services/reducers/auth";
 
 export function ProfileLink({ name }: { name: string }): JSX.Element | null {
   const dispatch = useDispatch();

@@ -4,16 +4,7 @@ export interface IResponse<T> extends Response {
 
 export interface IUser {
   email: string;
-  name: string;
-}
-
-// endpoints: auth/register | auth/login
-export interface IAuth {
-  success: boolean;
-  user?: IUser;
-  accessToken?: string;
-  refreshToken?: string;
-  message?: string;
+  username: string;
 }
 
 export interface ILogin {
