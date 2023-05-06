@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import PropTypes from "prop-types";
 
 // Styles
 import styles from "./modal.module.css";
@@ -50,11 +49,5 @@ function Modal({
     document.getElementById("modals") as HTMLElement
   );
 }
-
-Modal.propTypes = {
-  handleModalClose: PropTypes.func.isRequired,
-  header: PropTypes.string,
-  children: PropTypes.element.isRequired,
-};
 
 export default Modal;

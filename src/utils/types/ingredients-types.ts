@@ -1,4 +1,4 @@
-export type TIngredient = {
+export type TIngredientResponse = {
   _id: string;
   name: string;
   type: "bun" | "main" | "sauce";
@@ -11,13 +11,14 @@ export type TIngredient = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  qty?: number;
 };
+
+export type TIngredient = TIngredientResponse & { qty: number };
 
 export type TIngredientWithUniqueId = TIngredient & { nanoid: string };
 
 // Оставил тут any так как хранилище не типизировано
-export type TIngredientsWithUniqueId = {
+export type TIngredientsConstructor = {
   bun: TIngredient | any;
   fillings: TIngredientWithUniqueId[] | Array<any>;
 };

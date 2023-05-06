@@ -6,41 +6,65 @@ import {
   getUserRequest,
   updateUserRequest,
 } from "../../utils/burger-api";
+import {
+  IRegisterForm,
+  ILoginForm,
+  IUpdateUserForm,
+  IUser,
+} from "../../utils/types/api-types";
 import { setCookie } from "../../utils/cookie";
 import { deleteCookie } from "../../utils/cookie";
 
-const initialState = {
+interface IAuthSliceState {
+  registerStatus: string;
+  loginStatus: string;
+  logoutStatus: string;
+  getUserStatus: string;
+  updateUserStatus: string;
+  user: undefined | IUser;
+  isLoggedIn: boolean;
+  authChecked: boolean;
+  error: unknown;
+}
+
+const initialState: IAuthSliceState = {
   registerStatus: "uninitialized",
   loginStatus: "uninitialized",
   logoutStatus: "uninitialized",
   getUserStatus: "uninitialized",
   updateUserStatus: "uninitialized",
-  user: null,
+  user: undefined,
   isLoggedIn: false,
   authChecked: false,
   error: null,
 };
 
-export const register = createAsyncThunk("auth/register", async (form) => {
-  const res = await registerRequest(form);
-  if (res.success) {
-    setCookie(res.accessToken);
-    window.localStorage.setItem("refreshToken", res.refreshToken);
+export const register = createAsyncThunk(
+  "auth/register",
+  async (form: IRegisterForm) => {
+    const res = await registerRequest(form);
+    if (res.accessToken && res.refreshToken) {
+      setCookie(res.accessToken);
+      window.localStorage.setItem("refreshToken", res.refreshToken);
+    }
+    return res;
   }
-  return res;
-});
+);
 
-export const login = createAsyncThunk("auth/login", async (form) => {
-  const res = await loginRequest(form);
-  if (res.success) {
-    setCookie(res.accessToken);
-    window.localStorage.setItem("refreshToken", res.refreshToken);
+export const login = createAsyncThunk(
+  "auth/login",
+  async (form: ILoginForm) => {
+    const res = await loginRequest(form);
+    if (res.accessToken && res.refreshToken) {
+      setCookie(res.accessToken);
+      window.localStorage.setItem("refreshToken", res.refreshToken);
+    }
+    return res;
   }
-  return res;
-});
+);
 
-export const logout = createAsyncThunk("auth/logout", async (token) => {
-  const res = await logoutRequest(token);
+export const logout = createAsyncThunk("auth/logout", async () => {
+  const res = await logoutRequest();
   if (res.success) {
     deleteCookie();
     window.localStorage.clear();
@@ -52,9 +76,12 @@ export const getUser = createAsyncThunk("auth/getUser", async () => {
   return await getUserRequest();
 });
 
-export const updateUser = createAsyncThunk("auth/updateUser", async (form) => {
-  return await updateUserRequest(form);
-});
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async (form: IUpdateUserForm) => {
+    return await updateUserRequest(form);
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -67,11 +94,11 @@ export const authSlice = createSlice({
         state.registerStatus = "loading";
       })
       .addCase(register.fulfilled, (state, action) => {
-        const { name, email } = action.payload.user;
+        const { name, email } = action.payload.user as IUser;
         state.registerStatus = "succeeded";
         state.isLoggedIn = true;
         state.user = {
-          username: name,
+          name: name,
           email: email,
         };
       })
@@ -84,11 +111,11 @@ export const authSlice = createSlice({
         state.loginStatus = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        const { name, email } = action.payload.user;
+        const { name, email } = action.payload.user as IUser;
         state.loginStatus = "succeeded";
         state.isLoggedIn = true;
         state.user = {
-          username: name,
+          name: name,
           email: email,
         };
       })
@@ -103,7 +130,7 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.logoutStatus = "succeeded";
         state.isLoggedIn = false;
-        state.user = null;
+        state.user = undefined;
       })
       .addCase(logout.rejected, (state, action) => {
         state.logoutStatus = "failed";
@@ -114,11 +141,11 @@ export const authSlice = createSlice({
         state.getUserStatus = "loading";
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        const { name, email } = action.payload.user;
+        const { name, email } = action.payload.user as IUser;
         state.getUserStatus = "succeeded";
         state.isLoggedIn = true;
         state.user = {
-          username: name,
+          name: name,
           email: email,
         };
         state.authChecked = true;
@@ -133,10 +160,10 @@ export const authSlice = createSlice({
         state.updateUserStatus = "loading";
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        const { name, email } = action.payload.user;
+        const { name, email } = action.payload.user as IUser;
         state.updateUserStatus = "succeeded";
         state.user = {
-          username: name,
+          name: name,
           email: email,
         };
       })

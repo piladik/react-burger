@@ -2,18 +2,20 @@ import { getCookie, setCookie } from "./cookie";
 
 import {
   IResponse,
-  ILogin,
-  IRegister,
-  IResetPassword,
-  IUpdateuser,
-  IRefreshData,
-  IOptions,
-  IRefreshOptions,
+  ILoginForm,
+  IRegisterForm,
+  IResetPasswordForm,
+  IUpdateUserForm,
+  IRequestOptions,
+  IAuthResponse,
+  IRequestWithRefreshOptions,
+  IGetIngredientsResponse,
+  IOrderResponse,
 } from "./types/api-types";
 
 const BURGER_BASE_API = "https://norma.nomoreparties.space/api";
 
-async function request<T>(url: string, options?: IOptions): Promise<T> {
+async function request<T>(url: string, options?: IRequestOptions): Promise<T> {
   return await fetch(url, options).then(checkResponse);
 }
 
@@ -27,13 +29,13 @@ const checkResponse = <T>(res: IResponse<T>): Promise<T> => {
 
 export const requestWithRefresh = async <T>(
   url: string,
-  options: IRefreshOptions
+  options: IRequestWithRefreshOptions
 ): Promise<T> => {
   try {
     return await request(url, options);
   } catch (err) {
     if (err.message === "jwt expired" || "You should be authorised") {
-      const refreshData: IRefreshData = await updateTokenRequest();
+      const refreshData: IAuthResponse = await updateTokenRequest();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
@@ -49,11 +51,14 @@ export const requestWithRefresh = async <T>(
   }
 };
 
-export const getIngredientsRequest = async () => {
-  return await request(`${BURGER_BASE_API}/ingredients`);
-};
+export const getIngredientsRequest =
+  async (): Promise<IGetIngredientsResponse> => {
+    return await request(`${BURGER_BASE_API}/ingredients`);
+  };
 
-export const postOrderRequest = async (ingredientsId: Array<string>) => {
+export const postOrderRequest = async (
+  ingredientsId: Array<string>
+): Promise<IOrderResponse> => {
   return await request(`${BURGER_BASE_API}/orders`, {
     method: "POST",
     headers: {
@@ -64,7 +69,9 @@ export const postOrderRequest = async (ingredientsId: Array<string>) => {
   });
 };
 
-export const registerRequest = async (form: IRegister) => {
+export const registerRequest = async (
+  form: IRegisterForm
+): Promise<IAuthResponse> => {
   const { email, password, name } = form;
   return await request(`${BURGER_BASE_API}/auth/register`, {
     method: "POST",
@@ -73,7 +80,9 @@ export const registerRequest = async (form: IRegister) => {
   });
 };
 
-export const loginRequest = async (form: ILogin) => {
+export const loginRequest = async (
+  form: ILoginForm
+): Promise<IAuthResponse> => {
   const { email, password } = form;
   return await request(`${BURGER_BASE_API}/auth/login`, {
     method: "POST",
@@ -84,7 +93,7 @@ export const loginRequest = async (form: ILogin) => {
   });
 };
 
-export const logoutRequest = async () => {
+export const logoutRequest = async (): Promise<IAuthResponse> => {
   return await request(`${BURGER_BASE_API}/auth/logout`, {
     method: "POST",
     headers: {
@@ -94,7 +103,7 @@ export const logoutRequest = async () => {
   });
 };
 
-export const updateTokenRequest = async (): Promise<IRefreshData> => {
+export const updateTokenRequest = async (): Promise<IAuthResponse> => {
   return await request(`${BURGER_BASE_API}/auth/token`, {
     method: "POST",
     headers: {
@@ -104,7 +113,7 @@ export const updateTokenRequest = async (): Promise<IRefreshData> => {
   });
 };
 
-export const getUserRequest = async () => {
+export const getUserRequest = async (): Promise<IAuthResponse> => {
   return await requestWithRefresh(`${BURGER_BASE_API}/auth/user`, {
     method: "GET",
     headers: {
@@ -114,8 +123,10 @@ export const getUserRequest = async () => {
   });
 };
 
-export const updateUserRequest = async (form: IUpdateuser) => {
-  const inputs: IUpdateuser = { ...form };
+export const updateUserRequest = async (
+  form: IUpdateUserForm
+): Promise<IAuthResponse> => {
+  const inputs: IUpdateUserForm = { ...form };
   if (!inputs.password) {
     delete inputs.password;
   }
@@ -139,7 +150,7 @@ export const resetPasswordRequest = async <T>(email: string): Promise<T> => {
   });
 };
 
-export const resetPasswordConfirm = async (form: IResetPassword) => {
+export const resetPasswordConfirm = async (form: IResetPasswordForm) => {
   const { password, token } = form;
   return await request(`${BURGER_BASE_API}/password-reset/reset`, {
     method: "POST",

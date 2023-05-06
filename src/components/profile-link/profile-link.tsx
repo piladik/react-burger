@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -6,12 +6,11 @@ import PropTypes from "prop-types";
 import styles from "./profile-link.module.css";
 
 // ACTIONS_REDUCERS
-import { logout } from "../../services/reducers/auth";
+import { logout } from "../../services/slices/auth";
 
 export function ProfileLink({ name }: { name: string }): JSX.Element | null {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleLogout = () => {
-    //@ts-ignore хранилище не типизировано
     dispatch(logout());
   };
 

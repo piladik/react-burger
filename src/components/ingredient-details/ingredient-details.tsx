@@ -1,16 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./ingredient-details.module.css";
-import { TIngredient } from "../../utils/types/ingredients-types";
 
 function IngredientDetails(): JSX.Element {
   const { id } = useParams();
-  const { ingredients }: { ingredients: TIngredient[] } = useSelector(
-    (store: RootState) => store.ingredients
-  );
+  const { ingredients } = useAppSelector((store) => store.ingredients);
 
   const ingredient = ingredients.find((el) => el._id === id);
   return (

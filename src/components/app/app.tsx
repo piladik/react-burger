@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { RootState } from "../../services/reducers";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./app.module.css";
@@ -24,24 +23,22 @@ import {
 } from "../../pages";
 
 // ACTIONS-REDUCERS
-import { fetchIngredients } from "../../services/reducers/ingredients";
-import { getUser } from "../../services/reducers/auth";
+import { fetchIngredients } from "../../services/slices/ingredients";
+import { getUser } from "../../services/slices/auth";
 import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { authChecked } = useSelector((store: RootState) => store.auth);
+  const { authChecked } = useAppSelector((store) => store.auth);
 
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    //@ts-ignore хранилище не типизировано
     dispatch(fetchIngredients());
-    //@ts-ignore хранилище не типизировано
     dispatch(getUser());
     if (authChecked) {
       setLoading(false);

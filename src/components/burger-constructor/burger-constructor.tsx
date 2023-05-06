@@ -1,11 +1,7 @@
 import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useDrop } from "react-dnd";
-import { RootState } from "../../services/reducers";
-import {
-  TIngredient,
-  TIngredientsWithUniqueId,
-} from "../../utils/types/ingredients-types";
+import { TIngredient } from "../../utils/types/ingredients-types";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -19,16 +15,12 @@ import FillingsContainer from "./fillings-container";
 import { checkBun } from "../../utils/helpers";
 
 // ACTIONS-REDUCERS
-import {
-  counterIncrease,
-  changeBun,
-} from "../../services/reducers/ingredients";
-import { addBun, addFilling } from "../../services/reducers/constructor";
+import { counterIncrease, changeBun } from "../../services/slices/ingredients";
+import { addBun, addFilling } from "../../services/slices/constructor";
 
 function BurgerConstructor(): JSX.Element {
-  const { ingredients }: { ingredients: TIngredientsWithUniqueId } =
-    useSelector((store: RootState) => store.constructorBurger);
-  const dispatch = useDispatch();
+  const { ingredients } = useAppSelector((store) => store.constructorBurger);
+  const dispatch = useAppDispatch();
 
   const isEmptyBun = useMemo(() => checkBun(ingredients), [ingredients]);
 

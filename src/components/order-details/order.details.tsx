@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.png";
 
 function OrderDetails(): JSX.Element {
-  const { orderId } = useSelector((store: RootState) => store.order);
+  const { orderId } = useAppSelector((store) => store.order);
   return (
     <div className={styles.modal_content}>
       <p className={`text text_type_digits-large ${styles.order_id}`}>

@@ -1,15 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postOrderRequest } from "../../utils/burger-api";
 
-const initialState = {
+interface IOrderSlice {
+  status: string;
+  orderId: number | undefined;
+  error: unknown;
+}
+
+const initialState: IOrderSlice = {
   status: "uninitialized",
-  orderId: null,
+  orderId: undefined,
   error: null,
 };
 
 export const setOrderId = createAsyncThunk(
   "order/setOrderId",
-  async (ingredientsId) => {
+  async (ingredientsId: Array<string>) => {
     return await postOrderRequest(ingredientsId);
   }
 );

@@ -1,7 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
-import { IUser } from "../../utils/types/api-types";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 
@@ -16,8 +14,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function Header(): JSX.Element {
-  //@ts-ignore
-  const user: IUser = useSelector((store: RootState) => store.auth.user);
+  const user = useAppSelector((store) => store.auth.user);
   const active = `${styles.nav_link} ${styles.nav_link_active}`;
   const inactive = `${styles.nav_link}`;
 
@@ -51,7 +48,7 @@ function Header(): JSX.Element {
             to="/profile"
           >
             <ProfileIcon type="primary" />
-            <p>{user ? user.username : "Личный кабинет"}</p>
+            <p>{user ? user.name : "Личный кабинет"}</p>
           </NavLink>
         </div>
       </nav>

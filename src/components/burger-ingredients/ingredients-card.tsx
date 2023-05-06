@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/hooks/hooks";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 
@@ -20,8 +20,7 @@ function IngredientsCard({
   ingredient: TIngredient;
 }): JSX.Element {
   const location = useLocation();
-  const item = useSelector((store) =>
-    //@ts-ignore хранилище не типизировано
+  const item = useAppSelector((store) =>
     store.ingredients.ingredients.find((el) => el._id === ingredient._id)
   );
 
@@ -32,7 +31,7 @@ function IngredientsCard({
 
   return (
     <div className={`mt-6 mb-10 ml-4 ${styles.card}`} ref={dragRef}>
-      {item.qty > 0 && (
+      {item && item.qty > 0 && (
         <Counter count={item.qty} size="default" extraClass="m-1" />
       )}
       <Link

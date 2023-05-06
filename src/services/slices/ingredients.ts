@@ -1,7 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getIngredientsRequest } from "../../utils/burger-api";
+import { TIngredient } from "../../utils/types/ingredients-types";
 
-const initialState = {
+interface IIngredientsSlice {
+  status: string;
+  ingredients: Array<TIngredient>;
+  error: unknown;
+}
+
+const initialState: IIngredientsSlice = {
   status: "uninitialized",
   ingredients: [],
   error: null,
@@ -42,7 +49,7 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.ingredients = action.payload.map((el) => {
+        state.ingredients = action.payload!.map((el) => {
           el["qty"] = 0;
           return el;
         });
