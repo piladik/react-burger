@@ -1,10 +1,10 @@
 import {
-  TIngredientsWithUniqueId,
+  TIngredientsConstructor,
   TIngredientWithUniqueId,
   TIngredient,
 } from "./types/ingredients-types";
 
-export function countTotal(state: TIngredientsWithUniqueId) {
+export function countTotal(state: TIngredientsConstructor) {
   const isEmpty = isEmptyConstuctor(state);
   const { fillings }: { fillings: TIngredientWithUniqueId[] } = state;
   if (isEmpty) return 0;
@@ -38,7 +38,7 @@ export function getIngredientsId(
   return ingredientsId;
 }
 
-export function isEmptyConstuctor(ingredients: TIngredientsWithUniqueId) {
+export function isEmptyConstuctor(ingredients: TIngredientsConstructor) {
   if (!ingredients.bun.name && ingredients.fillings.length === 0) {
     return true;
   } else {
@@ -46,12 +46,12 @@ export function isEmptyConstuctor(ingredients: TIngredientsWithUniqueId) {
   }
 }
 
-export function checkBun(ingredients: TIngredientsWithUniqueId) {
+export function checkBun(ingredients: TIngredientsConstructor) {
   if (!ingredients.bun.name) return true;
   return false;
 }
 
-export function checkFillings(ingredients: TIngredientsWithUniqueId) {
+export function checkFillings(ingredients: TIngredientsConstructor) {
   if (ingredients.fillings.length === 0) return true;
   return false;
 }
