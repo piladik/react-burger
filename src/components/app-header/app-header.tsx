@@ -31,7 +31,7 @@ function Header(): JSX.Element {
           </NavLink>
           <NavLink
             className={({ isActive }) => (isActive ? active : inactive)}
-            to="/history"
+            to="/feed"
           >
             <ListIcon type="primary" />
             <p>Лента заказов</p>

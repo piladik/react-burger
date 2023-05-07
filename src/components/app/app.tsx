@@ -27,6 +27,7 @@ import { fetchIngredients } from "../../services/slices/ingredients";
 import { getUser } from "../../services/slices/auth";
 import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
+import { FeedPage } from "../../pages/feed-page";
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,7 @@ function App(): JSX.Element {
           <Header />
           <Routes location={background || location}>
             <Route path="/" element={<ConstructorPage />} />
+            <Route path="/feed" element={<FeedPage />} />
             <Route
               path="/login"
               element={
