@@ -8,10 +8,10 @@ export interface ITestData {
   timestamp: string;
   price: number;
 }
-const testData: ITestData[] = [
+export const testData: ITestData[] = [
   {
     name: "My Burger",
-    orderId: "#3303030",
+    orderId: "3303030",
     imgs: [
       "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
       "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
@@ -22,7 +22,7 @@ const testData: ITestData[] = [
   },
   {
     name: "My Burger",
-    orderId: "#3303030",
+    orderId: "3403030",
     imgs: [
       "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
       "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
@@ -33,7 +33,7 @@ const testData: ITestData[] = [
   },
   {
     name: "My Burger",
-    orderId: "#3303030",
+    orderId: "3503030",
     imgs: [
       "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
       "https://code.s3.yandex.net/react/code/meat-01-mobile.png",

@@ -1,5 +1,6 @@
 import styles from "./feed-order.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router-dom";
 
 interface IFeedOrderProps {
   name: string;
@@ -11,8 +12,15 @@ interface IFeedOrderProps {
 
 function FeedOrder({ order }: { order: IFeedOrderProps }): JSX.Element {
   const { name, orderId, imgs, timestamp, price } = order;
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/feed/${orderId}`);
+  };
   return (
-    <div className={`mb-6 mr-2 ${styles.feed_order_card}`}>
+    <div
+      className={`mb-6 mr-2 ${styles.feed_order_card}`}
+      onClick={handleClick}
+    >
       <div className="mr-6 ml-6 card_content">
         <div className={`pt-6 ${styles.card_header}`}>
           <p className="order_id text text_type_digits-default">{orderId}</p>
@@ -27,6 +35,7 @@ function FeedOrder({ order }: { order: IFeedOrderProps }): JSX.Element {
               <div
                 className={`${styles.img_wrapper}`}
                 style={{ zIndex: 100 - index }}
+                key={index}
               >
                 <img
                   src={img}
