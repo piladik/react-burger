@@ -1,8 +1,8 @@
-h1 {
+.header_id {
   text-align: center;
 }
 
-span {
+.status {
   color: #00cccc;
 }
 
