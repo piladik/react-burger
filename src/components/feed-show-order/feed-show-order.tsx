@@ -1,14 +1,16 @@
 import styles from "./feed-show-order.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function FeedShowOrder(): JSX.Element {
+function FeedShowOrder({ isModal }: { isModal: boolean }): JSX.Element {
   return (
-    <>
-      <h1
-        className={`mt-10 mb-10 text text_type_digits-default ${styles.header_id}`}
-      >
-        #3303030
-      </h1>
+    <div className="p-10">
+      {!isModal && (
+        <h1
+          className={`mt-10 mb-10 text text_type_digits-default ${styles.header_id}`}
+        >
+          #3303030
+        </h1>
+      )}
       <p className="mb-3 text text_type_main-medium">My Burger</p>
       <p className="mb-15 text text_type_main-small">
         <span className={`${styles.status}`}>Выполнен</span>
@@ -30,7 +32,7 @@ function FeedShowOrder(): JSX.Element {
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

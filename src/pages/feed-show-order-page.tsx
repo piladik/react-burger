@@ -4,7 +4,7 @@ import styles from "./feed-show-order-page.module.css";
 function FeedShowOrderPage(): JSX.Element {
   return (
     <section className={`${styles.feed_show_order_section}`}>
-      <FeedShowOrder />
+      <FeedShowOrder isModal={false} />
     </section>
   );
 }

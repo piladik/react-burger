@@ -86,7 +86,7 @@ function BurgerConstructorConfirm({
         </Button>
       </div>
       {isModalOpen && (
-        <Modal handleModalClose={handleClose}>
+        <Modal handleModalClose={handleClose} showId={false}>
           <OrderDetails />
         </Modal>
       )}

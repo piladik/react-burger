@@ -29,6 +29,7 @@ import { ProfileInfo } from "../profile-info/profile-info";
 import { ProfileOrders } from "../profile-orders/profile-orders";
 import { FeedPage } from "../../pages/feed-page";
 import { FeedShowOrderPage } from "../../pages/feed-show-order-page";
+import { FeedShowOrder } from "../feed-show-order/feed-show-order";
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,7 @@ function App(): JSX.Element {
   const { authChecked } = useAppSelector((store) => store.auth);
 
   const background = location.state && location.state.background;
+  console.log(background);
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -117,9 +119,26 @@ function App(): JSX.Element {
                 element={
                   <Modal
                     handleModalClose={handleModalClose}
+                    showId={false}
                     header={"Детали ингредиента"}
                   >
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/feed/:id"
+                element={
+                  <Modal handleModalClose={handleModalClose} showId={true}>
+                    <FeedShowOrder isModal={true} />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <Modal handleModalClose={handleModalClose} showId={true}>
+                    <FeedShowOrder isModal={true} />
                   </Modal>
                 }
               />

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useParams } from "react-router-dom";
 
 // Styles
 import styles from "./modal.module.css";
@@ -13,12 +14,15 @@ import ModalOverlay from "./modal-overlay";
 function Modal({
   handleModalClose,
   header,
+  showId = false,
   children,
 }: {
   handleModalClose: () => void;
   header?: string;
+  showId: boolean;
   children: React.ReactNode;
 }) {
+  const { id } = useParams();
   useEffect(() => {
     const closeOnEscape = (e: KeyboardEvent | React.KeyboardEvent) =>
       e.key === "Escape" ? handleModalClose() : null;
@@ -34,6 +38,7 @@ function Modal({
         <div className={styles.modal_box}>
           <div className={`mr-10 ml-10 mt-10 ${styles.modal_header}`}>
             {header && <h1 className="text text_type_main-large">{header}</h1>}
+            {showId && <h1 className="text text_type_digits-default">#{id}</h1>}
             <p
               onClick={handleModalClose}
               id="close-btn"
