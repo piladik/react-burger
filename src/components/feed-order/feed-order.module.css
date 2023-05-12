@@ -1,6 +1,7 @@
 .feed_order_card {
   border-radius: 20px;
   background-color: #1c1c21;
+  text-align: start;
 }
 
 .card_header {

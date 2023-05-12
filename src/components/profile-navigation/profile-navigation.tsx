@@ -6,8 +6,8 @@ import { ProfileLink } from "../profile-link/profile-link";
 
 export function ProfileNavigation(): JSX.Element {
   return (
-    <nav className={styles.profile_navigation}>
-      <ul className="mr-15 text text_type_main-medium">
+    <nav className={`mr-15 ${styles.profile_navigation}`}>
+      <ul className="text text_type_main-medium">
         <ProfileLink name={"Профиль"} />
         <ProfileLink name={"История заказов"} />
         <ProfileLink name={"Выход"} />

@@ -100,6 +100,14 @@ function App(): JSX.Element {
                 }
               />
             </Route>
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <ProtectedRouteElement onlyUnAuth={false}>
+                  <FeedShowOrderPage />
+                </ProtectedRouteElement>
+              }
+            />
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
           </Routes>
           {background && (

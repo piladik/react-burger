@@ -1,6 +1,6 @@
 import styles from "./feed-order.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface IFeedOrderProps {
   name: string;
@@ -10,11 +10,19 @@ interface IFeedOrderProps {
   price: number;
 }
 
-function FeedOrder({ order }: { order: IFeedOrderProps }): JSX.Element {
+function FeedOrder({
+  order,
+  isFromProfile,
+}: {
+  order: IFeedOrderProps;
+  isFromProfile: boolean;
+}): JSX.Element {
   const { name, orderId, imgs, timestamp, price } = order;
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
   const handleClick = () => {
-    navigate(`/feed/${orderId}`);
+    navigate(`${location.pathname}/${orderId}`);
   };
   return (
     <div
@@ -29,6 +37,9 @@ function FeedOrder({ order }: { order: IFeedOrderProps }): JSX.Element {
           </p>
         </div>
         <p className="text text_type_main-medium pt-6">{name}</p>
+        {isFromProfile && (
+          <p className="mt-2 text text_type_main-small">Создан</p>
+        )}
         <div className={`${styles.card_footer}`}>
           <div className={`pt-6 pb-6 mr-6 ${styles.ingredients_img_box}`}>
             {imgs.map((img, index) => (

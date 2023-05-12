@@ -50,7 +50,7 @@ function FeedOrders(): JSX.Element {
       <h1 className="text text_type_main-large mb-6">Лента заказов</h1>
       <div className={`${styles.scrollable_box}`}>
         {testData.map((el, index) => (
-          <FeedOrder order={el} key={index} />
+          <FeedOrder order={el} key={index} isFromProfile={false} />
         ))}
       </div>
     </section>
