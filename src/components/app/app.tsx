@@ -32,6 +32,9 @@ import { FeedShowOrderPage } from "../../pages/feed-show-order-page";
 import { FeedShowOrder } from "../feed-show-order/feed-show-order";
 import { connect } from "../../services/actions/ws-feed";
 
+// UTILS
+import { WS_ORDERS_API } from "../../utils/url";
+
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
@@ -44,7 +47,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
-    dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
+    dispatch(connect(WS_ORDERS_API));
     if (authChecked) {
       setLoading(false);
     }

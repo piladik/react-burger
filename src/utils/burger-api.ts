@@ -13,7 +13,7 @@ import {
   IOrderResponse,
 } from "./types/api-types";
 
-const BURGER_BASE_API = "https://norma.nomoreparties.space/api";
+import { BURGER_BASE_API } from "./url";
 
 async function request<T>(url: string, options?: IRequestOptions): Promise<T> {
   return await fetch(url, options).then(checkResponse);

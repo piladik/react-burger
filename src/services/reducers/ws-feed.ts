@@ -7,20 +7,7 @@ import {
   wsConnecting,
 } from "../actions/ws-feed";
 
-enum WebSocketStatus {
-  CONNECTING = "CONNECTING",
-  ONLINE = "ONLINE",
-  OFFLINE = "OFFLINE",
-}
-
-interface IWSOrder {
-  ingredients: Array<string>;
-  _id: string;
-  status: "done" | "created" | "pending";
-  number: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { WebSocketStatus, IWSOrder } from "../../types/web-socket";
 
 interface IWSFeedReducer {
   status: WebSocketStatus;

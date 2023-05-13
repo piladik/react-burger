@@ -1,12 +1,13 @@
 import styles from "./profile-order.module.css";
 import { FeedOrder } from "../feed-order/feed-order";
-import { testData } from "../feed-orders/feed-orders";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 export function ProfileOrders(): JSX.Element {
+  const { orders } = useAppSelector((store) => store.wsFeed);
   return (
     <section className={`${styles.profile_orders_section}`}>
       <div className={`${styles.scrollable_box}`}>
-        {testData.map((el, index) => (
+        {orders.map((el, index) => (
           <FeedOrder order={el} key={index} isFromProfile={true} />
         ))}
       </div>

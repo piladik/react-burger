@@ -55,3 +55,29 @@ export function checkFillings(ingredients: TIngredientsConstructor) {
   if (ingredients.fillings.length === 0) return true;
   return false;
 }
+
+export function getImgUrlList(
+  ingredientsIdArray: Array<string>,
+  ingredients: Array<TIngredient>
+) {
+  const imgList = ingredientsIdArray.map((id) => {
+    const ingredientImgUrl = ingredients.find(
+      (ingredient) => ingredient._id === id
+    )?.image_mobile;
+    return ingredientImgUrl;
+  });
+  const notDisplayedImgsQty = imgList.length - 5;
+  const urlObj = { imgList: imgList.slice(0, 6), notDisplayedImgsQty };
+  return urlObj;
+}
+
+export function countTotalById(
+  ingredientsIdArray: Array<string>,
+  ingredients: Array<TIngredient>
+) {
+  let total: number = 0;
+  ingredientsIdArray.forEach((id) => {
+    total += ingredients.find((ingredient) => ingredient._id === id)!.price;
+  });
+  return total;
+}

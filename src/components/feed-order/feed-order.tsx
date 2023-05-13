@@ -1,46 +1,49 @@
 import styles from "./feed-order.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useLocation, Link } from "react-router-dom";
-
-interface IFeedOrderProps {
-  name: string;
-  orderId: string;
-  imgs: Array<string>;
-  timestamp: string;
-  price: number;
-}
+import { IWSOrder } from "../../types/web-socket";
+import { useAppSelector } from "../../services/hooks/hooks";
+import { getImgUrlList, countTotalById } from "../../utils/helpers";
+import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function FeedOrder({
   order,
   isFromProfile,
 }: {
-  order: IFeedOrderProps;
+  order: IWSOrder;
   isFromProfile: boolean;
 }): JSX.Element {
-  const { name, orderId, imgs, timestamp, price } = order;
+  const { ingredients } = useAppSelector((store) => store.ingredients);
+  const { imgList, notDisplayedImgsQty } = getImgUrlList(
+    order.ingredients,
+    ingredients
+  );
+  const total = countTotalById(order.ingredients, ingredients);
   const location = useLocation();
 
   return (
     <div className={`mb-6 mr-2 ${styles.feed_order_card}`}>
       <Link
         style={{ textDecoration: "none", color: "white" }}
-        to={`${location.pathname}/${orderId}`}
+        to={`${location.pathname}/${order._id}`}
         state={{ background: location }}
       >
         <div className="mr-6 ml-6 card_content">
           <div className={`pt-6 ${styles.card_header}`}>
-            <p className="order_id text text_type_digits-default">{orderId}</p>
+            <p className="order_id text text_type_digits-default">
+              #{order.number}
+            </p>
             <p className="order_date text text_type_main-default text_color_inactive">
-              {timestamp}
+              <FormattedDate date={new Date(order.createdAt)} />
             </p>
           </div>
-          <p className="text text_type_main-medium pt-6">{name}</p>
+          <p className="text text_type_main-medium pt-6">{order.name}</p>
           {isFromProfile && (
             <p className="mt-2 text text_type_main-small">Создан</p>
           )}
           <div className={`${styles.card_footer}`}>
             <div className={`pt-6 pb-6 mr-6 ${styles.ingredients_img_box}`}>
-              {imgs.map((img, index) => (
+              {imgList.map((img, index) => (
                 <div
                   className={`${styles.img_wrapper}`}
                   style={{ zIndex: 100 - index }}
@@ -51,12 +54,20 @@ function FeedOrder({
                     alt="test"
                     className={`${styles.ingredients_img}`}
                   />
+                  {index + 1 === imgList.length && notDisplayedImgsQty > 0 && (
+                    <div
+                      className={`${styles.img_wrapper_empty}`}
+                      style={{ zIndex: 100 }}
+                    >
+                      +{notDisplayedImgsQty}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
             <div className={`${styles.total_box}`}>
               <p className="order_total text text_type_digits-default">
-                {price}
+                {total}
               </p>
               <CurrencyIcon type="primary" />
             </div>
