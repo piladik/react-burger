@@ -30,6 +30,7 @@ import { ProfileOrders } from "../profile-orders/profile-orders";
 import { FeedPage } from "../../pages/feed-page";
 import { FeedShowOrderPage } from "../../pages/feed-show-order-page";
 import { FeedShowOrder } from "../feed-show-order/feed-show-order";
+import { connect } from "../../services/actions/ws-feed";
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -39,11 +40,11 @@ function App(): JSX.Element {
   const { authChecked } = useAppSelector((store) => store.auth);
 
   const background = location.state && location.state.background;
-  console.log(background);
 
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
+    dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
     if (authChecked) {
       setLoading(false);
     }
