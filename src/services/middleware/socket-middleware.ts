@@ -51,7 +51,7 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
           const { success, ...restParsedData } = parsedData;
 
           if (success) {
-            dispatch(onMessage(restParsedData));
+            dispatch(onMessage({ ...restParsedData, dataReceived: true }));
           } else {
             console.log("Error in socketMiddleware - socket.onmessage");
           }

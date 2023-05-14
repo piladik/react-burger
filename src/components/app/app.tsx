@@ -41,6 +41,8 @@ function App(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
   const { authChecked } = useAppSelector((store) => store.auth);
+  const { ingredientsLoaded } = useAppSelector((store) => store.ingredients);
+  const { ordersLoaded } = useAppSelector((store) => store.wsFeed);
 
   const background = location.state && location.state.background;
 
@@ -48,10 +50,10 @@ function App(): JSX.Element {
     dispatch(fetchIngredients());
     dispatch(getUser());
     dispatch(connect(WS_ORDERS_API));
-    if (authChecked) {
+    if (authChecked && ingredientsLoaded && ordersLoaded) {
       setLoading(false);
     }
-  }, [authChecked, dispatch]);
+  }, [authChecked, ingredientsLoaded, ordersLoaded, dispatch]);
 
   const handleModalClose = () => {
     navigate(-1);

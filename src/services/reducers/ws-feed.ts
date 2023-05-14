@@ -15,6 +15,7 @@ interface IWSFeedReducer {
   total: number | undefined;
   totalToday: number | undefined;
   error: unknown;
+  ordersLoaded: boolean;
 }
 
 const initialState: IWSFeedReducer = {
@@ -23,6 +24,7 @@ const initialState: IWSFeedReducer = {
   total: undefined,
   totalToday: undefined,
   error: null,
+  ordersLoaded: false,
 };
 
 export const wsFeedReducer = createReducer(initialState, (builder) => {
@@ -44,5 +46,6 @@ export const wsFeedReducer = createReducer(initialState, (builder) => {
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
+      state.ordersLoaded = action.payload.dataReceived;
     });
 });

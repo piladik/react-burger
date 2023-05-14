@@ -5,12 +5,14 @@ import { TIngredient } from "../../utils/types/ingredients-types";
 interface IIngredientsSlice {
   status: string;
   ingredients: Array<TIngredient>;
+  ingredientsLoaded: boolean;
   error: unknown;
 }
 
 const initialState: IIngredientsSlice = {
   status: "uninitialized",
   ingredients: [],
+  ingredientsLoaded: false,
   error: null,
 };
 
@@ -53,6 +55,7 @@ export const ingredientsSlice = createSlice({
           el["qty"] = 0;
           return el;
         });
+        state.ingredientsLoaded = true;
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.status = "failed";

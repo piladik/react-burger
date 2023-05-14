@@ -71,6 +71,34 @@ export function getImgUrlList(
   return urlObj;
 }
 
+export function getIngredientInfoById(
+  ingredientsIdArray: Array<string>,
+  ingredients: Array<TIngredient>
+) {
+  const urlPriceName: Array<any> = [];
+  const checkedId: Array<string> = [];
+  ingredientsIdArray.forEach((id) => {
+    const ingredient = ingredients.find((el) => el._id === id);
+    if (!checkedId.includes(ingredient!._id)) {
+      urlPriceName.push({
+        _id: ingredient?._id,
+        url: ingredient?.image_mobile,
+        price: ingredient?.price,
+        name: ingredient?.name,
+        qty: 1,
+      });
+      checkedId.push(id);
+    } else {
+      urlPriceName.forEach((item, index) => {
+        if (item._id === id) {
+          urlPriceName[index].qty += 1;
+        }
+      });
+    }
+  });
+  return urlPriceName;
+}
+
 export function countTotalById(
   ingredientsIdArray: Array<string>,
   ingredients: Array<TIngredient>

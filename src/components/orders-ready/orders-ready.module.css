@@ -7,7 +7,7 @@
 }
 
 .ordersId {
-  max-height: 17vh;
+  max-height: 30vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
