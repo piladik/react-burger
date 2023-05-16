@@ -4,6 +4,7 @@ import { useAppSelector } from "../../services/hooks/hooks";
 import { useParams } from "react-router-dom";
 import { countTotalById, getIngredientInfoById } from "../../utils/helpers";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { OrderStatusEn, OrderStatusRu } from "../../types/web-socket";
 
 function FeedShowOrder({ isModal }: { isModal: boolean }): JSX.Element {
   const { id } = useParams();
@@ -17,6 +18,20 @@ function FeedShowOrder({ isModal }: { isModal: boolean }): JSX.Element {
     ingredients
   );
   const total = countTotalById(order!.ingredients, ingredients);
+  const status =
+    order && order.status === OrderStatusEn.DONE ? (
+      <p className="mb-15 text text_type_main-small">
+        <span className={`${styles.status_colored}`}>{OrderStatusRu.DONE}</span>
+      </p>
+    ) : order && order.status === OrderStatusEn.CREATED ? (
+      <p className="mb-15 text text_type_main-small">
+        <span>{OrderStatusRu.CREATED}</span>
+      </p>
+    ) : (
+      <p className="mb-15 text text_type_main-small">
+        <span>{OrderStatusRu.PENDING}</span>
+      </p>
+    );
   return (
     <div className="p-10">
       {!isModal && (
@@ -27,9 +42,7 @@ function FeedShowOrder({ isModal }: { isModal: boolean }): JSX.Element {
         </h1>
       )}
       <p className="mb-3 text text_type_main-medium">{order?.name}</p>
-      <p className="mb-15 text text_type_main-small">
-        <span className={`${styles.status}`}>Выполнен</span>
-      </p>
+      {status && status}
       <h2 className="mb-6 text text_type_main-medium">Состав:</h2>
       <div className={`mb-10 ${styles.ingredients_box}`}>
         {urlPriceQtyList.map((el, index) => (

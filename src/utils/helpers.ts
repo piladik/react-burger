@@ -71,6 +71,7 @@ export function getImgUrlList(
   return urlObj;
 }
 
+// Исправить после удаления некорректных заказов на сервере
 export function getIngredientInfoById(
   ingredientsIdArray: Array<string>,
   ingredients: Array<TIngredient>
@@ -78,34 +79,41 @@ export function getIngredientInfoById(
   const urlPriceName: Array<any> = [];
   const checkedId: Array<string> = [];
   ingredientsIdArray.forEach((id) => {
-    const ingredient = ingredients.find((el) => el._id === id);
-    if (!checkedId.includes(ingredient!._id)) {
-      urlPriceName.push({
-        _id: ingredient?._id,
-        url: ingredient?.image_mobile,
-        price: ingredient?.price,
-        name: ingredient?.name,
-        qty: 1,
-      });
-      checkedId.push(id);
-    } else {
-      urlPriceName.forEach((item, index) => {
-        if (item._id === id) {
-          urlPriceName[index].qty += 1;
-        }
-      });
+    if (id) {
+      const ingredient = ingredients.find((el) => el._id === id);
+      if (!checkedId.includes(ingredient!._id)) {
+        urlPriceName.push({
+          _id: ingredient?._id,
+          url: ingredient?.image_mobile,
+          price: ingredient?.price,
+          name: ingredient?.name,
+          qty: 1,
+        });
+        checkedId.push(id);
+      } else {
+        urlPriceName.forEach((item, index) => {
+          if (item._id === id) {
+            urlPriceName[index].qty += 1;
+          }
+        });
+      }
     }
   });
   return urlPriceName;
 }
 
+// Исправить после удаления некорректных заказов на сервере
 export function countTotalById(
   ingredientsIdArray: Array<string>,
   ingredients: Array<TIngredient>
 ) {
   let total: number = 0;
   ingredientsIdArray.forEach((id) => {
-    total += ingredients.find((ingredient) => ingredient._id === id)!.price;
+    if (id) {
+      total += ingredients.find((ingredient) => ingredient._id === id)!.price;
+    } else {
+      total += 0;
+    }
   });
   return total;
 }

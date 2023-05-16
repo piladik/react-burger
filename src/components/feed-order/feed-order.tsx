@@ -1,18 +1,12 @@
 import styles from "./feed-order.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useLocation, Link } from "react-router-dom";
-import { IWSOrder } from "../../types/web-socket";
+import { IWSOrder, OrderStatusEn, OrderStatusRu } from "../../types/web-socket";
 import { useAppSelector } from "../../services/hooks/hooks";
 import { getImgUrlList, countTotalById } from "../../utils/helpers";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function FeedOrder({
-  order,
-  isFromProfile,
-}: {
-  order: IWSOrder;
-  isFromProfile: boolean;
-}): JSX.Element {
+function FeedOrder({ order }: { order: IWSOrder }): JSX.Element {
   const { ingredients } = useAppSelector((store) => store.ingredients);
   const { imgList, notDisplayedImgsQty } = getImgUrlList(
     order.ingredients,
@@ -20,6 +14,14 @@ function FeedOrder({
   );
   const total = countTotalById(order.ingredients, ingredients);
   const location = useLocation();
+  const status =
+    order.status === OrderStatusEn.DONE ? (
+      <p className="mt-2 text text_type_main-small">{OrderStatusRu.DONE}</p>
+    ) : order.status === OrderStatusEn.CREATED ? (
+      <p className="mt-2 text text_type_main-small">{OrderStatusRu.CREATED}</p>
+    ) : (
+      <p className="mt-2 text text_type_main-small">{OrderStatusRu.PENDING}</p>
+    );
 
   return (
     <div className={`mb-6 mr-2 ${styles.feed_order_card}`}>
@@ -38,9 +40,7 @@ function FeedOrder({
             </p>
           </div>
           <p className="text text_type_main-medium pt-6">{order.name}</p>
-          {isFromProfile && (
-            <p className="mt-2 text text_type_main-small">Создан</p>
-          )}
+          {status && status}
           <div className={`${styles.card_footer}`}>
             <div className={`pt-6 pb-6 mr-6 ${styles.ingredients_img_box}`}>
               {imgList.map((img, index) => (

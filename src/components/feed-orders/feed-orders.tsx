@@ -9,7 +9,7 @@ function FeedOrders(): JSX.Element {
       <h1 className="text text_type_main-large mb-6">Лента заказов</h1>
       <div className={`${styles.scrollable_box}`}>
         {orders.map((el, index) => (
-          <FeedOrder order={el} key={index} isFromProfile={false} />
+          <FeedOrder order={el} key={index} />
         ))}
       </div>
     </section>
