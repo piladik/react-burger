@@ -96,6 +96,9 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         const { name, email } = action.payload.user as IUser;
         state.registerStatus = "succeeded";
+        state.loginStatus = "succeeded";
+        state.logoutStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.isLoggedIn = true;
         state.user = {
           name: name,
@@ -104,6 +107,9 @@ export const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.registerStatus = "failed";
+        state.loginStatus = "uninitialized";
+        state.logoutStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.error = action.error;
         state.isLoggedIn = false;
       })
@@ -112,7 +118,10 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         const { name, email } = action.payload.user as IUser;
+        state.registerStatus = "uninitialized";
         state.loginStatus = "succeeded";
+        state.logoutStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.isLoggedIn = true;
         state.user = {
           name: name,
@@ -121,6 +130,9 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loginStatus = "failed";
+        state.registerStatus = "uninitialized";
+        state.logoutStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.error = action.error;
         state.isLoggedIn = false;
       })
@@ -129,11 +141,18 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.logoutStatus = "succeeded";
+        state.loginStatus = "uninitialized";
+        state.registerStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.isLoggedIn = false;
         state.user = undefined;
+        state.authChecked = false;
       })
       .addCase(logout.rejected, (state, action) => {
         state.logoutStatus = "failed";
+        state.loginStatus = "uninitialized";
+        state.registerStatus = "uninitialized";
+        state.updateUserStatus = "uninitialized";
         state.error = action.error;
         state.isLoggedIn = false;
       })
@@ -148,6 +167,7 @@ export const authSlice = createSlice({
           name: name,
           email: email,
         };
+        state.error = null;
         state.authChecked = true;
       })
       .addCase(getUser.rejected, (state, action) => {

@@ -160,3 +160,10 @@ export const resetPasswordConfirm = async (form: IResetPasswordForm) => {
     body: JSON.stringify({ password, token }),
   });
 };
+
+export const getOrderInfoByNumber = async (orderNumber: number) => {
+  return request(`${BURGER_BASE_API}/orders/${orderNumber}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+};

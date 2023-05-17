@@ -15,9 +15,11 @@ function FeedOrder({ order }: { order: IWSOrder }): JSX.Element {
   const total = countTotalById(order.ingredients, ingredients);
   const location = useLocation();
   const status =
-    order.status === OrderStatusEn.DONE ? (
-      <p className="mt-2 text text_type_main-small">{OrderStatusRu.DONE}</p>
-    ) : order.status === OrderStatusEn.CREATED ? (
+    order && order.status === OrderStatusEn.DONE ? (
+      <p className={`mt-2 text text_type_main-small ${styles.status_colored}`}>
+        {OrderStatusRu.DONE}
+      </p>
+    ) : order && order.status === OrderStatusEn.CREATED ? (
       <p className="mt-2 text text_type_main-small">{OrderStatusRu.CREATED}</p>
     ) : (
       <p className="mt-2 text text_type_main-small">{OrderStatusRu.PENDING}</p>

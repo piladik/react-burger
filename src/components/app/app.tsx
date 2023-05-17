@@ -30,10 +30,18 @@ import { ProfileOrders } from "../profile-orders/profile-orders";
 import { FeedPage } from "../../pages/feed-page";
 import { FeedShowOrderPage } from "../../pages/feed-show-order-page";
 import { FeedShowOrder } from "../feed-show-order/feed-show-order";
-import { connect } from "../../services/actions/ws-feed";
+import {
+  connect as connectWsFeed,
+  disconnect as disconnectWsFeed,
+} from "../../services/actions/ws-feed";
+import {
+  connect as connectWsProfile,
+  disconnect as disconnectWsProfile,
+} from "../../services/actions/ws-profile";
 
 // UTILS
-import { WS_ORDERS_API } from "../../utils/url";
+import { WS_ORDERS_API, WS_PROFILE_ORDERS_API } from "../../utils/url";
+import { getCookie } from "../../utils/cookie";
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -42,18 +50,66 @@ function App(): JSX.Element {
   const navigate = useNavigate();
   const { authChecked } = useAppSelector((store) => store.auth);
   const { ingredientsLoaded } = useAppSelector((store) => store.ingredients);
-  const { ordersLoaded } = useAppSelector((store) => store.wsFeed);
+  const accessToken = getCookie("accessToken")?.slice(7);
 
   const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
-    dispatch(connect(WS_ORDERS_API));
-    if (authChecked && ingredientsLoaded && ordersLoaded) {
-      setLoading(false);
+    if (location.pathname.includes("/feed")) {
+      dispatch(connectWsFeed(WS_ORDERS_API));
     }
-  }, [authChecked, ingredientsLoaded, ordersLoaded, dispatch]);
+    if (location.pathname.includes("/profile/orders")) {
+      dispatch(
+        connectWsProfile(`${WS_PROFILE_ORDERS_API}?token=${accessToken}`)
+      );
+    }
+    if (authChecked && ingredientsLoaded) {
+      setLoading(false);
+      if (!location.pathname.includes("/feed")) {
+        dispatch(disconnectWsFeed());
+      }
+      if (!location.pathname.includes("/profile/orders")) {
+        dispatch(disconnectWsProfile());
+      }
+    }
+  }, [
+    authChecked,
+    ingredientsLoaded,
+    location.pathname,
+    accessToken,
+    dispatch,
+  ]);
+
+  // useEffect(() => {
+  //   dispatch(fetchIngredients());
+  //   dispatch(getUser());
+  //   dispatch(connectWsFeed(WS_ORDERS_API));
+  //   if (isLoggedIn && authChecked ) {
+  //     dispatch(
+  //       connectWsProfile(`${WS_PROFILE_ORDERS_API}?token=${accessToken}`)
+  //     );
+  //     // if (ingredientsLoaded && ordersFeedLoaded && ordersProfileLoaded) {
+  //     //   setLoading(false);
+  //     // }
+  //   } else if (
+  //     !isLoggedIn &&
+  //     authChecked &&
+  //     ingredientsLoaded &&
+  //     ordersFeedLoaded
+  //   ) {
+  //     setLoading(false);
+  //   }
+  // }, [
+  //   authChecked,
+  //   ingredientsLoaded,
+  //   ordersFeedLoaded,
+  //   ordersProfileLoaded,
+  //   accessToken,
+  //   isLoggedIn,
+  //   dispatch,
+  // ]);
 
   const handleModalClose = () => {
     navigate(-1);
@@ -70,7 +126,10 @@ function App(): JSX.Element {
             <Route path="/" element={<ConstructorPage />} />
             <Route path="/feed">
               <Route index element={<FeedPage />} />
-              <Route path=":id" element={<FeedShowOrderPage />} />
+              <Route
+                path=":id"
+                element={<FeedShowOrderPage isProfileOrder={false} />}
+              />
             </Route>
             <Route
               path="/login"
@@ -112,7 +171,7 @@ function App(): JSX.Element {
               path="/profile/orders/:id"
               element={
                 <ProtectedRouteElement onlyUnAuth={false}>
-                  <FeedShowOrderPage />
+                  <FeedShowOrderPage isProfileOrder={true} />
                 </ProtectedRouteElement>
               }
             />
@@ -126,6 +185,7 @@ function App(): JSX.Element {
                   <Modal
                     handleModalClose={handleModalClose}
                     showId={false}
+                    isProfileOrder={false}
                     header={"Детали ингредиента"}
                   >
                     <IngredientDetails />
@@ -135,16 +195,26 @@ function App(): JSX.Element {
               <Route
                 path="/feed/:id"
                 element={
-                  <Modal handleModalClose={handleModalClose} showId={true}>
-                    <FeedShowOrder isModal={true} />
+                  <Modal
+                    handleModalClose={handleModalClose}
+                    showId={true}
+                    isProfileOrder={false}
+                  >
+                    <FeedShowOrder isModal={true} isProfileOrder={false} />
                   </Modal>
                 }
               />
               <Route
                 path="/profile/orders/:id"
                 element={
-                  <Modal handleModalClose={handleModalClose} showId={true}>
-                    <FeedShowOrder isModal={true} />
+                  <Modal
+                    handleModalClose={handleModalClose}
+                    showId={true}
+                    isProfileOrder={true}
+                  >
+                    <ProtectedRouteElement onlyUnAuth={false}>
+                      <FeedShowOrder isModal={true} isProfileOrder={true} />
+                    </ProtectedRouteElement>
                   </Modal>
                 }
               />

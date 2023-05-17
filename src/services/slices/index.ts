@@ -16,7 +16,18 @@ import {
   wsMessage as FeedWsMessage,
 } from "../actions/ws-feed";
 
-const wsActions = {
+import {
+  connect as ProfileWsConnect,
+  disconnect as ProfileWsDisconnect,
+  wsConnecting as ProfileWsConnecting,
+  wsOpen as ProfileWsOpen,
+  wsClose as ProfileWsClose,
+  wsError as ProfileWsError,
+  wsMessage as ProfileWsMessage,
+} from "../actions/ws-profile";
+import { wsProfileReducer } from "../reducers/ws-profile";
+
+const wsFeedActions = {
   wsConnect: FeedWsConnect,
   wsDisconnect: FeedWsDisconnect,
   wsConnecting: FeedWsConnecting,
@@ -26,7 +37,18 @@ const wsActions = {
   onMessage: FeedWsMessage,
 };
 
-const wsFeedMiddleware = socketMiddleware(wsActions);
+const wsProfileActions = {
+  wsConnect: ProfileWsConnect,
+  wsDisconnect: ProfileWsDisconnect,
+  wsConnecting: ProfileWsConnecting,
+  onOpen: ProfileWsOpen,
+  onClose: ProfileWsClose,
+  onError: ProfileWsError,
+  onMessage: ProfileWsMessage,
+};
+
+const wsFeedMiddleware = socketMiddleware(wsFeedActions);
+const wsProfileMiddleware = socketMiddleware(wsProfileActions);
 
 const store = configureStore({
   reducer: {
@@ -35,9 +57,10 @@ const store = configureStore({
     order: orderReducer,
     auth: authReducer,
     wsFeed: wsFeedReducer,
+    wsProfile: wsProfileReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(wsFeedMiddleware);
+    return getDefaultMiddleware().concat(wsFeedMiddleware, wsProfileMiddleware);
   },
 });
 

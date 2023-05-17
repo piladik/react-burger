@@ -1,3 +1,7 @@
+.status_colored {
+  color: #00cccc;
+}
+
 .feed_order_card {
   border-radius: 20px;
   background-color: #1c1c21;

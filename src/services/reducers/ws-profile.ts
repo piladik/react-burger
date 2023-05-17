@@ -5,29 +5,25 @@ import {
   wsMessage,
   wsError,
   wsConnecting,
-} from "../actions/ws-feed";
+} from "../actions/ws-profile";
 
 import { WebSocketStatus, IWSOrder } from "../../types/web-socket";
 
-interface IWSFeedReducer {
+interface IWSProfileReducer {
   status: WebSocketStatus;
   orders: Array<IWSOrder>;
-  total: number | undefined;
-  totalToday: number | undefined;
   error: unknown;
-  ordersFeedLoaded: boolean;
+  ordersProfileLoaded: boolean;
 }
 
-const initialState: IWSFeedReducer = {
+const initialState: IWSProfileReducer = {
   status: WebSocketStatus.OFFLINE,
   orders: [],
-  total: undefined,
-  totalToday: undefined,
   error: null,
-  ordersFeedLoaded: false,
+  ordersProfileLoaded: false,
 };
 
-export const wsFeedReducer = createReducer(initialState, (builder) => {
+export const wsProfileReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(wsConnecting, (state) => {
       state.status = WebSocketStatus.CONNECTING;
@@ -44,8 +40,6 @@ export const wsFeedReducer = createReducer(initialState, (builder) => {
     })
     .addCase(wsMessage, (state, action) => {
       state.orders = action.payload.orders;
-      state.total = action.payload.total;
-      state.totalToday = action.payload.totalToday;
-      state.ordersFeedLoaded = action.payload.dataReceived;
+      state.ordersProfileLoaded = action.payload.dataReceived;
     });
 });

@@ -6,10 +6,19 @@ import { countTotalById, getIngredientInfoById } from "../../utils/helpers";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderStatusEn, OrderStatusRu } from "../../types/web-socket";
 
-function FeedShowOrder({ isModal }: { isModal: boolean }): JSX.Element {
+function FeedShowOrder({
+  isModal,
+  isProfileOrder,
+}: {
+  isModal: boolean;
+  isProfileOrder: boolean;
+}): JSX.Element {
   const { id } = useParams();
-  const order = useAppSelector((store) =>
-    store.wsFeed.orders.find((el) => el._id === id)
+
+  const order = useAppSelector(
+    !isProfileOrder
+      ? (store) => store.wsFeed.orders.find((el) => el._id === id)
+      : (store) => store.wsProfile.orders.find((el) => el._id === id)
   );
   const { ingredients } = useAppSelector((store) => store.ingredients);
 

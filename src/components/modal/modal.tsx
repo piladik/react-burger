@@ -16,16 +16,20 @@ function Modal({
   handleModalClose,
   header,
   showId = false,
+  isProfileOrder,
   children,
 }: {
   handleModalClose: () => void;
   header?: string;
   showId: boolean;
+  isProfileOrder: boolean;
   children: React.ReactNode;
 }) {
   const { id } = useParams();
-  const orderNumber = useAppSelector((store) =>
-    store.wsFeed.orders.find((el) => el._id === id)
+  const orderNumber = useAppSelector(
+    !isProfileOrder
+      ? (store) => store.wsFeed.orders.find((el) => el._id === id)
+      : (store) => store.wsProfile.orders.find((el) => el._id === id)
   )?.number;
   useEffect(() => {
     const closeOnEscape = (e: KeyboardEvent | React.KeyboardEvent) =>
