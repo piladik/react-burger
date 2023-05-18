@@ -54,6 +54,8 @@ function App(): JSX.Element {
 
   const background = location.state && location.state.background;
 
+  // dispatch(fetchIngredients());
+  // dispatch(getUser());
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());

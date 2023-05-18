@@ -4,6 +4,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { Middleware, MiddlewareAPI, AnyAction } from "redux";
 import type { RootState, AppDispatch } from "../slices";
+import { getUser } from "../slices/auth";
 
 type TWSStoreActions = {
   wsConnect: ActionCreatorWithPayload<string>;
@@ -52,9 +53,12 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
 
           if (success) {
             dispatch(onMessage({ ...restParsedData, dataReceived: true }));
+          } else if (parsedData.message === "Invalid or missing token") {
+            dispatch(getUser());
           } else {
-            console.log("Error in socketMiddleware - socket.onmessage");
-            console.log(event);
+            console.log(
+              `Error in socketMiddleware - socket.onmessage: ${parsedData.message}`
+            );
           }
         };
 

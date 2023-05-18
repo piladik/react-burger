@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { createSlice } from "@reduxjs/toolkit";
 import { TIngredientsConstructor } from "../../utils/types/ingredients-types";
 
