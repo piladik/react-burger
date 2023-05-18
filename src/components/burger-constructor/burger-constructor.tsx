@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useDrop } from "react-dnd";
 import { TIngredient } from "../../utils/types/ingredients-types";
+import { nanoid } from "nanoid";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -32,7 +33,7 @@ function BurgerConstructor(): JSX.Element {
         dispatch(addBun(ingredient));
         dispatch(counterIncrease(ingredient._id));
       } else {
-        dispatch(addFilling(ingredient));
+        dispatch(addFilling({ ingredient, nanoid: nanoid() }));
         dispatch(counterIncrease(ingredient._id));
       }
     },

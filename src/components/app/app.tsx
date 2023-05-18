@@ -57,59 +57,26 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(getUser());
+    setLoading(false);
+  }, [dispatch]);
+
+  useEffect(() => {
     if (location.pathname.includes("/feed")) {
       dispatch(connectWsFeed(WS_ORDERS_API));
+    } else {
+      dispatch(disconnectWsFeed());
     }
+  }, [location.pathname, dispatch]);
+
+  useEffect(() => {
     if (location.pathname.includes("/profile/orders")) {
       dispatch(
         connectWsProfile(`${WS_PROFILE_ORDERS_API}?token=${accessToken}`)
       );
+    } else {
+      dispatch(disconnectWsProfile());
     }
-    if (authChecked && ingredientsLoaded) {
-      setLoading(false);
-      if (!location.pathname.includes("/feed")) {
-        dispatch(disconnectWsFeed());
-      }
-      if (!location.pathname.includes("/profile/orders")) {
-        dispatch(disconnectWsProfile());
-      }
-    }
-  }, [
-    authChecked,
-    ingredientsLoaded,
-    location.pathname,
-    accessToken,
-    dispatch,
-  ]);
-
-  // useEffect(() => {
-  //   dispatch(fetchIngredients());
-  //   dispatch(getUser());
-  //   dispatch(connectWsFeed(WS_ORDERS_API));
-  //   if (isLoggedIn && authChecked ) {
-  //     dispatch(
-  //       connectWsProfile(`${WS_PROFILE_ORDERS_API}?token=${accessToken}`)
-  //     );
-  //     // if (ingredientsLoaded && ordersFeedLoaded && ordersProfileLoaded) {
-  //     //   setLoading(false);
-  //     // }
-  //   } else if (
-  //     !isLoggedIn &&
-  //     authChecked &&
-  //     ingredientsLoaded &&
-  //     ordersFeedLoaded
-  //   ) {
-  //     setLoading(false);
-  //   }
-  // }, [
-  //   authChecked,
-  //   ingredientsLoaded,
-  //   ordersFeedLoaded,
-  //   ordersProfileLoaded,
-  //   accessToken,
-  //   isLoggedIn,
-  //   dispatch,
-  // ]);
+  }, [location.pathname, dispatch, accessToken]);
 
   const handleModalClose = () => {
     navigate(-1);
@@ -117,7 +84,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      {loading ? (
+      {loading && !ingredientsLoaded && !authChecked ? (
         <Preloader />
       ) : (
         <div className={`${styles.App} text text_type_main-default`}>

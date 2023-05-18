@@ -8,7 +8,8 @@ function FeedShowOrderPage({
   isProfileOrder: boolean;
 }): JSX.Element {
   const { ordersProfileLoaded } = useAppSelector((store) => store.wsProfile);
-  return (
+  const { ordersFeedLoaded } = useAppSelector((store) => store.wsFeed);
+  const page = isProfileOrder ? (
     <>
       {ordersProfileLoaded && (
         <section className={`${styles.feed_show_order_section}`}>
@@ -16,7 +17,16 @@ function FeedShowOrderPage({
         </section>
       )}
     </>
+  ) : (
+    <>
+      {ordersFeedLoaded && (
+        <section className={`${styles.feed_show_order_section}`}>
+          <FeedShowOrder isModal={false} isProfileOrder={isProfileOrder} />
+        </section>
+      )}
+    </>
   );
+  return page;
 }
 
 export { FeedShowOrderPage };

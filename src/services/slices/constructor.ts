@@ -21,7 +21,11 @@ const constructorSlice = createSlice({
       state.ingredients.bun = action.payload;
     },
     addFilling(state, action) {
-      state.ingredients.fillings.push({ ...action.payload, nanoid: nanoid() });
+      state.ingredients.fillings.push({
+        ...action.payload.ingredient,
+        nanoid: action.payload.nanoid,
+      });
+      console.log(action.payload);
     },
     deleteFilling(state, action) {
       state.ingredients.fillings = state.ingredients.fillings.filter(
