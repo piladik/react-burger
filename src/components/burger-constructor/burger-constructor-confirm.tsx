@@ -1,8 +1,6 @@
 import { useState, useMemo, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useNavigate, useLocation } from "react-router-dom";
-import { RootState } from "../../services/reducers";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -19,7 +17,7 @@ import {
 import { getIngredientsId, countTotal } from "../../utils/helpers";
 
 // ACTIONS-REDUCERS
-import { setOrderId } from "../../services/actions/order";
+import { setOrderId } from "../../services/slices/order";
 
 function BurgerConstructorConfirm({
   isEmptyBun,
@@ -27,12 +25,10 @@ function BurgerConstructorConfirm({
   isEmptyBun: boolean;
 }): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { ingredients } = useSelector(
-    (store: RootState) => store.constructorBurger
-  );
-  const { isLoggedIn } = useSelector((store: RootState) => store.auth);
+  const { ingredients } = useAppSelector((store) => store.constructorBurger);
+  const { isLoggedIn } = useAppSelector((store) => store.auth);
   const memoizedTotal = useMemo(() => countTotal(ingredients), [ingredients]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -54,7 +50,6 @@ function BurgerConstructorConfirm({
     ) {
       // Если есть булка и список ингредиентов обновился,
       // то делаем запрос к api, получаем orderId и записываем его в глобальное состояние store.order.orderId
-      // @ts-ignore
       dispatch(setOrderId(ingredientsId));
     } else if (!isLoggedIn) {
       navigate("/login", { state: { from: location } });
@@ -91,15 +86,15 @@ function BurgerConstructorConfirm({
         </Button>
       </div>
       {isModalOpen && (
-        <Modal handleModalClose={handleClose}>
+        <Modal
+          handleModalClose={handleClose}
+          showId={false}
+          isProfileOrder={false}
+        >
           <OrderDetails />
         </Modal>
       )}
     </>
   );
 }
-
-BurgerConstructorConfirm.propTypes = {
-  isEmptyBun: PropTypes.bool.isRequired,
-};
 export default BurgerConstructorConfirm;

@@ -1,12 +1,8 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import type { Identifier, XYCoord } from "dnd-core";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
-import {
-  TIngredientWithUniqueId,
-  TIngredientsWithUniqueId,
-} from "../../utils/types/ingredients-types";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
+import { TIngredientWithUniqueId } from "../../utils/types/ingredients-types";
 
 // Components
 import {
@@ -18,11 +14,8 @@ import {
 import styles from "./burger-constructor.module.css";
 
 // ACTIONS-REDUCERS
-import {
-  DELETE_FILLING,
-  MOVE_FILLING,
-} from "../../services/actions/constructor";
-import { INGREDIENTS_COUNTER_DECREASE } from "../../services/actions/ingredients";
+import { counterDecrease } from "../../services/slices/ingredients";
+import { deleteFilling, moveFilling } from "../../services/slices/constructor";
 
 interface DragItem {
   index: number;
@@ -31,8 +24,7 @@ interface DragItem {
 }
 
 function FillingsContainer(): JSX.Element {
-  const { ingredients }: { ingredients: TIngredientsWithUniqueId } =
-    useSelector((store: RootState) => store.constructorBurger);
+  const { ingredients } = useAppSelector((store) => store.constructorBurger);
 
   return (
     <div className={styles.scrollable_box}>
@@ -55,7 +47,7 @@ function FillingItem({
   ingredient: TIngredientWithUniqueId;
   index: number;
 }): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Следующий код взят по сыллку от куратора из https://codesandbox.io/embed/react-dnd-rtk-ofjc4h?codemirror=1 и адаптирован под текущий проект
   const ref = useRef<HTMLDivElement>(null);
@@ -105,7 +97,8 @@ function FillingItem({
         return;
       }
 
-      dispatch({ type: MOVE_FILLING, from: dragIndex, to: hoverIndex });
+      // dispatch({ type: MOVE_FILLING, from: dragIndex, to: hoverIndex });
+      dispatch(moveFilling({ from: dragIndex, to: hoverIndex }));
 
       // Сразу меняем индекс перемещаемого элемента
       item.index = hoverIndex;
@@ -125,8 +118,8 @@ function FillingItem({
   drag(drop(ref));
 
   const deleteIngredient = (nanoid: string, id: string) => {
-    dispatch({ type: DELETE_FILLING, nanoid });
-    dispatch({ type: INGREDIENTS_COUNTER_DECREASE, id });
+    dispatch(deleteFilling(nanoid));
+    dispatch(counterDecrease(id));
   };
   return (
     <div

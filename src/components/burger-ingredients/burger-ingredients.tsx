@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./burger-ingredients.module.css";
@@ -14,8 +13,8 @@ function BurgerIngredients() {
   const [activeTab, setActiveTab] = useState({
     active: "one",
   });
-  const { ingredients }: { ingredients: TIngredient[] } = useSelector(
-    (store: RootState) => store.ingredients
+  const { ingredients }: { ingredients: TIngredient[] } = useAppSelector(
+    (store) => store.ingredients
   );
 
   // Отслеживает какой элемент попал в область видимости и присваивает нужный стейт

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 
 // Components
 import {
@@ -8,19 +8,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Utils
-import { login } from "../../services/actions/auth";
+import { login } from "../../services/slices/auth";
 import useForm from "../../hooks/useForm";
 import React from "react";
 
 export function LoginForm() {
   const { form, handleChange } = useForm({ email: "", password: "" });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
   };
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(login(form));
   };
   return (

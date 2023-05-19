@@ -1,17 +1,15 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../services/hooks/hooks";
 import { useLocation, Navigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import React from "react";
-import { RootState } from "../services/reducers";
+import { ReactElement } from "react";
 
 function ProtectedRouteElement({
   onlyUnAuth = false,
   children,
 }: {
   onlyUnAuth: boolean;
-  children: React.ReactElement;
+  children: ReactElement;
 }): JSX.Element {
-  const { isLoggedIn, user } = useSelector((store: RootState) => store.auth);
+  const { isLoggedIn, user } = useAppSelector((store) => store.auth);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
@@ -25,10 +23,5 @@ function ProtectedRouteElement({
 
   return children;
 }
-
-ProtectedRouteElement.propTypes = {
-  onlyUnAuth: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-};
 
 export default ProtectedRouteElement;

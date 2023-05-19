@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 
 // Components
 import {
@@ -9,21 +9,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // ACTIONS-REDUCERS
-import { register } from "../../services/actions/auth";
+import { register } from "../../services/slices/auth";
 
 // Utils
 import useForm from "../../hooks/useForm";
 
 export function RegisterForm(): JSX.Element {
   const { form, handleChange } = useForm({ email: "", password: "", name: "" });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    //@ts-ignore хранилище не типизировано
     dispatch(register(form));
   };
   return (

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useDrop } from "react-dnd";
-import { RootState } from "../../services/reducers";
 import { TIngredient } from "../../utils/types/ingredients-types";
+import { nanoid } from "nanoid";
 
 // Styles
 import styles from "./burger-constructor.module.css";
@@ -16,17 +16,12 @@ import FillingsContainer from "./fillings-container";
 import { checkBun } from "../../utils/helpers";
 
 // ACTIONS-REDUCERS
-import { ADD_FILLING, ADD_BUN } from "../../services/actions/constructor";
-import {
-  INGREDIENTS_COUNTER_INCREASE,
-  CHANGE_BUN,
-} from "../../services/actions/ingredients";
+import { counterIncrease, changeBun } from "../../services/slices/ingredients";
+import { addBun, addFilling } from "../../services/slices/constructor";
 
 function BurgerConstructor(): JSX.Element {
-  const { ingredients } = useSelector(
-    (store: RootState) => store.constructorBurger
-  );
-  const dispatch = useDispatch();
+  const { ingredients } = useAppSelector((store) => store.constructorBurger);
+  const dispatch = useAppDispatch();
 
   const isEmptyBun = useMemo(() => checkBun(ingredients), [ingredients]);
 
@@ -34,27 +29,12 @@ function BurgerConstructor(): JSX.Element {
     accept: ["bun", "main", "sauce"],
     drop({ ingredient }: { ingredient: TIngredient }) {
       if (ingredient.type === "bun") {
-        dispatch({
-          type: CHANGE_BUN,
-          id: ingredient._id,
-        });
-        dispatch({
-          type: ADD_BUN,
-          ingredient: ingredient,
-        });
-        dispatch({
-          type: INGREDIENTS_COUNTER_INCREASE,
-          id: ingredient._id,
-        });
+        dispatch(changeBun());
+        dispatch(addBun(ingredient));
+        dispatch(counterIncrease(ingredient._id));
       } else {
-        dispatch({
-          type: ADD_FILLING,
-          ingredient: ingredient,
-        });
-        dispatch({
-          type: INGREDIENTS_COUNTER_INCREASE,
-          id: ingredient._id,
-        });
+        dispatch(addFilling({ ingredient, nanoid: nanoid() }));
+        dispatch(counterIncrease(ingredient._id));
       }
     },
   });

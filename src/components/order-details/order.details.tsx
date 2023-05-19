@@ -1,17 +1,22 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/reducers";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.png";
 
 function OrderDetails(): JSX.Element {
-  const { orderId } = useSelector((store: RootState) => store.order);
+  const { orderId, status } = useAppSelector((store) => store.order);
   return (
     <div className={styles.modal_content}>
-      <p className={`text text_type_digits-large ${styles.order_id}`}>
-        {orderId}
-      </p>
+      {status === "loading" ? (
+        <p className={`text text_type_main-medium ${styles.order_id}`}>
+          Подождите, скоро появится номер заказа
+        </p>
+      ) : (
+        <p className={`text text_type_digits-large ${styles.order_id}`}>
+          {orderId}
+        </p>
+      )}
       <p
         className={`"text text_type_digits-small mt-8" ${styles.order_id_text}`}
       >

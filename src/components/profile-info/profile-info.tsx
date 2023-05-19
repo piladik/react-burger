@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../services/actions/auth";
-import { RootState } from "../../services/reducers";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
+import { updateUser } from "../../services/slices/auth";
 
 // Styles
 import styles from "./profile-info.module.css";
@@ -18,13 +17,15 @@ import {
 import useForm from "../../hooks/useForm";
 
 export function ProfileInfo(): JSX.Element {
-  const { user } = useSelector((store: RootState) => store.auth);
-  const dispatch = useDispatch();
+  const user = useAppSelector((store) => store.auth.user);
+  const dispatch = useAppDispatch();
   const [showButtons, setShowButtons] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
   const { form, handleChange, setForm } = useForm({
-    name: user.username,
-    email: user.email,
+    // if user accessed this page
+    // then user.name & user.email can not be undefined
+    name: user!.name,
+    email: user!.email,
     password: "12345678",
   });
 
@@ -38,8 +39,8 @@ export function ProfileInfo(): JSX.Element {
 
   const handleCancel = () => {
     setForm({
-      name: user.username,
-      email: user.email,
+      name: user!.name,
+      email: user!.email,
       password: "********",
     });
     setShowButtons(false);
@@ -49,10 +50,8 @@ export function ProfileInfo(): JSX.Element {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!passwordChanged) {
-      //@ts-ignore хранилище не типизировано
       dispatch(updateUser({ name: form.name, email: form.email }));
     } else {
-      //@ts-ignore хранилище не типизировано
       dispatch(updateUser(form));
     }
     setShowButtons(false);

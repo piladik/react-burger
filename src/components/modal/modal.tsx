@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../services/hooks/hooks";
 
 // Styles
 import styles from "./modal.module.css";
@@ -14,12 +15,22 @@ import ModalOverlay from "./modal-overlay";
 function Modal({
   handleModalClose,
   header,
+  showId = false,
+  isProfileOrder,
   children,
 }: {
   handleModalClose: () => void;
   header?: string;
+  showId: boolean;
+  isProfileOrder: boolean;
   children: React.ReactNode;
 }) {
+  const { id } = useParams();
+  const orderNumber = useAppSelector(
+    !isProfileOrder
+      ? (store) => store.wsFeed.orders.find((el) => el._id === id)
+      : (store) => store.wsProfile.orders.find((el) => el._id === id)
+  )?.number;
   useEffect(() => {
     const closeOnEscape = (e: KeyboardEvent | React.KeyboardEvent) =>
       e.key === "Escape" ? handleModalClose() : null;
@@ -35,6 +46,9 @@ function Modal({
         <div className={styles.modal_box}>
           <div className={`mr-10 ml-10 mt-10 ${styles.modal_header}`}>
             {header && <h1 className="text text_type_main-large">{header}</h1>}
+            {showId && (
+              <h1 className="text text_type_digits-default">#{orderNumber}</h1>
+            )}
             <p
               onClick={handleModalClose}
               id="close-btn"
@@ -50,11 +64,5 @@ function Modal({
     document.getElementById("modals") as HTMLElement
   );
 }
-
-Modal.propTypes = {
-  handleModalClose: PropTypes.func.isRequired,
-  header: PropTypes.string,
-  children: PropTypes.element.isRequired,
-};
 
 export default Modal;

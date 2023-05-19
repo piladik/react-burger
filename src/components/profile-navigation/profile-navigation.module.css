@@ -1,5 +1,10 @@
+.profile_navigation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .profile_navigation p {
-  text-align: start;
   width: 320px;
-  height: 48;
+  text-align: start;
 }
