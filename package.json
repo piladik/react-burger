@@ -35,7 +35,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "jest-test": "jest"
+    "jest-test": "jest",
+    "jest-test:order": "jest slices/order.test.ts",
+    "jest-test:ingredients": "jest slices/ingredients.test.ts",
+    "jest-test:constructor": "jest slices/constructor.test.ts"
   },
   "eslintConfig": {
     "extends": [

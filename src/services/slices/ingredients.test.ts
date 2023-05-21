@@ -8,7 +8,7 @@ import { IIngredientsSlice } from "./ingredients";
 import {
   mockedIngredientsData,
   mockedIngredientsDataWithQty,
-  mockedIngredient,
+  mockedBun,
 } from "../../utils/mockedData";
 import { BURGER_BASE_API } from "../../utils/url";
 import "core-js/actual/structured-clone";
@@ -78,14 +78,12 @@ test("should handle an ingredeint's qty property to be increased by 1", () => {
   };
   const expectedIngredients = structuredClone(mockedIngredientsDataWithQty);
   expectedIngredients[0].qty = 1;
-  expect(reducer(previousState, counterIncrease(mockedIngredient._id))).toEqual(
-    {
-      status: "succeeded",
-      ingredients: expectedIngredients,
-      ingredientsLoaded: true,
-      error: null,
-    }
-  );
+  expect(reducer(previousState, counterIncrease(mockedBun._id))).toEqual({
+    status: "succeeded",
+    ingredients: expectedIngredients,
+    ingredientsLoaded: true,
+    error: null,
+  });
 });
 
 test("should handle an ingredeint's qty property to be decreased by 1", () => {
@@ -99,14 +97,12 @@ test("should handle an ingredeint's qty property to be decreased by 1", () => {
   };
   const expectedIngredients = structuredClone(mockedIngredientsDataWithQty);
   expectedIngredients[0].qty = 0;
-  expect(reducer(previousState, counterDecrease(mockedIngredient._id))).toEqual(
-    {
-      status: "succeeded",
-      ingredients: expectedIngredients,
-      ingredientsLoaded: true,
-      error: null,
-    }
-  );
+  expect(reducer(previousState, counterDecrease(mockedBun._id))).toEqual({
+    status: "succeeded",
+    ingredients: expectedIngredients,
+    ingredientsLoaded: true,
+    error: null,
+  });
 });
 
 test("should handle setting bun's qty to 0", () => {

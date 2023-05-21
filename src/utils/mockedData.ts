@@ -1,6 +1,7 @@
 import {
   TIngredientResponse,
   TIngredient,
+  TIngredientWithUniqueId,
 } from "../utils/types/ingredients-types";
 export const mockedIngredientsData: Array<TIngredientResponse> = [
   {
@@ -153,7 +154,7 @@ export const mockedIngredientsDataWithQty: Array<TIngredient> = [
   },
 ];
 
-export const mockedIngredient: TIngredient = {
+export const mockedBun: TIngredient = {
   calories: 420,
   carbohydrates: 53,
   fat: 24,
@@ -167,4 +168,21 @@ export const mockedIngredient: TIngredient = {
   __v: 0,
   _id: "643d69a5c3f7b9001cfa093c",
   qty: 0,
+};
+
+export const mockedFilling: TIngredientWithUniqueId = {
+  calories: 643,
+  carbohydrates: 85,
+  fat: 26,
+  image: "https://code.s3.yandex.net/react/code/meat-03.png",
+  image_large: "https://code.s3.yandex.net/react/code/meat-03-large.png",
+  image_mobile: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
+  name: "Филе Люминесцентного тетраодонтимформа",
+  price: 988,
+  proteins: 44,
+  type: "main",
+  __v: 0,
+  _id: "643d69a5c3f7b9001cfa093e",
+  qty: 0,
+  nanoid: "1mjhDAF9C2nhBmo5kzDVW",
 };

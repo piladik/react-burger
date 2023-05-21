@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TIngredientsConstructor } from "../../utils/types/ingredients-types";
 
-interface IConstructorSlice {
+export interface IConstructorSlice {
   ingredients: TIngredientsConstructor;
 }
 
@@ -24,7 +24,6 @@ const constructorSlice = createSlice({
         ...action.payload.ingredient,
         nanoid: action.payload.nanoid,
       });
-      console.log(action.payload);
     },
     deleteFilling(state, action) {
       state.ingredients.fillings = state.ingredients.fillings.filter(
