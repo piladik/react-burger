@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getIngredientsRequest } from "../../utils/burger-api";
 import { TIngredient } from "../../utils/types/ingredients-types";
 
-interface IIngredientsSlice {
+export interface IIngredientsSlice {
   status: string;
   ingredients: Array<TIngredient>;
   ingredientsLoaded: boolean;
@@ -60,6 +60,7 @@ export const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.status = "failed";
         state.ingredients = [];
+        state.ingredientsLoaded = false;
         state.error = action.error;
       });
   },
