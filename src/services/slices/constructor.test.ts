@@ -1,14 +1,16 @@
 import reducer, {
   addBun,
   addFilling,
-  //   deleteFilling,
+  deleteFilling,
+  moveFilling,
   //   moveFilling,
 } from "./constructor";
 import {
   mockedBun,
   mockedIngredientsDataWithQty,
   mockedFilling,
-} from "../../utils/mockedData";
+} from "../../utils/mocked-data/mocked-data-general";
+import { mockedIngredientsWithNanoId } from "../../utils/mocked-data/mocked-data-constructor";
 import { IConstructorSlice } from "./constructor";
 // import { TIngredientWithUniqueId } from "../../utils/types/ingredients-types";
 
@@ -71,6 +73,32 @@ test("should handle adding fillings to not empty ingredients: fillings", () => {
     ingredients: {
       bun: {},
       fillings: [...initialState.ingredients.fillings, { ...expectedFilling }],
+    },
+  });
+});
+
+test("should handle deleting filling", () => {
+  const initialState = {
+    ingredients: { bun: { ...mockedBun }, fillings: [{ ...mockedFilling }] },
+  };
+  expect(reducer(initialState, deleteFilling(mockedFilling.nanoid))).toEqual({
+    ingredients: {
+      bun: { ...mockedBun },
+      fillings: [],
+    },
+  });
+});
+
+test("should handle moving fillings", () => {
+  const initialState = {
+    ingredients: { bun: {}, fillings: [...mockedIngredientsWithNanoId] },
+  };
+  const movedIngredient = mockedIngredientsWithNanoId.shift();
+  mockedIngredientsWithNanoId.splice(1, 0, movedIngredient!);
+  expect(reducer(initialState, moveFilling({ from: 0, to: 1 }))).toEqual({
+    ingredients: {
+      bun: {},
+      fillings: [...mockedIngredientsWithNanoId],
     },
   });
 });

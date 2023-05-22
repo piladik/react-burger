@@ -9,7 +9,7 @@ import {
   mockedIngredientsData,
   mockedIngredientsDataWithQty,
   mockedBun,
-} from "../../utils/mockedData";
+} from "../../utils/mocked-data/mocked-data-general";
 import { BURGER_BASE_API } from "../../utils/url";
 import "core-js/actual/structured-clone";
 import { TIngredient } from "../../utils/types/ingredients-types";

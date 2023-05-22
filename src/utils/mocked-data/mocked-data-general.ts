@@ -2,7 +2,7 @@ import {
   TIngredientResponse,
   TIngredient,
   TIngredientWithUniqueId,
-} from "../utils/types/ingredients-types";
+} from "../../utils/types/ingredients-types";
 export const mockedIngredientsData: Array<TIngredientResponse> = [
   {
     calories: 420,
