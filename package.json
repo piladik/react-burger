@@ -38,7 +38,8 @@
     "jest-test": "jest",
     "jest-test:order": "jest slices/order.test.ts",
     "jest-test:ingredients": "jest slices/ingredients.test.ts",
-    "jest-test:constructor": "jest slices/constructor.test.ts"
+    "jest-test:constructor": "jest slices/constructor.test.ts",
+    "jest-test:auth": "jest slices/auth.test.ts"
   },
   "eslintConfig": {
     "extends": [
