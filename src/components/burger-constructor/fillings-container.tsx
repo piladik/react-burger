@@ -126,6 +126,7 @@ function FillingItem({
       className={styles.constructor_item}
       ref={ref}
       data-handler-id={handlerId}
+      data-test="filling"
     >
       <DragIcon type="primary" />
       <ConstructorElement
