@@ -67,7 +67,7 @@ function BurgerIngredients() {
         >
           Булки
         </h1>
-        <div className={styles.cards_container} id="bun_tab">
+        <div className={styles.cards_container} id="bun_tab" data-test="Булки">
           {buns.map((bun) => (
             <IngredientsCard ingredient={bun} key={bun._id} />
           ))}
@@ -78,7 +78,11 @@ function BurgerIngredients() {
         >
           Соусы
         </h1>
-        <div className={styles.cards_container} id="sauce_tab">
+        <div
+          className={styles.cards_container}
+          id="sauce_tab"
+          data-test="Соусы"
+        >
           {sauces.map((sauce) => (
             <IngredientsCard ingredient={sauce} key={sauce._id} />
           ))}
@@ -89,7 +93,11 @@ function BurgerIngredients() {
         >
           Начинки
         </h1>
-        <div className={styles.cards_container} id="main_tab">
+        <div
+          className={styles.cards_container}
+          id="main_tab"
+          data-test="Начинки"
+        >
           {mains.map((main) => (
             <IngredientsCard ingredient={main} key={main._id} />
           ))}
