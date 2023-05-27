@@ -12,9 +12,11 @@ Stellar Burger is a React-based web application that allows users to create and 
 
 User authentication was implemented using JSON Web Tokens (JWT). Upon successful login, a token is generated and stored in the user's browser. This token is then sent with each subsequent request to authenticate the user. The token has a limited lifespan and must be refreshed periodically to maintain access.
 
-## Order History
+## Orders History
 
 In the /feed route, users can view the last 50 orders that have been made by all users, as well as the total amount of orders made today and of all time.
+
+The orders history was implemented using websockets, which allows the server to send the updated history list to all connected clients whenever a new order is added. This ensures that all users have access to the most up-to-date information about the orders. If you have any further questions, please let me know.
 
 ## Order Details
 
