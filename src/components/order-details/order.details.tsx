@@ -7,7 +7,7 @@ import doneImg from "../../images/done.png";
 function OrderDetails(): JSX.Element {
   const { orderId, status } = useAppSelector((store) => store.order);
   return (
-    <div className={styles.modal_content}>
+    <div className={styles.modal_content} data-test="order-details">
       {status === "loading" ? (
         <p className={`text text_type_main-medium ${styles.order_id}`}>
           Подождите, скоро появится номер заказа

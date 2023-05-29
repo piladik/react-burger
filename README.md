@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# README: Stellar Burger Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Deployment
 
-## Available Scripts
+The Stellar Burger web application is currently deployed and can be accessed using the following link: https://piladik.github.io/react-burger/
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+Stellar Burger is a React-based web application that allows users to create and order burgers using ingredients fetched from an API. One of the unique features of the app is the drag and drop feature, which enables users to add ingredients to their burgers by simply dragging and dropping them into the constructor. This feature was implemented using the react-dnd library.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## User Authentication
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+User authentication was implemented using JSON Web Tokens (JWT). Upon successful login, a token is generated and stored in the user's browser. This token is then sent with each subsequent request to authenticate the user. The token has a limited lifespan and must be refreshed periodically to maintain access.
 
-### `npm test`
+## Orders History
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In the /feed route, users can view the last 50 orders that have been made by all users, as well as the total amount of orders made today and of all time.
 
-### `npm run build`
+The orders history was implemented using websockets, which allows the server to send the updated history list to all connected clients whenever a new order is added. This ensures that all users have access to the most up-to-date information about the orders. If you have any further questions, please let me know.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Order Details
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Users can view the details of an order by clicking on the order in the /feed route. A modal window will be opened with all the information about the order, including the ingredients used, the price of each ingredient, and the total price of the order.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## User Profile
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+In the /profile route, users can change their name and password. Additionally, users can view their order history, which includes all orders that they have made on the application. These orders are sorted by date and include the details of each order, such as the ingredients used and the total price.

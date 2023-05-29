@@ -44,7 +44,10 @@ function Modal({
       <ModalOverlay handleModalClose={handleModalClose} />
       <div className={styles.modal_container}>
         <div className={styles.modal_box}>
-          <div className={`mr-10 ml-10 mt-10 ${styles.modal_header}`}>
+          <div
+            className={`mr-10 ml-10 mt-10 ${styles.modal_header}`}
+            data-test="modal-header"
+          >
             {header && <h1 className="text text_type_main-large">{header}</h1>}
             {showId && (
               <h1 className="text text_type_digits-default">#{orderNumber}</h1>

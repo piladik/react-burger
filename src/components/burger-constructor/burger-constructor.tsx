@@ -41,10 +41,15 @@ function BurgerConstructor(): JSX.Element {
 
   return (
     <section className={`mt-25 ${styles.constructor_section}`}>
-      <div className={styles.constructor_container} ref={dropTarget}>
+      <div
+        className={styles.constructor_container}
+        ref={dropTarget}
+        data-test="drop-area"
+      >
         {!isEmptyBun ? (
           <div
             className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
+            data-test="top-bun"
           >
             <ConstructorElement
               type="top"
@@ -63,6 +68,7 @@ function BurgerConstructor(): JSX.Element {
         {!isEmptyBun ? (
           <div
             className={`${styles.constructor_item} ${styles.constructor_item_bun}`}
+            data-test="bottom-bun"
           >
             <ConstructorElement
               type="bottom"

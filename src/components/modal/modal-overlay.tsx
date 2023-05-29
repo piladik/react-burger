@@ -7,6 +7,7 @@ function ModalOverlay({ handleModalClose }: { handleModalClose: () => void }) {
       className={styles.modal_overlay}
       onClick={handleModalClose}
       id="modal-overlay"
+      data-test="modal-overlay"
     ></div>
   );
 }

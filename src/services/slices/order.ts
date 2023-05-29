@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postOrderRequest } from "../../utils/burger-api";
 
-interface IOrderSlice {
+export interface IOrderSlice {
   status: string;
   orderId: number | undefined;
   error: unknown;
@@ -34,7 +34,7 @@ const orderSlice = createSlice({
         state.orderId = action.payload.order.number;
       })
       .addCase(setOrderId.rejected, (state, action) => {
-        state.status = "succeeded";
+        state.status = "failed";
         state.error = action.error;
       });
   },

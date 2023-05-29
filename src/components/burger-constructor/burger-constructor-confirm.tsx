@@ -67,7 +67,10 @@ function BurgerConstructorConfirm({
 
   return (
     <>
-      <div className={`mt-10 ${styles.confirm_container}`}>
+      <div
+        className={`mt-10 ${styles.confirm_container}`}
+        data-test="confirm-container"
+      >
         <div className={`mr-10 ${styles.total_box}`}>
           <p className="text text_type_digits-medium">{memoizedTotal}</p>
           <CurrencyIcon type="primary" />
