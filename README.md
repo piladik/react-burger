@@ -16,7 +16,7 @@ User authentication was implemented using JSON Web Tokens (JWT). Upon successful
 
 In the /feed route, users can view the last 50 orders that have been made by all users, as well as the total amount of orders made today and of all time.
 
-The orders history was implemented using websockets, which allows the server to send the updated history list to all connected clients whenever a new order is added. This ensures that all users have access to the most up-to-date information about the orders. If you have any further questions, please let me know.
+The orders history was implemented using websockets, which allows the server to send the updated history list to all connected clients whenever a new order is added. This ensures that all users have access to the most up-to-date information about the orders.
 
 ## Order Details
 
